@@ -2,6 +2,6 @@
 cryptography
 num2words
 pykude
-pysifen
 qrcode
 requests
+sifen

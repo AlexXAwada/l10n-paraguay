@@ -7,7 +7,7 @@
     "website": "https://github.com/OCA/l10n-paraguay",
     "license": "LGPL-3",
     "depends": ["l10n_py_edi_base"],
-    "external_dependencies": {"python": ["pysifen"]},
+    "external_dependencies": {"python": ["sifen"]},
     "data": [
         "security/ir.model.access.csv",
         "views/edi_connector_views.xml",
