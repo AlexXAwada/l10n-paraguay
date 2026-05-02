@@ -23,6 +23,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [l10n_py](l10n_py/) | 16.0.1.1.0 |  | Localización contable para Paraguay
+[l10n_py_account](l10n_py_account/) | 16.0.2.0.0 |  | Accounting extensions for Paraguay localization
 [l10n_py_base](l10n_py_base/) | 16.0.1.2.0 |  | Base localization data for Paraguay
 
 [//]: # (end addons)
