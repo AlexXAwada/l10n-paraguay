@@ -169,13 +169,21 @@ class ResPartner(models.Model):
         return super().create(vals_list)
 
     def write(self, values):
-        if any(
+        # If only syncing vat (no id_type or country), and vat already has correct DV,
+        # skip formatting to avoid recursion with parent sync
+        only_vat_sync = (
+            "vat" in values
+            and "l10n_latam_identification_type_id" not in values
+            and "country_id" not in values
+        )
+        if not only_vat_sync and any(
             f in values
             for f in ["vat", "l10n_latam_identification_type_id", "country_id"]
         ):
             for record in self:
+                current_vat = values.get("vat", record.vat)
                 vat_values = {
-                    "vat": values.get("vat", record.vat),
+                    "vat": current_vat,
                     "l10n_latam_identification_type_id": values.get(
                         "l10n_latam_identification_type_id",
                         record.l10n_latam_identification_type_id.id,
@@ -183,7 +191,8 @@ class ResPartner(models.Model):
                     "country_id": values.get("country_id", record.country_id.id),
                 }
                 formatted = self._format_vat_py(vat_values)
-                if formatted:
+                # Solo actualizar si el formatted es diferente al valor actual del dict
+                if formatted and formatted != current_vat:
                     values["vat"] = formatted
         return super().write(values)
 

@@ -137,23 +137,22 @@
                 />
                 <separator />
                 <field name="l10n_latam_document_type_id" />
-                <group expand="0" string="Agrupar Por">
-                    <filter
-                        string="Estado"
-                        name="group_state"
-                        context="{'group_by': 'state'}"
-                    />
-                    <filter
-                        string="Tipo de Documento"
-                        name="group_type"
-                        context="{'group_by': 'l10n_latam_document_type_id'}"
-                    />
-                    <filter
-                        string="Establecimiento"
-                        name="group_establishment"
-                        context="{'group_by': 'establishment'}"
-                    />
-                </group>
+                <separator />
+                <filter
+                    string="Estado"
+                    name="group_state"
+                    context="{'group_by': 'state'}"
+                />
+                <filter
+                    string="Tipo de Documento"
+                    name="group_type"
+                    context="{'group_by': 'l10n_latam_document_type_id'}"
+                />
+                <filter
+                    string="Establecimiento"
+                    name="group_establishment"
+                    context="{'group_by': 'establishment'}"
+                />
             </search>
         </field>
     </record>
