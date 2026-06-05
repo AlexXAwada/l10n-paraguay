@@ -26,7 +26,14 @@ class TestEdiDemoScenarios(TransactionCase):
                 "account_fiscal_country_id": cls.country_py.id,
             }
         )
-        cls.company.l10n_py_ruc = "80009401"
+        # Setear el RUC en el partner de la compañía (via vat field)
+        ruc_type = cls.env.ref("l10n_py_base.it_ruc", raise_if_not_found=False)
+        cls.company.partner_id.write(
+            {
+                "l10n_latam_identification_type_id": ruc_type.id if ruc_type else False,
+                "vat": "80009401-0",
+            }
+        )
 
         # Document types (from data/, always available)
         cls.doc_type_fe = cls.env.ref("l10n_py_account.dc_py_f")
@@ -38,7 +45,7 @@ class TestEdiDemoScenarios(TransactionCase):
         # Accounts
         account_receivable = cls.env["account.account"].search(
             [
-                ("company_id", "=", cls.company.id),
+                ("company_ids", "in", [cls.company.id]),
                 ("account_type", "=", "asset_receivable"),
             ],
             limit=1,
@@ -50,7 +57,7 @@ class TestEdiDemoScenarios(TransactionCase):
                     "code": "110001",
                     "account_type": "asset_receivable",
                     "reconcile": True,
-                    "company_id": cls.company.id,
+                    "company_ids": [(6, 0, [cls.company.id])],
                 }
             )
 
@@ -329,11 +336,20 @@ class TestEdiDemoScenarios(TransactionCase):
 
     def test_nre_entre_locales_same_ruc(self):
         """NRE entre locales con mismo RUC → validación OK"""
+        # Setear el RUC en el partner de la compañía
+        ruc_type = self.env.ref("l10n_py_base.it_ruc", raise_if_not_found=False)
+        self.company.partner_id.write(
+            {
+                "l10n_latam_identification_type_id": ruc_type.id if ruc_type else False,
+                "vat": "80009401-0",
+            }
+        )
         partner_same = self.env["res.partner"].create(
             {
                 "name": "Sucursal Test",
                 "country_id": self.country_py.id,
-                "l10n_py_ruc": "80009401",
+                "l10n_latam_identification_type_id": ruc_type.id if ruc_type else False,
+                "vat": "80009401-0",
                 "l10n_py_taxpayer_type": "1",
                 "street": "Calle Sucursal 123",
             }

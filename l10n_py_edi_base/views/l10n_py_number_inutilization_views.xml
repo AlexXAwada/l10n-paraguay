@@ -11,7 +11,7 @@
                         string="Enviar al SIFEN"
                         type="object"
                         class="oe_highlight"
-                        attrs="{'invisible': [('state', '!=', 'draft')]}"
+                        invisible="state != 'draft'"
                     />
                     <field
                         name="state"
@@ -44,7 +44,7 @@
         <field name="name">l10n_py.number.inutilization.tree</field>
         <field name="model">l10n_py.number.inutilization</field>
         <field name="arch" type="xml">
-            <tree
+            <list
                 decoration-success="state=='accepted'"
                 decoration-danger="state=='rejected'"
                 decoration-info="state=='sent'"
@@ -55,7 +55,7 @@
                 <field name="quantity" />
                 <field name="motive" />
                 <field name="state" widget="badge" />
-            </tree>
+            </list>
         </field>
     </record>
 

@@ -44,7 +44,7 @@ class TestEDILifecycle(TransactionCase):
 
         cls.account_income = cls.env["account.account"].search(
             [
-                ("company_id", "=", cls.company.id),
+                ("company_ids", "in", [cls.company.id]),
                 ("account_type", "=", "income"),
             ],
             limit=1,
@@ -55,13 +55,13 @@ class TestEDILifecycle(TransactionCase):
                     "name": "Ingresos",
                     "code": "400099",
                     "account_type": "income",
-                    "company_id": cls.company.id,
+                    "company_ids": [(6, 0, [cls.company.id])],
                 }
             )
 
         cls.account_receivable = cls.env["account.account"].search(
             [
-                ("company_id", "=", cls.company.id),
+                ("company_ids", "in", [cls.company.id]),
                 ("account_type", "=", "asset_receivable"),
             ],
             limit=1,
@@ -73,7 +73,7 @@ class TestEDILifecycle(TransactionCase):
                     "code": "110099",
                     "account_type": "asset_receivable",
                     "reconcile": True,
-                    "company_id": cls.company.id,
+                    "company_ids": [(6, 0, [cls.company.id])],
                 }
             )
 
@@ -104,12 +104,25 @@ class TestEDILifecycle(TransactionCase):
             }
         )
 
+        # Ensure there's a tax group with country_id = PY
+        tax_group = cls.env["account.tax.group"].search(
+            [("country_id", "=", cls.country_py.id), ("name", "=", "Exento")],
+            limit=1,
+        )
+        if not tax_group:
+            tax_group = cls.env["account.tax.group"].create(
+                {
+                    "name": "Exento",
+                    "country_id": cls.country_py.id,
+                }
+            )
         cls.tax_exempt = cls.env["account.tax"].create(
             {
                 "name": "Exento",
                 "amount": 0.0,
                 "amount_type": "percent",
                 "type_tax_use": "sale",
+                "tax_group_id": tax_group.id,
             }
         )
 

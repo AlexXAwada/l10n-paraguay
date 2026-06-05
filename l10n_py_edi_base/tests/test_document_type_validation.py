@@ -19,7 +19,14 @@ class TestDocumentTypeValidation(TransactionCase):
                 "account_fiscal_country_id": cls.country_py.id,
             }
         )
-        cls.company.l10n_py_ruc = "80009401"
+        ruc_type = cls.env.ref("l10n_py_base.it_ruc", raise_if_not_found=False)
+        # Setear el RUC en el partner de la compañía (via vat field)
+        cls.company.partner_id.write(
+            {
+                "l10n_latam_identification_type_id": ruc_type.id if ruc_type else False,
+                "vat": "80009401-0",
+            }
+        )
 
         # Document types
         cls.doc_types = {}
@@ -55,7 +62,8 @@ class TestDocumentTypeValidation(TransactionCase):
             {
                 "name": "Cliente Test PY",
                 "country_id": cls.country_py.id,
-                "l10n_py_ruc": "80009401",
+                "l10n_latam_identification_type_id": ruc_type.id if ruc_type else False,
+                "vat": "80009401-0",
                 "l10n_py_taxpayer_type": "1",
                 "street": "Calle Test 123",
             }
@@ -292,12 +300,21 @@ class TestDocumentTypeValidation(TransactionCase):
 
     def test_nre_same_ruc_transfer(self):
         """F07: NRE entre locales com mesmo RUC → sem erros"""
+        # Setear el RUC directamente en el partner_id de la compañía
+        ruc_type = self.env.ref("l10n_py_base.it_ruc", raise_if_not_found=False)
+        self.company.partner_id.write(
+            {
+                "l10n_latam_identification_type_id": ruc_type.id if ruc_type else False,
+                "vat": "80009401-0",
+            }
+        )
         # Partner com mesmo RUC da empresa
         partner_same = self.env["res.partner"].create(
             {
                 "name": "Sucursal",
                 "country_id": self.country_py.id,
-                "l10n_py_ruc": "80009401",
+                "l10n_latam_identification_type_id": ruc_type.id if ruc_type else False,
+                "vat": "80009401-0",
                 "l10n_py_taxpayer_type": "1",
                 "street": "Calle Sucursal",
             }

@@ -843,7 +843,7 @@ class AccountMove(models.Model):
             # Motivo "5" (entre locales) → RUC receptor = RUC emissor
             if self.l10n_py_nre_motive == "5":
                 partner_ruc = self.partner_id.l10n_py_ruc or ""
-                company_ruc = self.company_id.l10n_py_ruc or ""
+                company_ruc = self.company_id.partner_id.l10n_py_ruc or ""
                 if partner_ruc != company_ruc:
                     errors.append(
                         self.env._(

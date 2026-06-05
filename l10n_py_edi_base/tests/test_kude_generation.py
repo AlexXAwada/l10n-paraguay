@@ -13,6 +13,11 @@ class TestKudeGeneration(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        # Skip if pykude is not available
+        try:
+            import pykude  # noqa: F401
+        except ImportError:
+            cls.skipTest(cls, "pykude is not available in this environment")
         cls.company = cls.env.ref("base.main_company")
         cls.country_py = cls.env.ref("base.py")
         cls.company.write(
@@ -45,7 +50,7 @@ class TestKudeGeneration(TransactionCase):
 
         cls.account_income = cls.env["account.account"].search(
             [
-                ("company_id", "=", cls.company.id),
+                ("company_ids", "in", [cls.company.id]),
                 ("account_type", "=", "income"),
             ],
             limit=1,
@@ -56,13 +61,13 @@ class TestKudeGeneration(TransactionCase):
                     "name": "Ingresos",
                     "code": "400098",
                     "account_type": "income",
-                    "company_id": cls.company.id,
+                    "company_ids": [(6, 0, [cls.company.id])],
                 }
             )
 
         cls.account_receivable = cls.env["account.account"].search(
             [
-                ("company_id", "=", cls.company.id),
+                ("company_ids", "in", [cls.company.id]),
                 ("account_type", "=", "asset_receivable"),
             ],
             limit=1,
@@ -74,7 +79,7 @@ class TestKudeGeneration(TransactionCase):
                     "code": "110098",
                     "account_type": "asset_receivable",
                     "reconcile": True,
-                    "company_id": cls.company.id,
+                    "company_ids": [(6, 0, [cls.company.id])],
                 }
             )
 
