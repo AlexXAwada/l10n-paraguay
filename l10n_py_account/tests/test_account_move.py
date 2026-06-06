@@ -140,7 +140,7 @@ class TestAccountMove(TransactionCase):
                 "amount": 10.0,
                 "amount_type": "percent",
                 "type_tax_use": "sale",
-                "price_include": True,
+                "price_include_override": "tax_included",
                 "tax_group_id": tax_group.id,
             }
         )
@@ -150,7 +150,7 @@ class TestAccountMove(TransactionCase):
                 "amount": 5.0,
                 "amount_type": "percent",
                 "type_tax_use": "sale",
-                "price_include": True,
+                "price_include_override": "tax_included",
                 "tax_group_id": tax_group.id,
             }
         )

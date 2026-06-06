@@ -196,6 +196,42 @@ class ResPartner(models.Model):
                     values["vat"] = formatted
         return super().write(values)
 
+    @api.model
+    def format_vat_py(self, vat):
+        """Keep already formatted Paraguayan RUC values in RUC-DV format.
+
+        Odoo's base_vat falls back to python-stdnum's compact() for PY,
+        which strips the hyphen from RUC numbers. This override prevents
+        compacting values that are already in the local SET format.
+
+        Do not add a DV here: base_vat only knows the country, not whether
+        the document number is a RUC, CI, passport, or residence card.
+        RUC auto-formatting is handled by _format_vat_py() when the LATAM
+        identification type is explicitly RUC.
+        """
+        vat_clean = vat.strip() if vat else vat
+        if vat_clean and "-" in vat_clean:
+            return self._format_ruc_vat(vat_clean)
+        return vat_clean
+
+    @api.model
+    def _format_ruc_vat(self, vat):
+        """Return a Paraguayan RUC formatted as RUC-DV when possible."""
+        if not vat:
+            return vat
+
+        vat_clean = vat.strip()
+        if "-" in vat_clean:
+            ruc_num = vat_clean.split("-", 1)[0]
+        else:
+            ruc_num = "".join(c for c in vat_clean if c.isdigit())
+
+        if ruc_num and ruc_num.isdigit() and len(ruc_num) >= 6:
+            dv = str(RUCValidator._calculate_check_digit(ruc_num))
+            return f"{ruc_num}-{dv}"
+
+        return vat_clean
+
     def _format_vat_py(self, vals):
         """Format vat for RUC type: append DV if missing or incorrect.
 
@@ -215,19 +251,12 @@ class ResPartner(models.Model):
         if not is_ruc:
             return None
 
-        vat = vals["vat"].strip()
-        if "-" in vat:
-            ruc_num = vat.split("-", 1)[0]
-        else:
-            ruc_num = "".join(c for c in vat if c.isdigit())
-
-        if ruc_num and ruc_num.isdigit() and len(ruc_num) >= 6:
-            dv = str(RUCValidator._calculate_check_digit(ruc_num))
-            formatted = f"{ruc_num}-{dv}"
+        formatted = self._format_ruc_vat(vals["vat"])
+        if formatted != vals["vat"]:
             vals["vat"] = formatted
             return formatted
 
-        return None
+        return formatted
 
     # ============== ONCHANGE METHODS ==============
 
