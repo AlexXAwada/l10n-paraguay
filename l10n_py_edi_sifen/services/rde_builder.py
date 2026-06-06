@@ -193,7 +193,7 @@ class RDeBuilder:
         """Build complete RDe."""
         tde = TDe(
             Id=self.cdc,
-            dDVId=self.cdc[-1] if len(self.cdc) == 43 else "",
+            dDVId=self.cdc[-1] if len(self.cdc) == 44 else "",
             dFecFirma="",
             gOpeDE=self._build_gOpeDE(),
             gTimb=self._build_gTimb(),

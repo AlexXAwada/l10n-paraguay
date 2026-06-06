@@ -175,14 +175,12 @@ class NumberInutilization(models.Model):
                 self.state = "rejected"
                 _logger.warning("Inutilización rechazada: %s", response.get("error"))
                 raise UserError(
-                    self.env._(
-                        "Error de inutilización: %s", error=response.get("error")
-                    )
+                    self.env._("Error de inutilización: %s", response.get("error"))
                 )
         except UserError:
             raise
         except Exception as e:
             self.state = "rejected"
             raise UserError(
-                self.env._("Error enviando inutilización: %s", value=str(e))
+                self.env._("Error enviando inutilización: %s", str(e))
             ) from e

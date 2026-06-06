@@ -64,7 +64,7 @@ class CDCGenerator:
             company_ruc, doc_type, establishment, expedition_point, sequence
         )
 
-        # Construir CDC base (42 dígitos)
+        # Construir CDC base (43 dígitos)
         cdc_base = cls._build_cdc_base(
             company_ruc,
             doc_type,

@@ -1127,9 +1127,7 @@ class AccountMove(models.Model):
             self.l10n_py_edi_message = f"Cancelado el {fields.Datetime.now()}"
         else:
             raise UserError(
-                self.env._(
-                    "Error cancelando documento: %s", error=response.get("error")
-                )
+                self.env._("Error cancelando documento: %s", response.get("error"))
             )
 
     def action_retry_edi(self):

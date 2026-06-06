@@ -65,7 +65,14 @@ class EDICancelWizard(models.TransientModel):
 
         # Calcular horas desde la aceptación
         accepted_dt = invoice.l10n_py_edi_accepted_date or invoice.write_date
-        if invoice.l10n_py_edi_status == "accepted" and accepted_dt:
+        if invoice.l10n_py_edi_status == "accepted":
+            if not accepted_dt:
+                raise UserError(
+                    self.env._(
+                        "No se puede cancelar: la fecha de aceptación EDI no está "
+                        "registrada. Contacte al administrador."
+                    )
+                )
             now = fields.Datetime.now()
             delta = now - accepted_dt
             hours_since = delta.total_seconds() / 3600

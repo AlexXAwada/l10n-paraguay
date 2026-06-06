@@ -38,8 +38,13 @@ class TestSIFENConnector(TransactionCase):
         self.assertEqual(connector.provider_type, "sifen")
         self.assertEqual(connector.environment, "test")
 
-    def test_company_unique_constraint(self):
-        """Test that only one connector per company is allowed."""
+    def test_company_provider_unique_constraint(self):
+        """Test that one connector per (company, provider_type) is allowed.
+
+        The constraint is unique(company_id, provider_type), so multiple
+        connectors for the same company are allowed if provider_type differs.
+        Duplicate (company, provider_type) raises IntegrityError.
+        """
         # Ensure a connector exists for the company
         existing = (
             self.env["l10n_py.edi.connector"]
