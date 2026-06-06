@@ -127,15 +127,12 @@ class AccountAuthorization(models.Model):
         help="Porcentaje de números utilizados respecto al total autorizado",
     )
 
-    _sql_constraints = [
-        (
-            "unique_timbrado",
-            "unique(name, establishment, expedition_point, series, "
-            "l10n_latam_document_type_id, company_id)",
-            "La combinación timbrado/establecimiento/punto de expedición/"
-            "serie/tipo de documento debe ser única.",
-        ),
-    ]
+    _unique_timbrado = models.Constraint(
+        "unique(name, establishment, expedition_point, series, "
+        "l10n_latam_document_type_id, company_id)",
+        "La combinación timbrado/establecimiento/punto de expedición/"
+        "serie/tipo de documento debe ser única.",
+    )
 
     @api.depends("date_from", "date_to")
     def _compute_state(self):
@@ -196,6 +193,7 @@ class AccountAuthorization(models.Model):
             else:
                 record.usage_percentage = 0.0
 
+    @api.constrains("name")
     def _check_timbrado_format(self):
         """Valida el formato del número de timbrado"""
         for record in self:
@@ -317,7 +315,7 @@ class AccountAuthorization(models.Model):
             raise ValidationError(
                 self.env._(
                     "El número %(number)s está fuera del rango autorizado "
-                    "(%(from)s - %(to)s.",
+                    "(%(from_)s - %(to)s.",
                     number=number,
                     from_=self.invoice_number_from,
                     to=self.invoice_number_to,

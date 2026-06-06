@@ -1,13 +1,12 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 
-from unittest import TestCase
 from unittest.mock import patch
 
-from odoo.tests.common import tagged
+from odoo.tests.common import TransactionCase, tagged
 
 
 @tagged("post_install", "-at_install")
-class TestRDeBuilder(TestCase):
+class TestRDeBuilder(TransactionCase):
     """Test RDeBuilder without Odoo environment (pure Python)."""
 
     def _get_sample_invoice_data(self):
@@ -74,11 +73,13 @@ class TestRDeBuilder(TestCase):
             "email": "test@empresa.com",
         }
 
-    @patch("l10n_py_edi_sifen.services.rde_builder.RDe")
-    @patch("l10n_py_edi_sifen.services.rde_builder.TDe")
+    @patch("odoo.addons.l10n_py_edi_sifen.services.rde_builder.RDe")
+    @patch("odoo.addons.l10n_py_edi_sifen.services.rde_builder.TDe")
     def test_build_creates_rde(self, mock_tde, mock_rde):
         """Test that build() creates an RDe object."""
-        from l10n_py_edi_sifen.services.rde_builder import RDeBuilder
+        from odoo.addons.l10n_py_edi_sifen.services.rde_builder import (
+            RDeBuilder,  # noqa: E501,W8150
+        )
 
         builder = RDeBuilder(
             self._get_sample_invoice_data(),

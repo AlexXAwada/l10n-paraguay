@@ -48,7 +48,7 @@ class TestAccountMove(TransactionCase):
         # Cuentas contables
         cls.account_income = cls.env["account.account"].search(
             [
-                ("company_id", "=", cls.company.id),
+                ("company_ids", "in", [cls.company.id]),
                 ("account_type", "=", "income"),
             ],
             limit=1,
@@ -59,13 +59,13 @@ class TestAccountMove(TransactionCase):
                     "name": "Ingresos por Ventas",
                     "code": "400001",
                     "account_type": "income",
-                    "company_id": cls.company.id,
+                    "company_ids": [(6, 0, [cls.company.id])],
                 }
             )
 
         cls.account_receivable = cls.env["account.account"].search(
             [
-                ("company_id", "=", cls.company.id),
+                ("company_ids", "in", [cls.company.id]),
                 ("account_type", "=", "asset_receivable"),
             ],
             limit=1,
@@ -77,7 +77,7 @@ class TestAccountMove(TransactionCase):
                     "code": "110001",
                     "account_type": "asset_receivable",
                     "reconcile": True,
-                    "company_id": cls.company.id,
+                    "company_ids": [(6, 0, [cls.company.id])],
                 }
             )
 
@@ -120,6 +120,19 @@ class TestAccountMove(TransactionCase):
             }
         )
 
+        # Ensure there's a tax group with country_id = PY
+        tax_group = cls.env["account.tax.group"].search(
+            [("country_id", "=", cls.country_py.id), ("name", "=", "IVA 10%")],
+            limit=1,
+        )
+        if not tax_group:
+            tax_group = cls.env["account.tax.group"].create(
+                {
+                    "name": "IVA 10%",
+                    "country_id": cls.country_py.id,
+                }
+            )
+
         # Impuestos (incluidos en el precio para SIFEN)
         cls.tax_10 = cls.Tax.create(
             {
@@ -128,6 +141,7 @@ class TestAccountMove(TransactionCase):
                 "amount_type": "percent",
                 "type_tax_use": "sale",
                 "price_include": True,
+                "tax_group_id": tax_group.id,
             }
         )
         cls.tax_5 = cls.Tax.create(
@@ -137,6 +151,7 @@ class TestAccountMove(TransactionCase):
                 "amount_type": "percent",
                 "type_tax_use": "sale",
                 "price_include": True,
+                "tax_group_id": tax_group.id,
             }
         )
         cls.tax_exempt = cls.Tax.create(
@@ -145,6 +160,7 @@ class TestAccountMove(TransactionCase):
                 "amount": 0.0,
                 "amount_type": "percent",
                 "type_tax_use": "sale",
+                "tax_group_id": tax_group.id,
             }
         )
 
@@ -268,7 +284,7 @@ class TestAccountMove(TransactionCase):
         """F02: Factura de compra sin timbrado → OK (no requiere timbrado propio)"""
         account_payable = self.env["account.account"].search(
             [
-                ("company_id", "=", self.company.id),
+                ("company_ids", "in", [self.company.id]),
                 ("account_type", "=", "liability_payable"),
             ],
             limit=1,
@@ -280,13 +296,13 @@ class TestAccountMove(TransactionCase):
                     "code": "210001",
                     "account_type": "liability_payable",
                     "reconcile": True,
-                    "company_id": self.company.id,
+                    "company_ids": [(6, 0, [self.company.id])],
                 }
             )
 
         expense_account = self.env["account.account"].search(
             [
-                ("company_id", "=", self.company.id),
+                ("company_ids", "in", [self.company.id]),
                 ("account_type", "=", "expense"),
             ],
             limit=1,
@@ -297,7 +313,7 @@ class TestAccountMove(TransactionCase):
                     "name": "Gastos",
                     "code": "500001",
                     "account_type": "expense",
-                    "company_id": self.company.id,
+                    "company_ids": [(6, 0, [self.company.id])],
                 }
             )
 

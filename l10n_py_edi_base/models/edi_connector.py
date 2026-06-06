@@ -12,6 +12,11 @@ class EDIConnector(models.Model):
     _name = "l10n_py.edi.connector"
     _description = "Conector EDI Paraguay"
 
+    _company_provider_unique = models.Constraint(
+        "UNIQUE (company_id, provider_type)",
+        "Only one connector per (company, provider_type) is allowed.",
+    )
+
     name = fields.Char(required=True)
     company_id = fields.Many2one(
         "res.company",
