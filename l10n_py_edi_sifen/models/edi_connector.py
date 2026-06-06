@@ -12,13 +12,6 @@ from pysifen.de.bindings.v150.evento_v150 import (
     TrGeVeCan,
     TrGeVeInu,
 )
-from pysifen.de.bindings.v150.xmldsig_core_schema import (
-    CanonicalizationMethod,
-    Signature,
-    SignatureMethod,
-    SignatureValue,
-    SignedInfo,
-)
 from pysifen.transmissao import ConsultaSIFEN, TransmissaoDE, TransmissaoEvento
 from pysifen.transmissao.config import PRODUCCION, TEST
 from xsdata.formats.dataclass.serializers import XmlSerializer
@@ -127,23 +120,16 @@ class EDIConnector(models.Model):
                 mOtEve=reason or "Cancelación solicitada por el emisor",
             )
             now_str = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
-            empty_signature = Signature(
-                SignedInfo=SignedInfo(
-                    CanonicalizationMethod=CanonicalizationMethod(Algorithm=""),
-                    SignatureMethod=SignatureMethod(Algorithm=""),
-                ),
-                SignatureValue=SignatureValue(),
-            )
             r_eve = TrEve(
                 dFecFirma=now_str,
                 dVerFor="150",
                 gGroupTiEvt=TgGroupEvt(rGeVeCan=cancel_event),
                 Id="1",
             )
-            r_ges_eve = TrGesEve(rEve=r_eve, Signature=empty_signature)
+            r_ges_eve = TrGesEve(rEve=r_eve)
             grupo = TgGroupGesEve(rGesEve=[r_ges_eve])
 
-            result = evento.enviar_evento(grupo)
+            result = evento.enviar_evento(grupo, sign=True)
             _logger.info("SIFEN cancel result for CDC %s: %s", cdc, result)
 
             if hasattr(result, "gResProcEVe") and result.gResProcEVe:
@@ -176,23 +162,16 @@ class EDIConnector(models.Model):
                 mOtEve=data.get("motivo", "Inutilización de números"),
             )
             now_str = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
-            empty_signature = Signature(
-                SignedInfo=SignedInfo(
-                    CanonicalizationMethod=CanonicalizationMethod(Algorithm=""),
-                    SignatureMethod=SignatureMethod(Algorithm=""),
-                ),
-                SignatureValue=SignatureValue(),
-            )
             r_eve = TrEve(
                 dFecFirma=now_str,
                 dVerFor="150",
                 gGroupTiEvt=TgGroupEvt(rGeVeInu=inu_event),
                 Id="1",
             )
-            r_ges_eve = TrGesEve(rEve=r_eve, Signature=empty_signature)
+            r_ges_eve = TrGesEve(rEve=r_eve)
             grupo = TgGroupGesEve(rGesEve=[r_ges_eve])
 
-            result = evento.enviar_evento(grupo)
+            result = evento.enviar_evento(grupo, sign=True)
             _logger.info("SIFEN inutilize result: %s", result)
 
             if hasattr(result, "gResProcEVe") and result.gResProcEVe:
@@ -275,13 +254,19 @@ class EDIConnector(models.Model):
         punto = invoice_data.get("punto", "001")
         numero = invoice_data.get("numero", "0000001")
 
-        cdc = CDCGenerator.generate(
-            company_ruc=company.l10n_py_ruc,
-            doc_type=doc_type,
-            establishment=establishment,
-            expedition_point=punto,
-            sequence=int(numero),
-        )
+        existing_cdc = invoice_data.get("cdc")
+        if existing_cdc:
+            cdc = existing_cdc
+        else:
+            security_code = invoice_data.get("security_code") or None
+            cdc = CDCGenerator.generate(
+                company_ruc=company.l10n_py_ruc,
+                doc_type=doc_type,
+                establishment=establishment,
+                expedition_point=punto,
+                sequence=int(numero),
+                security_code=security_code,
+            )
 
         company_data = self._sifen_prepare_company_data()
         return RDeBuilder(invoice_data, company_data, cdc).build()

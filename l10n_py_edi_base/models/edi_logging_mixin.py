@@ -57,17 +57,20 @@ class EDILoggingMixin(models.AbstractModel):
                 execution_time=execution_time, success=True, **log_data
             )
 
-        except Exception as e:
+        except Exception as exc:
             # Operação com erro
             execution_time = (time.time() - start_time) * 1000
-            self.env["l10n_py.edi.log"].log_operation(
-                execution_time=execution_time,
-                success=False,
-                error_message=str(e),
-                **log_data,
-            )
-            # Re-raise a exceção
-            raise
+            try:
+                self.env["l10n_py.edi.log"].log_operation(
+                    execution_time=execution_time,
+                    success=False,
+                    error_message=str(exc),
+                    **log_data,
+                )
+            except Exception:
+                _logger.warning("Failed to log EDI operation: %s", exc, exc_info=True)
+            # Re-raise a exceção original
+            raise exc
 
     def _log_success(
         self, operation_type, provider, document=None, execution_time=0, **kwargs

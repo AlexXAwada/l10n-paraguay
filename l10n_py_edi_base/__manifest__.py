@@ -37,7 +37,7 @@
         "views/l10n_py_edi_menu.xml",
         "views/edi_connector_views.xml",
     ],
-    "_external_dependencies": {
+    "external_dependencies": {
         "python": [
             "qrcode",
             "requests",

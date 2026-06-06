@@ -176,10 +176,29 @@ class ResPartner(models.Model):
             and "l10n_latam_identification_type_id" not in values
             and "country_id" not in values
         )
-        if not only_vat_sync and any(
+        if only_vat_sync:
+            # Format VAT even on vat-only writes using the partner's existing id type
+            values_without_vat = {k: v for k, v in values.items() if k != "vat"}
+            for record in self:
+                vat_vals = {
+                    "vat": values.get("vat", record.vat),
+                    "l10n_latam_identification_type_id": (
+                        record.l10n_latam_identification_type_id.id
+                    ),
+                    "country_id": record.country_id.id,
+                }
+                formatted = record._format_vat_py(vat_vals)
+                per_record_vals = dict(values_without_vat)
+                per_record_vals["vat"] = (
+                    formatted if formatted else values.get("vat", record.vat)
+                )
+                super(ResPartner, record).write(per_record_vals)
+            return True
+        if any(
             f in values
             for f in ["vat", "l10n_latam_identification_type_id", "country_id"]
         ):
+            vat_overrides = {}
             for record in self:
                 current_vat = values.get("vat", record.vat)
                 vat_values = {
@@ -191,9 +210,18 @@ class ResPartner(models.Model):
                     "country_id": values.get("country_id", record.country_id.id),
                 }
                 formatted = self._format_vat_py(vat_values)
-                # Solo actualizar si el formatted es diferente al valor actual del dict
                 if formatted and formatted != current_vat:
-                    values["vat"] = formatted
+                    vat_overrides[record.id] = formatted
+            if vat_overrides:
+                values_without_vat = {k: v for k, v in values.items() if k != "vat"}
+                for record in self:
+                    per_record_vals = dict(values_without_vat)
+                    if record.id in vat_overrides:
+                        per_record_vals["vat"] = vat_overrides[record.id]
+                    elif "vat" in values:
+                        per_record_vals["vat"] = values["vat"]
+                    super(ResPartner, record).write(per_record_vals)
+                return True
         return super().write(values)
 
     @api.model
@@ -245,6 +273,8 @@ class ResPartner(models.Model):
         id_type_id = vals.get("l10n_latam_identification_type_id")
         if isinstance(id_type_id, int):
             is_ruc = id_type_id == ruc_type.id
+        elif hasattr(id_type_id, "id"):
+            is_ruc = id_type_id.id == ruc_type.id
         else:
             is_ruc = False
 

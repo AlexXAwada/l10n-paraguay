@@ -39,7 +39,7 @@ class EDICancelWizard(models.TransientModel):
         # Verificar plazo de cancelación
         self._check_cancel_deadline()
 
-        self.invoice_id.action_cancel_edi()
+        self.invoice_id.action_cancel_edi(motive=self.motive)
 
         return {
             "type": "ir.actions.client",
@@ -64,10 +64,10 @@ class EDICancelWizard(models.TransientModel):
         limit_hours = CANCEL_LIMITS.get(doc_type_code, 48)
 
         # Calcular horas desde la aceptación
-        if invoice.l10n_py_edi_status == "accepted" and invoice.write_date:
+        accepted_dt = invoice.l10n_py_edi_accepted_date or invoice.write_date
+        if invoice.l10n_py_edi_status == "accepted" and accepted_dt:
             now = fields.Datetime.now()
-            # Usar write_date como proxy de cuando fue aceptado
-            delta = now - invoice.write_date
+            delta = now - accepted_dt
             hours_since = delta.total_seconds() / 3600
 
             if hours_since > limit_hours:

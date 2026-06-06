@@ -184,6 +184,11 @@ class AccountMove(models.Model):
                     auth.check_validity()
                     # Flush pending writes so the SQL query sees all data
                     self.env["account.move"].flush_model(["l10n_py_invoice_number"])
+                    # Lock the authorization row to prevent concurrent number assignment
+                    self.env.cr.execute(
+                        "SELECT id FROM account_authorization WHERE id = %s FOR UPDATE",
+                        (auth.id,),
+                    )
                     # Query next number directly to avoid ORM cache issues
                     self.env.cr.execute(
                         """
@@ -306,10 +311,27 @@ class AccountMove(models.Model):
                     currency_code,
                     move.currency_id.currency_unit_label or "guaraníes",
                 )
-                amount_words = num2words(int(move.amount_total), lang="es")
-                move.l10n_py_amount_total_words = (
-                    f"{amount_words} {currency_name}".capitalize()
-                )
+                amount_int = int(move.amount_total)
+                decimal_places = move.currency_id.decimal_places
+                if decimal_places > 0:
+                    cents = round(
+                        (move.amount_total - amount_int) * (10**decimal_places)
+                    )
+                    amount_words = num2words(amount_int, lang="es")
+                    if cents:
+                        cents_words = num2words(cents, lang="es")
+                        cents_label = (
+                            move.currency_id.currency_subunit_label or "centavos"
+                        )
+                        words = (
+                            f"{amount_words} {currency_name} "
+                            f"con {cents_words} {cents_label}"
+                        )
+                    else:
+                        words = f"{amount_words} {currency_name}"
+                else:
+                    words = f"{num2words(amount_int, lang='es')} {currency_name}"
+                move.l10n_py_amount_total_words = words.capitalize()
             else:
                 move.l10n_py_amount_total_words = False
 
@@ -329,7 +351,7 @@ class AccountMove(models.Model):
     def _check_authorization_validity(self):
         """Validar que el timbrado esté vigente"""
         for move in self:
-            if move.l10n_py_authorization_id:
+            if move.state == "posted" and move.l10n_py_authorization_id:
                 move.l10n_py_authorization_id.check_validity()
 
     # ============== ONCHANGE METHODS ==============

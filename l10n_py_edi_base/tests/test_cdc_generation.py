@@ -29,7 +29,7 @@ class TestCDCGeneration(TransactionCase):
         cls.emission_date = datetime(2025, 1, 15, 10, 30)
 
     def test_cdc_length(self):
-        """CDC tiene 43 dígitos"""
+        """CDC tiene 44 dígitos (43 base + 1 dígito verificador)"""
         cdc = CDCGenerator.generate(
             company_ruc=self.company_ruc,
             doc_type=self.doc_type,
@@ -38,7 +38,7 @@ class TestCDCGeneration(TransactionCase):
             sequence=self.sequence,
             emission_date=self.emission_date,
         )
-        self.assertEqual(len(cdc), 43)
+        self.assertEqual(len(cdc), 44)
 
     def test_cdc_only_digits(self):
         """CDC contiene solo dígitos"""
@@ -85,10 +85,10 @@ class TestCDCGeneration(TransactionCase):
         self.assertTrue(is_valid, f"CDC válido fue rechazado: {error}")
 
     def test_validate_invalid_cdc_length(self):
-        """Rechaza CDC con != 43 dígitos"""
+        """Rechaza CDC con != 44 dígitos"""
         is_valid, error = CDCGenerator.validate_cdc("123456789")
         self.assertFalse(is_valid)
-        self.assertIn("43 dígitos", error)
+        self.assertIn("44 dígitos", error)
 
     def test_validate_invalid_check_digit(self):
         """Rechaza DV incorrecto"""
@@ -109,7 +109,7 @@ class TestCDCGeneration(TransactionCase):
 
     def test_validate_non_numeric(self):
         """Rechaza CDC con caracteres no numéricos"""
-        is_valid, error = CDCGenerator.validate_cdc("A" * 43)
+        is_valid, error = CDCGenerator.validate_cdc("A" * 44)
         self.assertFalse(is_valid)
         self.assertIn("números", error)
 

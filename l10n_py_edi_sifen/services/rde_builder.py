@@ -561,7 +561,7 @@ class RDeBuilder:
         if vehiculos:
             transp.gVehTras = [
                 TgVehTras(
-                    dTiVehTras=_MOD_TRANS_DESC.get(mod_trans, TdDesModTrans.TERRESTRE),
+                    dTiVehTras=v.get("tipo", ""),
                     dMarVeh=v.get("marca", ""),
                     dNroIDVeh=v.get("numero", ""),
                 )

@@ -90,6 +90,11 @@ class AccountMove(models.Model):
 
     l10n_py_edi_message = fields.Text("Mensaje EDI", readonly=True, copy=False)
     l10n_py_edi_batch_id = fields.Char("ID de Lote", readonly=True, copy=False)
+    l10n_py_edi_accepted_date = fields.Datetime(
+        string="EDI Acceptance Date",
+        readonly=True,
+        copy=False,
+    )
     l10n_py_security_code = fields.Char(
         "Código de Seguridad", size=9, readonly=True, copy=False
     )
@@ -355,7 +360,7 @@ class AccountMove(models.Model):
             doc_type_code = self.l10n_latam_document_type_id.code or "1"
 
         # Datos del timbrado (Grupo B)
-        auth = self.journal_id.l10n_py_authorization_id
+        auth = self.l10n_py_authorization_id or self.journal_id.l10n_py_authorization_id
         timbrado_data = {}
         if auth:
             timbrado_data = {
@@ -443,13 +448,15 @@ class AccountMove(models.Model):
             "baseGravada10": self.l10n_py_base_10,  # F019
             "totalBaseGravada": self.l10n_py_base_total,  # F020
         }
-        if self.l10n_py_amount_total_pyg is not None:
+        if self.l10n_py_amount_total_pyg:
             document_data["totales"]["totalPYG"] = self.l10n_py_amount_total_pyg  # F023
         else:
-            # Fallback: use totalOperacion when currency is PYG
             document_data["totales"]["totalPYG"] = document_data["totales"][
                 "totalOperacion"
             ]
+
+        document_data["cdc"] = self.l10n_py_cdc or ""
+        document_data["security_code"] = self.l10n_py_security_code or ""
 
         return document_data
 
@@ -570,19 +577,22 @@ class AccountMove(models.Model):
 
             # Preparar información de cuotas
             cuotas = []
-            if self.invoice_date and self.invoice_payment_term_id.line_ids:
-                for line in self.invoice_payment_term_id.line_ids:
-                    due_date = self.invoice_date + relativedelta(days=line.days)
-                    cuotas.append(
-                        {
-                            "moneda": self.currency_id.name,
-                            "monto": (
-                                self.amount_total
-                                / len(self.invoice_payment_term_id.line_ids)
-                            ),
-                            "vencimiento": due_date.strftime("%Y-%m-%d"),
-                        }
-                    )
+            payment_lines = self.invoice_payment_term_id.compute(
+                self.amount_total,
+                date_ref=self.invoice_date or fields.Date.today(),
+            )
+            for date_due, amount in payment_lines:
+                cuotas.append(
+                    {
+                        "moneda": self.currency_id.name,
+                        "monto": amount,
+                        "vencimiento": (
+                            date_due.strftime("%Y-%m-%d")
+                            if hasattr(date_due, "strftime")
+                            else str(date_due)
+                        ),
+                    }
+                )
 
             payment_condition["credito"]["infoCuotas"] = cuotas
         else:
@@ -829,11 +839,8 @@ class AccountMove(models.Model):
             if self.l10n_py_nre_estimated_invoice_date and self.invoice_date:
                 est_date = self.l10n_py_nre_estimated_invoice_date
                 inv_date = self.invoice_date
-                # La fecha estimada no debe superar el mes siguiente
-                if est_date.month > inv_date.month + 1 or (
-                    est_date.year > inv_date.year
-                    and not (inv_date.month == 12 and est_date.month == 1)
-                ):
+                max_allowed = inv_date + relativedelta(months=1, day=31)
+                if est_date > max_allowed:
                     errors.append(
                         self.env._(
                             "La fecha estimada de facturación no puede "
@@ -956,8 +963,6 @@ class AccountMove(models.Model):
         import base64 as b64
 
         xml_b64 = b64.b64encode(xml_string.encode("utf-8"))
-        self.l10n_py_edi_xml = xml_b64
-        self.l10n_py_edi_xml_filename = "preview.xml"
 
         attachment = self.env["ir.attachment"].create(
             {
@@ -975,16 +980,15 @@ class AccountMove(models.Model):
         import base64
 
         self.ensure_one()
-        if not self.l10n_py_edi_xml:
-            # Generate XML first
-            self.action_preview_xml()
-        if not self.l10n_py_edi_xml:
-            raise UserError(self.env._("No hay XML disponible para generar el KuDE"))
+        self._validate_edi_data()
+        document_data = self._prepare_edi_document_data()
+        connector = self._get_edi_connector()
+        xml_string = connector.preview_document(document_data)
 
         from pykude import auto_kude
         from pykude.kude_fe.config import KudeFeConfig
 
-        xml_content = base64.b64decode(self.l10n_py_edi_xml).decode("utf-8")
+        xml_content = xml_string
 
         config = KudeFeConfig()
         if self.company_id.logo:
@@ -1046,15 +1050,16 @@ class AccountMove(models.Model):
         # Guardar CDC y otros datos
         if result.get("deList"):
             de_data = result["deList"][0]
-            self.write(
-                {
-                    "l10n_py_cdc": de_data.get("cdc"),
-                    "l10n_py_qr_string": de_data.get("qr"),
-                    "l10n_py_edi_status": "accepted",
-                    "l10n_py_edi_batch_id": result.get("loteId"),
-                    "l10n_py_edi_message": ("Documento aceptado exitosamente"),
-                }
-            )
+            vals = {
+                "l10n_py_cdc": de_data.get("cdc"),
+                "l10n_py_qr_string": de_data.get("qr"),
+                "l10n_py_edi_status": "accepted",
+                "l10n_py_edi_batch_id": result.get("loteId"),
+                "l10n_py_edi_message": ("Documento aceptado exitosamente"),
+            }
+            if not self.l10n_py_edi_accepted_date:
+                vals["l10n_py_edi_accepted_date"] = fields.Datetime.now()
+            self.write(vals)
 
             # Guardar XML si viene
             if de_data.get("xml"):
@@ -1087,8 +1092,14 @@ class AccountMove(models.Model):
         else:
             max_hours = 168
 
-        emission_dt = fields.Datetime.from_string(str(self.invoice_date) + " 00:00:00")
-        deadline = emission_dt + relativedelta(hours=max_hours)
+        accepted_dt = self.l10n_py_edi_accepted_date or (
+            fields.Datetime.from_string(str(self.invoice_date) + " 00:00:00")
+            if self.invoice_date
+            else None
+        )
+        if not accepted_dt:
+            return
+        deadline = accepted_dt + relativedelta(hours=max_hours)
         now = fields.Datetime.now()
         if now > deadline:
             raise UserError(
@@ -1100,7 +1111,7 @@ class AccountMove(models.Model):
                 )
             )
 
-    def action_cancel_edi(self):
+    def action_cancel_edi(self, motive=None):
         """Cancelar documento electrónico"""
         self.ensure_one()
 
@@ -1110,7 +1121,7 @@ class AccountMove(models.Model):
         self._validate_cancel_deadline()
 
         connector = self._get_edi_connector()
-        response = connector.cancel_document(self.l10n_py_cdc)
+        response = connector.cancel_document(self.l10n_py_cdc, reason=motive or "")
         if response.get("success"):
             self.l10n_py_edi_status = "cancelled"
             self.l10n_py_edi_message = f"Cancelado el {fields.Datetime.now()}"
@@ -1232,8 +1243,7 @@ class AccountMove(models.Model):
                     continue
                 response = connector.check_status(doc.l10n_py_edi_batch_id)
                 if response.get("success"):
-                    # Actualizar estado según respuesta
-                    pass
+                    doc._process_edi_response(response)
             except Exception as e:
                 _logger.error(
                     "Error verificando estado EDI para %s: %s",

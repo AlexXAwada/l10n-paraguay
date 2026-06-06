@@ -150,6 +150,7 @@ class AccountAuthorization(models.Model):
             else:
                 record.state = "valid"
 
+    @api.depends()
     def _compute_next_number(self):
         """Calcula el próximo número disponible"""
         for record in self:
@@ -167,6 +168,7 @@ class AccountAuthorization(models.Model):
             else:
                 record.next_number = record.invoice_number_from
 
+    @api.depends()
     def _compute_used_numbers(self):
         """Calcula cuántos números se han utilizado"""
         for record in self:
@@ -178,12 +180,14 @@ class AccountAuthorization(models.Model):
             )
             record.used_numbers = count
 
+    @api.depends("used_numbers", "invoice_number_from", "invoice_number_to")
     def _compute_remaining_numbers(self):
         """Calcula cuántos números quedan disponibles"""
         for record in self:
             total = record.invoice_number_to - record.invoice_number_from + 1
             record.remaining_numbers = total - record.used_numbers
 
+    @api.depends("used_numbers", "invoice_number_from", "invoice_number_to")
     def _compute_usage_percentage(self):
         """Calcula el porcentaje de uso de la faja de numeración"""
         for record in self:

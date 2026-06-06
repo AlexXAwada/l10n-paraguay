@@ -47,8 +47,7 @@ class RUCValidator:
                 ruc_number = clean_ruc[:-1]
                 check_digit = clean_ruc[-1]
             else:
-                ruc_number = clean_ruc
-                check_digit = None
+                return False, "RUC incompleto: debe incluir el dígito verificador."
 
         # Validar comprimento
         if len(ruc_number) < 6 or len(ruc_number) > 8:

@@ -36,14 +36,6 @@ class EDIConnector(models.Model):
     active = fields.Boolean(default=True)
     timeout = fields.Integer(default=30)
 
-    _sql_constraints = [
-        (
-            "company_unique",
-            "unique(company_id)",
-            "Solo un conector EDI por empresa",
-        ),
-    ]
-
     # === Public interface (each provider must implement) ===
 
     def send_document(self, invoice_data):
