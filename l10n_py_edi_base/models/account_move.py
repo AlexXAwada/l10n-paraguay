@@ -1,9 +1,12 @@
 # l10n_py_edi_base/models/account_move.py
 
+import base64 as b64
+import io
 import logging
 import secrets
 import string
 
+import qrcode
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models
@@ -20,7 +23,7 @@ class AccountMove(models.Model):
     # ============== CAMPOS EDI PARAGUAY ==============
 
     l10n_py_emission_type = fields.Selection(
-        [("1", "Normal"), ("2", "Contingencia")],
+        [("1", "Normal"), ("2", "Contingency")],
         string="Emission Type",
         default="1",
         required=True,
@@ -112,8 +115,8 @@ class AccountMove(models.Model):
     )
     l10n_py_receipt_id = fields.Char("Receipt ID", help="Unique customer system ID")
 
-    # Campos para contingencia
-    l10n_py_contingency_motive = fields.Char("Reason de Contingencia")
+    # Contingency fields
+    l10n_py_contingency_motive = fields.Char("Contingency Reason")
 
     # Documents asociados (Grupo H SIFEN)
     l10n_py_associated_document_ids = fields.One2many(
@@ -134,19 +137,19 @@ class AccountMove(models.Model):
     # Tipo de pago (Grupo E — gPaConEIni)
     l10n_py_payment_type = fields.Selection(
         [
-            ("1", "Efectivo"),
-            ("2", "Cheque"),
+            ("1", "Cash"),
+            ("2", "Check"),
             ("3", "Credit card"),
             ("4", "Debit card"),
             ("5", "Transfer"),
-            ("6", "Giro"),
+            ("6", "Bank giro"),
             ("7", "Electronic wallet"),
-            ("8", "Tarjeta empresarial"),
-            ("9", "Vale"),
+            ("8", "Business card"),
+            ("9", "Voucher"),
             ("10", "Withholding"),
-            ("11", "Anticipo"),
-            ("12", "Valor fiscal"),
-            ("13", "Valor comercial"),
+            ("11", "Advance"),
+            ("12", "Tax value"),
+            ("13", "Commercial value"),
             ("14", "Compensation"),
             ("15", "Permuta"),
             ("16", "Pago bancario"),
@@ -1003,9 +1006,6 @@ class AccountMove(models.Model):
         document_data = self._prepare_edi_document_data()
         connector = self._get_edi_connector()
         xml_string = connector.preview_document(document_data)
-
-        import base64 as b64
-
         xml_b64 = b64.b64encode(xml_string.encode("utf-8"))
 
         attachment = self.env["ir.attachment"].create(
@@ -1021,8 +1021,6 @@ class AccountMove(models.Model):
 
     def action_preview_kude(self):
         """Generate KuDE (PDF) a partir del XML preview via pykude."""
-        import base64
-
         self.ensure_one()
         self._validate_edi_data()
         document_data = self._prepare_edi_document_data()
@@ -1036,7 +1034,7 @@ class AccountMove(models.Model):
 
         config = KudeFeConfig()
         if self.company_id.logo:
-            config.logo = base64.b64decode(self.company_id.logo)
+            config.logo = b64.b64decode(self.company_id.logo)
 
         kude = auto_kude(xml=xml_content, config=config)
         pdf_bytes = kude.output()
@@ -1044,7 +1042,7 @@ class AccountMove(models.Model):
         attachment = self.env["ir.attachment"].create(
             {
                 "name": f"KUDE_preview_{self.name or self.id}.pdf",
-                "datas": base64.b64encode(pdf_bytes),
+                "datas": b64.b64encode(pdf_bytes),
                 "mimetype": "application/pdf",
                 "res_model": self._name,
                 "res_id": self.id,
@@ -1107,16 +1105,27 @@ class AccountMove(models.Model):
 
             # Save XML si viene
             if de_data.get("xml"):
-                import base64 as b64
-
                 self.l10n_py_edi_xml = b64.b64encode(de_data["xml"].encode("utf-8"))
                 self.l10n_py_edi_xml_filename = f"{self.l10n_py_cdc}.xml"
+
+            # Generate QR code binary from qr_string (CDC + signature)
+            if de_data.get("qr"):
+                try:
+                    qr = qrcode.QRCode(version=1, box_size=10, border=4)
+                    qr.add_data(de_data["qr"])
+                    qr.make(fit=True)
+                    img = qr.make_image(fill_color="black", back_color="white")
+                    buffer = io.BytesIO()
+                    img.save(buffer, format="PNG")
+                    self.l10n_py_qr_code = b64.b64encode(buffer.getvalue())
+                except Exception as e:
+                    _logger.warning("Error generating QR code: %s", str(e))
 
             # Auto-generate KuDE al aceptar
             try:
                 self._generate_kude()
             except Exception as e:
-                _logger.warning("Error generando KuDE: %s", str(e))
+                _logger.warning("Error generating KuDE: %s", str(e))
 
     def _validate_cancel_deadline(self):
         """Validate cancellation deadline per SIFEN document type.
@@ -1236,8 +1245,6 @@ class AccountMove(models.Model):
 
     def _generate_kude(self):
         """Generate KUDE (graphical representation of DTE) via pykude."""
-        import base64
-
         self.ensure_one()
         if not self.l10n_py_edi_xml:
             return
@@ -1251,24 +1258,24 @@ class AccountMove(models.Model):
         from pykude import auto_kude
         from pykude.kude_fe.config import KudeFeConfig
 
-        xml_content = base64.b64decode(self.l10n_py_edi_xml).decode("utf-8")
+        xml_content = b64.b64decode(self.l10n_py_edi_xml).decode("utf-8")
 
         config = KudeFeConfig()
         if self.company_id.logo:
-            config.logo = base64.b64decode(self.company_id.logo)
+            config.logo = b64.b64decode(self.company_id.logo)
 
         kude = auto_kude(xml=xml_content, config=config)
         pdf_bytes = kude.output()
-        self.l10n_py_kude_pdf = base64.b64encode(pdf_bytes)
+        self.l10n_py_kude_pdf = b64.b64encode(pdf_bytes)
         self.l10n_py_kude_filename = f"KUDE_{self.l10n_py_cdc}.pdf"
 
     # ============== CRON METHODS ==============
 
     @api.model
     def _cron_check_edi_status(self):
-        """Verify estado de documentos enviados y procesar cola de contingencia.
+        """Verify status of sent documents and process contingency queue.
 
-        Prioriza documentos cercanos al plazo de 72h.
+        Prioritizes documents close to the 72h deadline.
         """
         # 1. Procesar cola de contingencia (to_send pendientes)
         contingency_docs = self.search(

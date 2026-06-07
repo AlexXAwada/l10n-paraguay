@@ -1,8 +1,8 @@
 # l10n_py_edi_base/models/l10n_py_edi_log.py
 
 """
-Sistema de Logs Avançado para operações EDI
-Implementa logging completo conforme propostas de melhoria
+Advanced Logging System for EDI Operations
+Implements complete logging per improvement proposals
 """
 
 import json
@@ -14,59 +14,59 @@ _logger = logging.getLogger(__name__)
 
 
 class EDILog(models.Model):
-    """Modelo robusto para registrar logs de operações EDI"""
+    """Robust model to register EDI operation logs"""
 
     _name = "l10n_py.edi.log"
-    _description = "Log de Operações EDI Paraguay"
+    _description = "EDI Operations Log"
     _order = "create_date desc"
     _rec_name = "operation_type"
 
-    # ============== IDENTIFICAÇÃO DA OPERAÇÃO ==============
+    # ============== OPERATION IDENTIFICATION ==============
 
     operation_type = fields.Selection(
         [
-            ("send", "Envio de Document"),
-            ("status", "Consulta de Status"),
+            ("send", "Document Sending"),
+            ("status", "Status Check"),
             ("cancel", "Cancellation"),
-            ("event", "Evento"),
+            ("event", "Event"),
             ("download_pdf", "Download PDF"),
             ("download_xml", "Download XML"),
-            ("validate", "Validação"),
+            ("validate", "Validation"),
         ],
-        string="Tipo de Operação",
+        string="Operation Type",
         required=True,
         index=True,
     )
 
-    # ============== DOCUMENTOS RELACIONADOS ==============
+    # ============== RELATED DOCUMENTS ==============
 
     document_id = fields.Many2one(
         "account.move",
         string="Document",
         ondelete="cascade",
         index=True,
-        help="Document fiscal relacionado",
+        help="Related fiscal document",
     )
 
-    cdc = fields.Char(string="CDC", index=True, help="Code de Control del documento")
+    cdc = fields.Char(string="CDC", index=True, help="Document control code")
 
-    # ============== PROVEDOR EDI ==============
+    # ============== EDI PROVIDER ==============
 
     provider = fields.Selection(
         [
             ("factpy", "FactPy"),
             ("facturasend", "InvoiceSend"),
             ("sifen", "SIFEN Directo"),
-            ("local", "Processamento Local"),
+            ("local", "Local Processing"),
         ],
-        string="Provedor",
+        string="Provider",
         required=True,
         index=True,
     )
 
-    # ============== DADOS DA REQUISIÇÃO ==============
+    # ============== REQUEST DATA ==============
 
-    endpoint = fields.Char(help="URL ou endpoint da API")
+    endpoint = fields.Char(help="API URL or endpoint")
 
     method = fields.Selection(
         [
@@ -79,37 +79,35 @@ class EDILog(models.Model):
         string="HTTP Method",
     )
 
-    request_headers = fields.Text(
-        string="Headers da Requisição", help="Headers HTTP enviados"
-    )
+    request_headers = fields.Text(string="Request Headers", help="HTTP headers sent")
 
-    request_data = fields.Text(string="Dados Sents", help="Payload da requisição")
+    request_data = fields.Text(string="Request Data", help="Request payload")
 
-    # ============== DADOS DA RESPOSTA ==============
+    # ============== RESPONSE DATA ==============
 
-    status_code = fields.Integer(string="Code de Status", help="Code de status HTTP")
+    status_code = fields.Integer(string="Status Code", help="HTTP status code")
 
     response_headers = fields.Text(
-        string="Headers da Resposta", help="Headers HTTP recebidos"
+        string="Response Headers", help="HTTP headers received"
     )
 
-    response_data = fields.Text(string="Resposta Recebida", help="Payload da resposta")
+    response_data = fields.Text(string="Response Data", help="Response payload")
 
     # ============== METRICS ==============
 
     execution_time = fields.Float(
-        string="Tempo de Execução (ms)",
-        help="Tempo de execução em milissegundos",
+        string="Execution Time (ms)",
+        help="Execution time in milliseconds",
         digits=(10, 2),
     )
 
-    # ============== STATUS E ERRO ==============
+    # ============== STATUS AND ERROR ==============
 
     success = fields.Boolean(
-        string="Sucesso",
+        string="Success",
         default=True,
         index=True,
-        help="Indica se a operação foi bem-sucedida",
+        help="Indicates whether the operation was successful",
     )
 
     error_message = fields.Text(

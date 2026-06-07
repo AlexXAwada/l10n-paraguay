@@ -83,7 +83,7 @@ class CDCGenerator:
 
         # Validate formato final
         if len(cdc_complete) != 44:
-            raise ValueError(f"CDC debe tener 44 digits, generado: {len(cdc_complete)}")
+            raise ValueError(f"CDC must have 44 digits, generated: {len(cdc_complete)}")
 
         _logger.info("CDC generado: %s", cdc_complete)
         return cdc_complete
@@ -167,7 +167,7 @@ class CDCGenerator:
         cdc += datetime_code
 
         if len(cdc) != 43:
-            raise ValueError(f"CDC base debe tener 43 digits, generado: {len(cdc)}")
+            raise ValueError(f"CDC base must have 43 digits, generated: {len(cdc)}")
 
         return cdc
 
@@ -200,9 +200,7 @@ class CDCGenerator:
             int: Check digit (0-9)
         """
         if len(cdc_base) != 43:
-            raise ValueError(
-                f"CDC base debe tener 43 digits, recibido: {len(cdc_base)}"
-            )
+            raise ValueError(f"CDC base must have 43 digits, received: {len(cdc_base)}")
 
         # Calcular suma ponderada
         total = 0
@@ -273,7 +271,7 @@ class CDCGenerator:
             dict: Diccionario con componentes del CDC
         """
         if len(cdc) != 44:
-            raise ValueError(f"CDC debe tener 44 digits, recibido: {len(cdc)}")
+            raise ValueError(f"CDC must have 44 digits, received: {len(cdc)}")
 
         return {
             "ruc": cdc[0:8],
