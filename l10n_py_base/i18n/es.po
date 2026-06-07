@@ -6,149 +6,196 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
+#. module: l10n_py_base
 msgid "Economic Activity"
-msgstr "Actividad Económica"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Neighborhood"
-msgstr "Barrio"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Neighborhood or district of the contact"
-msgstr "Barrio o distrito del contacto"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Neighborhood..."
-msgstr "Barrio..."
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Neighborhoods"
-msgstr "Barrios"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Residence Permit"
-msgstr "Carnet de Residencia"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "City"
-msgstr "Ciudad"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "City the neighborhood belongs to"
-msgstr "Ciudad a la que pertenece el barrio"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Taxpayer"
-msgstr "Contribuyente"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Create a new neighborhood"
-msgstr "Crear un nuevo barrio"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Identity Card"
-msgstr "Cédula de Identidad"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Code"
-msgstr "Código"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "SET City Code"
-msgstr "Código Ciudad SET"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "SET Department Code"
-msgstr "Código Departamento SET"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Zip Code"
-msgstr "Código Postal"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "SET Code"
-msgstr "Código SET"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "City code according to SET"
-msgstr "Código de la ciudad según SET"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Neighborhood code"
-msgstr "Código del barrio"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Department code according to SET"
-msgstr "Código del departamento según SET"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Neighborhood zip code"
-msgstr "Código postal del barrio"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Department"
-msgstr "Departamento"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Department the neighborhood belongs to"
-msgstr "Departamento al que pertenece el barrio"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Description of the main economic activity"
-msgstr "Descripción de la actividad económica principal"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "RUC check digit"
-msgstr "Dígito verificador del RUC"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "The SET code of the city must be unique per country"
-msgstr "El código SET de la ciudad debe ser único por país"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "The SET code of the department must be unique per country"
-msgstr "El código SET del departamento debe ser único por país"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Unnamed"
-msgstr "Innominado"
+msgstr ""
 
-msgid "Neighborhoods are subdivisions of cities in Paraguay.
-                You can create neighborhoods to better organize addresses."
-msgstr "Los barrios son subdivisiones de las ciudades en Paraguay.
-                Puede crear barrios para organizar mejor las direcciones."
+#. module: l10n_py_base
+msgid "Neighborhoods are subdivisions of cities in Paraguay. You can create neighborhoods to better organize addresses."
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Non-Taxpayer"
-msgstr "No Contribuyente"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Name"
-msgstr "Nombre"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Commercial or trade name"
-msgstr "Nombre comercial o de fantasía"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Trade Name"
-msgstr "Nombre de Fantasía"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Trade Name..."
-msgstr "Nombre de Fantasía..."
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Neighborhood Name"
-msgstr "Nombre del Barrio"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Neighborhood name"
-msgstr "Nombre del barrio"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Document Number"
-msgstr "Número de Documento"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Country"
-msgstr "País"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Country the neighborhood belongs to"
-msgstr "País al que pertenece el barrio"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "By City"
-msgstr "Por Ciudad"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "By Department"
-msgstr "Por Departamento"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Tax ID (RUC)"
-msgstr "RUC"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Single Taxpayer Registry (without check digit)"
-msgstr "Registro Único del Contribuyente (sin dígito verificador)"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Taxpayer Type"
-msgstr "Tipo de Contribuyente"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Identity Document Type"
-msgstr "Tipo de Documento de Identidad"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Taxpayer type according to SET"
-msgstr "Tipo de contribuyente según la SET"
+msgstr ""
 
+#. module: l10n_py_base
 msgid "Identity document type for non-taxpayers (SIFEN D024)"
-msgstr "Tipo de documento de identidad para no contribuyentes (SIFEN D024)"
+msgstr ""
+

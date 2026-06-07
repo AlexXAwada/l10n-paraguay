@@ -1,52 +1,105 @@
-# Translation of Odoo Server.
-# This file contains the translation of the following modules:
-# 	* l10n_py_edi_sifen
+# Translations template for Odoo.
+# Copyright (C) 2026 Odoo Community Association (OCA)
+# This file is distributed under the same license as the Odoo project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
+#, fuzzy
 msgid ""
 msgstr ""
+"Project-Id-Version: Odoo 19.0\n"
+"Report-Msgid-Bugs-To: https://github.com/OCA/l10n-paraguay\n"
+"POT-Creation-Date: 2026-06-07 13:46-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
 
-msgid "Digital Certificate (SIFEN)"
-msgstr ""
-
-msgid "PKCS12 Certificate (.pfx)"
-msgstr ""
-
-msgid "Companies"
-msgstr ""
-
-msgid "Conector EDI Paraguay"
-msgstr ""
-
+#: models/edi_connector.py:202
+#. module: l10n_py_edi_sifen
 msgid "Connection Successful"
 msgstr ""
 
-msgid "Configure the PKCS12 certificate in company %s"
+#: models/edi_connector.py:203
+#. module: l10n_py_edi_sifen
+msgid "SIFEN connection verified successfully."
 msgstr ""
 
-msgid "Certificate Password"
+#: demo/edi_connector_demo.xml:5 views/edi_connector_views.xml:5
+#: views/res_company_views.xml:5
+#. module: l10n_py_edi_sifen
+msgid "name"
 msgstr ""
 
-msgid "The PKCS12 digital certificate is configured in the company form."
+#: views/edi_connector_views.xml:6 views/res_company_views.xml:6
+#. module: l10n_py_edi_sifen
+msgid "model"
 msgstr ""
 
-msgid "SIFEN connection error: %s"
+#: views/edi_connector_views.xml:7 views/res_company_views.xml:7
+#. module: l10n_py_edi_sifen
+msgid "inherit_id"
 msgstr ""
 
-msgid "Expiry"
+#: views/edi_connector_views.xml:8 views/res_company_views.xml:8
+#. module: l10n_py_edi_sifen
+msgid "arch"
 msgstr ""
 
-msgid "L10N Py Certificate Filename"
+#: views/edi_connector_views.xml:9
+#. module: l10n_py_edi_sifen
+msgid "credentials"
 msgstr ""
 
-msgid "The SIFEN connection was verified successfully."
-msgstr ""
-
-msgid "Provider"
-msgstr ""
-
+#: views/edi_connector_views.xml:10
+#. module: l10n_py_edi_sifen
 msgid "SIFEN"
 msgstr ""
 
-msgid "SIFEN Directo"
+#: views/res_company_views.xml:9
+#. module: l10n_py_edi_sifen
+msgid "l10n_py_fiscal"
+msgstr ""
+
+#: views/res_company_views.xml:10
+#. module: l10n_py_edi_sifen
+msgid "Certificado Digital (SIFEN)"
+msgstr ""
+
+#: demo/res_company_certificate_demo.xml:9 views/res_company_views.xml:12
+#. module: l10n_py_edi_sifen
+msgid "l10n_py_certificate"
+msgstr ""
+
+#: demo/res_company_certificate_demo.xml:11 views/res_company_views.xml:15
+#. module: l10n_py_edi_sifen
+msgid "l10n_py_certificate_filename"
+msgstr ""
+
+#: demo/res_company_certificate_demo.xml:12 views/res_company_views.xml:16
+#. module: l10n_py_edi_sifen
+msgid "l10n_py_certificate_password"
+msgstr ""
+
+#: demo/res_company_certificate_demo.xml:13 views/res_company_views.xml:17
+#. module: l10n_py_edi_sifen
+msgid "l10n_py_certificate_expiry"
+msgstr ""
+
+#: demo/edi_connector_demo.xml:6
+#. module: l10n_py_edi_sifen
+msgid "company_id"
+msgstr ""
+
+#: demo/edi_connector_demo.xml:7
+#. module: l10n_py_edi_sifen
+msgid "provider_type"
+msgstr ""
+
+#: demo/edi_connector_demo.xml:8
+#. module: l10n_py_edi_sifen
+msgid "environment"
 msgstr ""
 

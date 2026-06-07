@@ -6,381 +6,487 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-06 00:00+0000\n"
-"PO-Revision-Date: 2026-06-06 00:00+0000\n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);"
-
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#. module: l10n_py_account
 msgid "Active"
-msgstr "Activo"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Assets"
-msgstr "Activos"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Group By"
-msgstr "Agrupar Por"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Billing Authorization"
-msgstr "Autorización de Facturación (Timbrado)"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Taxable Base 10% (F019)"
-msgstr "Base Gravada 10% (F019)"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Taxable Base 5% (F018)"
-msgstr "Base Gravada 5% (F018)"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Net taxable base 10% excl. VAT (SIFEN F019)"
-msgstr "Base gravada neta 10% sin IVA (SIFEN F019)"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Net taxable base 5% excl. VAT (SIFEN F018)"
-msgstr "Base gravada neta 5% sin IVA (SIFEN F018)"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Search Authorizations"
-msgstr "Buscar Timbrados"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Quantity of numbers still available"
-msgstr "Cantidad de números aún disponibles"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Quantity of numbers already used"
-msgstr "Cantidad de números ya utilizados"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Companies"
-msgstr "Companies"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Company"
-msgstr "Compañía"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Paraguay EDI Configuration"
-msgstr "Configuración EDI Paraguay"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Create a new authorization"
-msgstr "Crear un nuevo timbrado"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Created by"
-msgstr "Created by"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Created on"
-msgstr "Created on"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Establishment code (3 digits)"
-msgstr "Código de establecimiento (3 dígitos)"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Expedition point code (3 digits)"
-msgstr "Código de punto de expedición (3 dígitos)"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "You must select an authorization to confirm a sale invoice."
-msgstr "Debe seleccionar un timbrado para confirmar una factura de venta."
+msgstr ""
 
+#. module: l10n_py_account
 msgid "VAT Breakdown (SIFEN)"
-msgstr "Discriminación de IVA (SIFEN)"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Display Name"
-msgstr "Display Name"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "The establishment code must contain exactly 3 digits."
-msgstr "El código de establecimiento debe contener exactamente 3 dígitos."
+msgstr ""
 
+#. module: l10n_py_account
 msgid "The expedition point code must contain exactly 3 digits."
-msgstr "El código de punto de expedición debe contener exactamente 3 dígitos."
+msgstr ""
 
+#. module: l10n_py_account
 msgid "The establishment must be numeric"
-msgstr "El establecimiento debe ser numérico"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "The establishment must have 3 digits"
-msgstr "El establecimiento debe tener 3 dígitos"
+msgstr ""
 
-msgid "\nNumber %(number)s is outside the authorized range (%(from)s - %(to)s)."
-msgstr "\nEl número %(number)s está fuera del rango autorizado (%(from)s - %(to)s)."
+#. module: l10n_py_account
+msgid "Number %(number)s is outside the authorized range (%(from)s - %(to)s)."
+msgstr ""
 
-msgid "\nNumber %(number)s has already been used in invoice %(invoice_name)s."
-msgstr "\nEl número %(number)s ya ha sido utilizado en la factura %(invoice_name)s."
+#. module: l10n_py_account
+msgid "Number %(number)s has already been used in invoice %(invoice_name)s."
+msgstr ""
 
+#. module: l10n_py_account
 msgid "The invoice number must be unique per authorization."
-msgstr "El número de factura debe ser único por timbrado."
+msgstr ""
 
+#. module: l10n_py_account
 msgid "The authorization number must contain exactly 8 numeric digits."
-msgstr "El número de timbrado debe contener exactamente 8 dígitos numéricos."
+msgstr ""
 
+#. module: l10n_py_account
 msgid "The end number must be greater than the start number."
-msgstr "El número final debe ser mayor al número inicial."
+msgstr ""
 
+#. module: l10n_py_account
 msgid "The end number cannot exceed %(max)s."
-msgstr "El número final no puede exceder %(max)s."
+msgstr ""
 
+#. module: l10n_py_account
 msgid "The start number must be greater than zero."
-msgstr "El número inicial debe ser mayor a cero."
+msgstr ""
 
+#. module: l10n_py_account
 msgid "The expedition point must be numeric"
-msgstr "El punto de expedición debe ser numérico"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "The expedition point must have 3 digits"
-msgstr "El punto de expedición debe tener 3 dígitos"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "The authorization is not yet effective."
-msgstr "El timbrado aún no ha entrado en vigencia."
+msgstr ""
 
+#. module: l10n_py_account
 msgid "The authorization is inactive."
-msgstr "El timbrado está inactivo."
+msgstr ""
 
+#. module: l10n_py_account
 msgid "The authorization has expired."
-msgstr "El timbrado ha vencido."
+msgstr ""
 
-msgid "\nThe selected authorization does not match the establishment and expedition point configured in the journal."
-msgstr "\nEl timbrado seleccionado no corresponde al establecimiento y punto de \nexpedición configurados en el diario."
+#. module: l10n_py_account
+msgid "The selected authorization does not match the establishment and expedition point configured in the journal."
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Establishment"
-msgstr "Establecimiento"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "State"
-msgstr "Estado"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Statistics"
-msgstr "Estadísticas"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Exempt (F003)"
-msgstr "Exento (F003)"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Start Date"
-msgstr "Fecha de Inicio"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "End Date"
-msgstr "Fecha de Vencimiento"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Authorization end date"
-msgstr "Fecha de vencimiento del timbrado"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Date from which the authorization is valid"
-msgstr "Fecha desde la cual el timbrado es válido"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Date until which the authorization is valid"
-msgstr "Fecha hasta la cual el timbrado es válido"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Identification"
-msgstr "Identificación"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Inactive"
-msgstr "Inactivos"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Paraguay Tax Information"
-msgstr "Información Fiscal Paraguay"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Journal"
-msgstr "Journal"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Journal Entry"
-msgstr "Journal Entry"
+msgstr ""
 
-msgid "\nThe combination authorization/establishment/expedition-point/series/document-type must be unique."
-msgstr "\nLa combinación timbrado/establecimiento/punto de expedición/serie/tipo de \ndocumento debe ser única."
+#. module: l10n_py_account
+msgid "The combination authorization/establishment/expedition-point/series/document-type must be unique."
+msgstr ""
 
+#. module: l10n_py_account
 msgid "The numbering range is exhausted for authorization %(timbrado)s."
-msgstr "La faja de numeración está agotada para el timbrado %(timbrado)s."
+msgstr ""
 
+#. module: l10n_py_account
 msgid "The end date must be after the start date."
-msgstr "La fecha de vencimiento debe ser posterior a la fecha de inicio."
+msgstr ""
 
+#. module: l10n_py_account
 msgid "The series must be exactly 2 uppercase letters (e.g., AA, AB, ZZ)."
-msgstr "La serie debe ser exactamente 2 letras mayúsculas (ej: AA, AB, ZZ)."
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Last Modified on"
-msgstr "Last Modified on"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Last Updated by"
-msgstr "Last Updated by"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Last Updated on"
-msgstr "Last Updated on"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "VAT 10% Liquidation (F016)"
-msgstr "Liq. IVA 10% (F016)"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "VAT 5% Liquidation (F015)"
-msgstr "Liq. IVA 5% (F015)"
+msgstr ""
 
-msgid "VAT 10% Liquidation (F016)"
-msgstr "Liquidación IVA 10% (F016)"
-
+#. module: l10n_py_account
 msgid "VAT 10% Liquidation (SIFEN F016)"
-msgstr "Liquidación IVA 10% (SIFEN F016)"
+msgstr ""
 
-msgid "VAT 5% Liquidation (F015)"
-msgstr "Liquidación IVA 5% (F015)"
-
+#. module: l10n_py_account
 msgid "VAT 5% Liquidation (SIFEN F015)"
-msgstr "Liquidación IVA 5% (SIFEN F015)"
+msgstr ""
 
-msgid "\nAuthorizations are permits granted by SET (Deputy Secretariat of State for Taxation)\\n\n                to issue invoices. Each authorization has a numbering range and specific validity dates."
-msgstr "\nLas autorizaciones son permisos otorgados por la SET (Subsecretaría de Estado de Tributación)\\n\n                para emitir facturas. Cada autorización tiene un rango de numeración y fechas de validez específicas."
+#. module: l10n_py_account
+msgid "Authorizations are permits granted by SET (Deputy Secretariat of State for Taxation)\to issue invoices. Each authorization has a numbering range and specific validity dates."
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Mark as inactive to disable the authorization"
-msgstr "Marcar como inactivo para deshabilitar el timbrado"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Invoice No."
-msgstr "Nro. Factura"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Authorized Numbering"
-msgstr "Numeración Autorizada"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Full Number"
-msgstr "Número Completo"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Start Number"
-msgstr "Número Desde"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "End Number"
-msgstr "Número Hasta"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Full invoice number (format: 001-001-0000001)"
-msgstr "Número completo de factura (formato: 001-001-0000001)"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Invoice Number"
-msgstr "Número de Factura"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Authorization Number"
-msgstr "Número de Timbrado"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Invoice number according to authorized authorization"
-msgstr "Número de factura según timbrado autorizado"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Authorization number granted by SET"
-msgstr "Número de timbrado otorgado por la SET"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Available Numbers"
-msgstr "Números Disponibles"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Used Numbers"
-msgstr "Números Utilizados"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Paraguay"
-msgstr "Paraguay"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "To Expire"
-msgstr "Por Vencer"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Usage Percentage"
-msgstr "Porcentaje de Uso"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Percentage of numbers used relative to total authorized"
-msgstr "Porcentaje de números utilizados respecto al total autorizado"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "First authorized invoice number"
-msgstr "Primer número de factura autorizado"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Next Number"
-msgstr "Próximo Número"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Next invoice number to use"
-msgstr "Próximo número de factura a utilizar"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Expedition Point"
-msgstr "Punto de Expedición"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Series"
-msgstr "Serie"
+msgstr ""
 
-msgid "\nAuthorization series (2 uppercase letters, AA-ZZ). Allows restarting numbering when the range is exhausted."
-msgstr "\nSerie del timbrado (2 letras mayúsculas, AA-ZZ). Permite reiniciar \nnumeración cuando se agota la faja."
+#. module: l10n_py_account
+msgid "Authorization series (2 uppercase letters, AA-ZZ). Allows restarting numbering when the range is exhausted."
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Exempt/non-taxable subtotal (SIFEN F003)"
-msgstr "Subtotal exento/no gravado (SIFEN F003)"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Taxable subtotal 10% — value with tax included (SIFEN F005)"
-msgstr "Subtotal gravado 10% — valor con impuesto incluido (SIFEN F005)"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Taxable subtotal 5% — value with tax included (SIFEN F004)"
-msgstr "Subtotal gravado 5% — valor con impuesto incluido (SIFEN F004)"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Authorization"
-msgstr "Timbrado"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Authorization authorized by SET for this journal"
-msgstr "Timbrado autorizado por SET para este diario"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Authorization used for this invoice"
-msgstr "Timbrado utilizado para esta factura"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Authorizations"
-msgstr "Timbrados"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Exchange Rate"
-msgstr "Tipo de Cambio"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Document Type"
-msgstr "Tipo de Documento"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Exchange rate to guaranies (PYG) for invoicing in foreign currency"
-msgstr "Tipo de cambio a guaranies (PYG) para facturación en moneda extranjera"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "LATAM document type (Invoice, Credit Note, Debit Note, etc.)"
-msgstr "Tipo de documento LATAM (Factura, NC, ND, etc.)"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Total Taxable Base (F020)"
-msgstr "Total Base Gravada (F020)"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Total Exempt (F003)"
-msgstr "Total Exento (F003)"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Total Taxable 10% (F005)"
-msgstr "Total Gravado 10% (F005)"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Total Taxable 5% (F004)"
-msgstr "Total Gravado 5% (F004)"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Total VAT (F014)"
-msgstr "Total IVA (F014)"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Total Operation (F008)"
-msgstr "Total Operación (F008)"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Total taxable base (SIFEN F020 = F018 + F019)"
-msgstr "Total base gravada (SIFEN F020 = F018 + F019)"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Total operation (SIFEN F008 = F003 + F004 + F005)"
-msgstr "Total de la operación (SIFEN F008 = F003 + F004 + F005)"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Total operation in guaranies (SIFEN F023)"
-msgstr "Total de la operación en guaranies (SIFEN F023)"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Total in Gs. (F023)"
-msgstr "Total en Gs. (F023)"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Total in Guaranies (F023)"
-msgstr "Total en Guaranies (F023)"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Total in Words"
-msgstr "Total en Letras"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Total VAT liquidation (SIFEN F014)"
-msgstr "Total liquidación IVA (SIFEN F014)"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Expired"
-msgstr "Vencido"
+msgstr ""
 
-msgid "Expired"
-msgstr "Vencidos"
-
+#. module: l10n_py_account
 msgid "Authorization Expiry"
-msgstr "Vencimiento del Timbrado"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Check Validity"
-msgstr "Verificar Validez"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Valid"
-msgstr "Vigente"
+msgstr ""
 
-msgid "Valid"
-msgstr "Vigentes"
-
+#. module: l10n_py_account
 msgid "e.g., 12345678"
-msgstr "ej: 12345678"
+msgstr ""
 
+#. module: l10n_py_account
 msgid "Last authorized invoice number"
-msgstr "Último número de factura autorizado"
+msgstr ""

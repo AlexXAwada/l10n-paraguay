@@ -1,384 +1,1216 @@
-# Translation of Odoo Server.
-# This file contains the translation of the following modules:
-# 	* l10n_py_account
+# Translations template for Odoo.
+# Copyright (C) 2026 Odoo Community Association (OCA)
+# This file is distributed under the same license as the Odoo project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
+#, fuzzy
 msgid ""
 msgstr ""
-
-msgid "Active"
-msgstr ""
-
-msgid "Assets"
-msgstr ""
-
-msgid "Group By"
-msgstr ""
-
-msgid "Billing Authorization"
-msgstr ""
-
-msgid "Taxable Base 10% (F019)"
-msgstr ""
-
-msgid "Taxable Base 5% (F018)"
-msgstr ""
-
-msgid "Net taxable base 10% excl. VAT (SIFEN F019)"
-msgstr ""
-
-msgid "Net taxable base 5% excl. VAT (SIFEN F018)"
-msgstr ""
-
-msgid "Search Authorizations"
-msgstr ""
-
-msgid "Quantity of numbers still available"
-msgstr ""
-
-msgid "Quantity of numbers already used"
-msgstr ""
-
-msgid "Companies"
-msgstr ""
-
-msgid "Company"
-msgstr ""
-
-msgid "Paraguay EDI Configuration"
-msgstr ""
-
-msgid "Create a new authorization"
-msgstr ""
-
-msgid "Created by"
-msgstr ""
-
-msgid "Created on"
-msgstr ""
-
-msgid "Establishment code (3 digits)"
-msgstr ""
-
-msgid "Expedition point code (3 digits)"
-msgstr ""
-
-msgid "You must select an authorization to confirm a sale invoice."
-msgstr ""
-
-msgid "VAT Breakdown (SIFEN)"
-msgstr ""
-
-msgid "Display Name"
-msgstr ""
-
-msgid "The establishment code must contain exactly 3 digits."
-msgstr ""
-
-msgid "The expedition point code must contain exactly 3 digits."
-msgstr ""
-
-msgid "The establishment must be numeric"
-msgstr ""
-
-msgid "The establishment must have 3 digits"
-msgstr ""
-
-msgid "
-Number %(number)s is outside the authorized range (%(from)s - %(to)s)."
-msgstr ""
-
-msgid "
-Number %(number)s has already been used in invoice %(invoice_name)s."
-msgstr ""
-
-msgid "The invoice number must be unique per authorization."
-msgstr ""
-
-msgid "The authorization number must contain exactly 8 numeric digits."
-msgstr ""
-
-msgid "The end number must be greater than the start number."
-msgstr ""
-
-msgid "The end number cannot exceed %(max)s."
-msgstr ""
-
-msgid "The start number must be greater than zero."
-msgstr ""
-
-msgid "The expedition point must be numeric"
-msgstr ""
-
-msgid "The expedition point must have 3 digits"
-msgstr ""
-
-msgid "The authorization is not yet effective."
-msgstr ""
-
-msgid "The authorization is inactive."
-msgstr ""
-
-msgid "The authorization has expired."
-msgstr ""
-
-msgid "
-The selected authorization does not match the establishment and expedition point configured in the journal."
-msgstr ""
-
-msgid "Establishment"
-msgstr ""
-
-msgid "State"
-msgstr ""
-
-msgid "Statistics"
-msgstr ""
-
-msgid "Exempt (F003)"
-msgstr ""
-
-msgid "Start Date"
-msgstr ""
-
-msgid "End Date"
-msgstr ""
-
-msgid "Authorization end date"
-msgstr ""
-
-msgid "Date from which the authorization is valid"
-msgstr ""
-
-msgid "Date until which the authorization is valid"
-msgstr ""
-
-msgid "ID"
-msgstr ""
-
-msgid "Identification"
-msgstr ""
-
-msgid "Inactive"
-msgstr ""
-
-msgid "Paraguay Tax Information"
-msgstr ""
-
-msgid "Journal"
-msgstr ""
-
-msgid "Journal Entry"
-msgstr ""
-
-msgid "
-The combination authorization/establishment/expedition-point/series/document-type must be unique."
-msgstr ""
-
-msgid "The numbering range is exhausted for authorization %(timbrado)s."
-msgstr ""
-
-msgid "The end date must be after the start date."
-msgstr ""
-
-msgid "The series must be exactly 2 uppercase letters (e.g., AA, AB, ZZ)."
-msgstr ""
-
-msgid "Last Modified on"
-msgstr ""
-
-msgid "Last Updated by"
-msgstr ""
-
-msgid "Last Updated on"
-msgstr ""
-
-msgid "VAT 10% Liquidation (F016)"
-msgstr ""
-
-msgid "VAT 5% Liquidation (F015)"
-msgstr ""
-
-msgid "VAT 10% Liquidation (F016)"
-msgstr ""
-
-msgid "VAT 10% Liquidation (SIFEN F016)"
-msgstr ""
-
-msgid "VAT 5% Liquidation (F015)"
-msgstr ""
-
-msgid "VAT 5% Liquidation (SIFEN F015)"
-msgstr ""
-
-msgid "
-Authorizations are permits granted by SET (Deputy Secretariat of State for Taxation)\
-
-                to issue invoices. Each authorization has a numbering range and specific validity dates."
-msgstr ""
-
-msgid "Mark as inactive to disable the authorization"
-msgstr ""
-
-msgid "Invoice No."
-msgstr ""
-
-msgid "Authorized Numbering"
-msgstr ""
-
-msgid "Full Number"
-msgstr ""
-
-msgid "Start Number"
-msgstr ""
-
-msgid "End Number"
-msgstr ""
-
-msgid "Full invoice number (format: 001-001-0000001)"
-msgstr ""
-
-msgid "Invoice Number"
-msgstr ""
-
+"Project-Id-Version: Odoo 19.0\n"
+"Report-Msgid-Bugs-To: https://github.com/OCA/l10n-paraguay\n"
+"POT-Creation-Date: 2026-06-07 13:46-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: models/account_authorization.py:21 views/account_authorization_views.xml:27
+#. module: l10n_py_account
 msgid "Authorization Number"
 msgstr ""
 
-msgid "Invoice number according to authorized authorization"
+#: models/account_authorization.py:24
+#. module: l10n_py_account
+msgid "Authorization number issued by SET"
 msgstr ""
 
-msgid "Authorization number granted by SET"
+#: models/account_authorization.py:28
+#. module: l10n_py_account
+msgid "Start Date"
 msgstr ""
 
-msgid "Available Numbers"
+#: models/account_authorization.py:30
+#. module: l10n_py_account
+msgid "Date from which the authorization is valid"
 msgstr ""
 
-msgid "Used Numbers"
+#: models/account_authorization.py:34
+#. module: l10n_py_account
+msgid "End Date"
 msgstr ""
 
-msgid "Paraguay"
+#: models/account_authorization.py:36
+#. module: l10n_py_account
+msgid "Date until which the authorization is valid"
 msgstr ""
 
-msgid "To Expire"
+#: models/account_authorization.py:40
+#. module: l10n_py_account
+msgid "From Number"
 msgstr ""
 
-msgid "Usage Percentage"
-msgstr ""
-
-msgid "Percentage of numbers used relative to total authorized"
-msgstr ""
-
+#: models/account_authorization.py:42
+#. module: l10n_py_account
 msgid "First authorized invoice number"
 msgstr ""
 
-msgid "Next Number"
+#: models/account_authorization.py:46
+#. module: l10n_py_account
+msgid "To Number"
 msgstr ""
 
-msgid "Next invoice number to use"
+#: models/account_authorization.py:48
+#. module: l10n_py_account
+msgid "Last authorized invoice number"
 msgstr ""
 
+#: models/account_authorization.py:52 models/account_journal.py:13
+#: views/account_authorization_views.xml:152
+#. module: l10n_py_account
+msgid "Establishment"
+msgstr ""
+
+#: models/account_authorization.py:56 models/account_journal.py:16
+#. module: l10n_py_account
+msgid "Establishment code (3 digits)"
+msgstr ""
+
+#: models/account_authorization.py:60 models/account_journal.py:20
+#. module: l10n_py_account
 msgid "Expedition Point"
 msgstr ""
 
+#: models/account_authorization.py:64 models/account_journal.py:23
+#. module: l10n_py_account
+msgid "Expedition point code (3 digits)"
+msgstr ""
+
+#: models/account_authorization.py:68
+#. module: l10n_py_account
 msgid "Series"
 msgstr ""
 
-msgid "
-Authorization series (2 uppercase letters, AA-ZZ). Allows restarting numbering when the range is exhausted."
+#: models/account_authorization.py:71
+#. module: l10n_py_account
+msgid "Authorization series (2 uppercase letters, AA-ZZ). "
 msgstr ""
 
-msgid "Exempt/non-taxable subtotal (SIFEN F003)"
-msgstr ""
-
-msgid "Taxable subtotal 10% — value with tax included (SIFEN F005)"
-msgstr ""
-
-msgid "Taxable subtotal 5% — value with tax included (SIFEN F004)"
-msgstr ""
-
-msgid "Authorization"
-msgstr ""
-
-msgid "Authorization authorized by SET for this journal"
-msgstr ""
-
-msgid "Authorization used for this invoice"
-msgstr ""
-
-msgid "Authorizations"
-msgstr ""
-
-msgid "Exchange Rate"
-msgstr ""
-
+#: models/account_authorization.py:77 views/account_authorization_views.xml:147
+#. module: l10n_py_account
 msgid "Document Type"
 msgstr ""
 
-msgid "Exchange rate to guaranies (PYG) for invoicing in foreign currency"
+#: models/account_authorization.py:79
+#. module: l10n_py_account
+msgid "LATAM document type (Invoice, CN, DN, etc.)"
 msgstr ""
 
-msgid "LATAM document type (Invoice, Credit Note, Debit Note, etc.)"
+#: models/account_authorization.py:84
+#. module: l10n_py_account
+msgid "Company"
 msgstr ""
 
-msgid "Total Taxable Base (F020)"
+#: models/account_authorization.py:90
+#. module: l10n_py_account
+msgid "Active"
 msgstr ""
 
-msgid "Total Exempt (F003)"
+#: models/account_authorization.py:92
+#. module: l10n_py_account
+msgid "Mark as inactive to disable the authorization"
 msgstr ""
 
-msgid "Total Taxable 10% (F005)"
+#: models/account_authorization.py:101
+#: views/account_authorization_views.xml:142
+#. module: l10n_py_account
+msgid "State"
 msgstr ""
 
-msgid "Total Taxable 5% (F004)"
+#: models/account_authorization.py:107
+#. module: l10n_py_account
+msgid "Next Number"
 msgstr ""
 
-msgid "Total VAT (F014)"
+#: models/account_authorization.py:109
+#. module: l10n_py_account
+msgid "Next invoice number to use"
 msgstr ""
 
-msgid "Total Operation (F008)"
+#: models/account_authorization.py:113
+#. module: l10n_py_account
+msgid "Used Numbers"
 msgstr ""
 
-msgid "Total taxable base (SIFEN F020 = F018 + F019)"
+#: models/account_authorization.py:115
+#. module: l10n_py_account
+msgid "Number of numbers already used"
 msgstr ""
 
-msgid "Total operation (SIFEN F008 = F003 + F004 + F005)"
+#: models/account_authorization.py:119
+#. module: l10n_py_account
+msgid "Available Numbers"
 msgstr ""
 
-msgid "Total operation in guaranies (SIFEN F023)"
+#: models/account_authorization.py:121
+#. module: l10n_py_account
+msgid "Number of remaining available numbers"
 msgstr ""
 
-msgid "Total in Gs. (F023)"
+#: models/account_authorization.py:125
+#. module: l10n_py_account
+msgid "Usage Percentage"
 msgstr ""
 
-msgid "Total in Guaranies (F023)"
+#: models/account_authorization.py:127
+#. module: l10n_py_account
+msgid "Percentage of numbers used out of total authorized"
 msgstr ""
 
-msgid "Total in Words"
+#: models/account_authorization.py:218
+#. module: l10n_py_account
+msgid "The establishment code must contain exactly 3 digits."
 msgstr ""
 
-msgid "Total VAT liquidation (SIFEN F014)"
+#: models/account_authorization.py:236
+#. module: l10n_py_account
+msgid "The starting number must be greater than zero."
 msgstr ""
 
-msgid "Expired"
+#: models/account_authorization.py:270
+#. module: l10n_py_account
+msgid "The end date must be after the start date."
 msgstr ""
 
-msgid "Expired"
+#: models/account_authorization.py:297
+#. module: l10n_py_account
+msgid "The authorization is inactive."
 msgstr ""
 
+#: models/account_authorization.py:300
+#. module: l10n_py_account
+msgid "The authorization is not yet effective."
+msgstr ""
+
+#: models/account_authorization.py:303
+#. module: l10n_py_account
+msgid "The authorization has expired."
+msgstr ""
+
+#: models/account_journal.py:28 models/account_move.py:28
+#: views/account_authorization_views.xml:108 views/account_journal_views.xml:15
+#. module: l10n_py_account
+msgid "Authorization"
+msgstr ""
+
+#: models/account_journal.py:30
+#. module: l10n_py_account
+msgid "Authorization issued by SET for this journal"
+msgstr ""
+
+#: models/account_journal.py:34
+#. module: l10n_py_account
 msgid "Authorization Expiry"
 msgstr ""
 
-msgid "Check Validity"
+#: models/account_journal.py:38
+#. module: l10n_py_account
+msgid "Authorization expiry date"
 msgstr ""
 
-msgid "Valid"
+#: models/account_journal.py:50
+#. module: l10n_py_account
+msgid "The establishment must be numeric"
 msgstr ""
 
-msgid "Valid"
+#: models/account_journal.py:54
+#. module: l10n_py_account
+msgid "The establishment must have 3 digits"
 msgstr ""
 
-msgid "e.g., 12345678"
+#: models/account_journal.py:64
+#. module: l10n_py_account
+msgid "The expedition point must be numeric"
 msgstr ""
 
-msgid "Last authorized invoice number"
+#: models/account_journal.py:68
+#. module: l10n_py_account
+msgid "The expedition point must have 3 digits"
+msgstr ""
+
+#: models/account_move.py:34
+#. module: l10n_py_account
+msgid "Authorization used for this invoice"
+msgstr ""
+
+#: models/account_move.py:38
+#. module: l10n_py_account
+msgid "Invoice Number"
+msgstr ""
+
+#: models/account_move.py:39
+#. module: l10n_py_account
+msgid "Invoice number according to authorized authorization"
+msgstr ""
+
+#: models/account_move.py:43
+#. module: l10n_py_account
+msgid "Full Number"
+msgstr ""
+
+#: models/account_move.py:46
+#. module: l10n_py_account
+msgid "Complete invoice number (format: 001-001-0000001)"
+msgstr ""
+
+#: models/account_move.py:52
+#. module: l10n_py_account
+msgid "Gross 10% (F005)"
+msgstr ""
+
+#: models/account_move.py:56
+#. module: l10n_py_account
+msgid "Gross subtotal 10% — price including tax (SIFEN F005)"
+msgstr ""
+
+#: models/account_move.py:60
+#. module: l10n_py_account
+msgid "VAT 10% (F016)"
+msgstr ""
+
+#: models/account_move.py:64
+#, python-format
+#. module: l10n_py_account
+msgid "VAT 10% liquidation (SIFEN F016)"
+msgstr ""
+
+#: models/account_move.py:68
+#. module: l10n_py_account
+msgid "Gross 5% (F004)"
+msgstr ""
+
+#: models/account_move.py:72
+#. module: l10n_py_account
+msgid "Gross subtotal 5% — price including tax (SIFEN F004)"
+msgstr ""
+
+#: models/account_move.py:76
+#. module: l10n_py_account
+msgid "VAT 5% (F015)"
+msgstr ""
+
+#: models/account_move.py:80
+#, python-format
+#. module: l10n_py_account
+msgid "VAT 5% liquidation (SIFEN F015)"
+msgstr ""
+
+#: models/account_move.py:84
+#. module: l10n_py_account
+msgid "Exempt Total (F003)"
+msgstr ""
+
+#: models/account_move.py:88
+#. module: l10n_py_account
+msgid "Exempt/un taxed subtotal (SIFEN F003)"
+msgstr ""
+
+#: models/account_move.py:92 views/account_move_views.xml:64
+#. module: l10n_py_account
+msgid "Total VAT (F014)"
+msgstr ""
+
+#: models/account_move.py:96
+#. module: l10n_py_account
+msgid "Total VAT liquidation (SIFEN F014)"
+msgstr ""
+
+#: models/account_move.py:100
+#. module: l10n_py_account
+msgid "Tax Base 10% (F019)"
+msgstr ""
+
+#: models/account_move.py:104
+#. module: l10n_py_account
+msgid "Net tax base 10% without VAT (SIFEN F019)"
+msgstr ""
+
+#: models/account_move.py:108
+#. module: l10n_py_account
+msgid "Tax Base 5% (F018)"
+msgstr ""
+
+#: models/account_move.py:112
+#. module: l10n_py_account
+msgid "Net tax base 5% without VAT (SIFEN F018)"
+msgstr ""
+
+#: models/account_move.py:116
+#. module: l10n_py_account
+msgid "Total Tax Base (F020)"
+msgstr ""
+
+#: models/account_move.py:120
+#. module: l10n_py_account
+msgid "Total tax base (SIFEN F020 = F018 + F019)"
+msgstr ""
+
+#: models/account_move.py:124 views/account_move_views.xml:73
+#. module: l10n_py_account
+msgid "Operation Total (F008)"
+msgstr ""
+
+#: models/account_move.py:128
+#. module: l10n_py_account
+msgid "Total operation amount (SIFEN F008 = F003 + F004 + F005)"
+msgstr ""
+
+#: models/account_move.py:134
+#. module: l10n_py_account
+msgid "Exchange Rate"
+msgstr ""
+
+#: models/account_move.py:136
+#. module: l10n_py_account
+msgid "Exchange rate to guaranies (PYG) for foreign currency invoicing"
+msgstr ""
+
+#: models/account_move.py:140
+#. module: l10n_py_account
+msgid "Total in Guaranies (F023)"
+msgstr ""
+
+#: models/account_move.py:144
+#. module: l10n_py_account
+msgid "Operation total in guaranies (SIFEN F023)"
+msgstr ""
+
+#: models/account_move.py:148
+#. module: l10n_py_account
+msgid "Total in Words"
+msgstr ""
+
+#: data/account_authorization_sequence.xml:5
+#: data/l10n_latam_document_type_data.xml:7
+#: data/l10n_latam_document_type_data.xml:17
+#: data/l10n_latam_document_type_data.xml:27
+#: data/l10n_latam_document_type_data.xml:37
+#: data/l10n_latam_document_type_data.xml:47
+#: demo/account_authorization_demo.xml:7 demo/account_authorization_demo.xml:26
+#: demo/account_authorization_demo.xml:45
+#: demo/account_authorization_demo.xml:64
+#: demo/account_authorization_demo.xml:83
+#: demo/account_authorization_demo.xml:102 demo/product_product_demo.xml:6
+#: demo/product_product_demo.xml:25 demo/product_product_demo.xml:45
+#: demo/product_product_demo.xml:64 demo/product_product_demo.xml:85
+#: demo/res_company_demo.xml:8 demo/res_partner_demo.xml:7
+#: demo/res_partner_demo.xml:24 demo/res_partner_demo.xml:41
+#: demo/res_partner_demo.xml:60 demo/res_partner_demo.xml:78
+#: demo/res_partner_demo.xml:99 demo/res_partner_demo.xml:113
+#: views/account_authorization_views.xml:5
+#: views/account_authorization_views.xml:29
+#: views/account_authorization_views.xml:70
+#: views/account_authorization_views.xml:78
+#: views/account_authorization_views.xml:104
+#: views/account_authorization_views.xml:108
+#: views/account_authorization_views.xml:162 views/account_journal_views.xml:4
+#: views/account_move_views.xml:5 views/account_move_views.xml:97
+#: views/account_move_views.xml:102
+#. module: l10n_py_account
+msgid "name"
+msgstr ""
+
+#: views/account_authorization_views.xml:6
+#: views/account_authorization_views.xml:71
+#: views/account_authorization_views.xml:105 views/account_journal_views.xml:5
+#: views/account_move_views.xml:6 views/account_move_views.xml:98
+#. module: l10n_py_account
+msgid "model"
+msgstr ""
+
+#: views/account_journal_views.xml:6 views/account_move_views.xml:7
+#: views/account_move_views.xml:99
+#. module: l10n_py_account
+msgid "inherit_id"
+msgstr ""
+
+#: views/account_authorization_views.xml:7
+#: views/account_authorization_views.xml:72
+#: views/account_authorization_views.xml:106 views/account_journal_views.xml:7
+#: views/account_move_views.xml:8 views/account_move_views.xml:100
+#. module: l10n_py_account
+msgid "arch"
+msgstr ""
+
+#: views/account_journal_views.xml:8
+#. module: l10n_py_account
+msgid "advanced_settings"
+msgstr ""
+
+#: views/account_journal_views.xml:9
+#. module: l10n_py_account
+msgid "Configuration EDI Paraguay"
+msgstr ""
+
+#: views/account_journal_views.xml:9
+#. module: l10n_py_account
+msgid "l10n_py_edi_config"
+msgstr ""
+
+#: views/account_journal_views.xml:11
+#. module: l10n_py_account
+msgid "Identification"
+msgstr ""
+
+#: views/account_journal_views.xml:12
+#. module: l10n_py_account
+msgid "l10n_py_establishment"
+msgstr ""
+
+#: views/account_journal_views.xml:13
+#. module: l10n_py_account
+msgid "l10n_py_point"
+msgstr ""
+
+#: demo/account_customer_invoice_demo.xml:12
+#: demo/account_customer_invoice_demo.xml:37
+#: demo/account_customer_invoice_demo.xml:62
+#: demo/account_customer_invoice_demo.xml:93
+#: demo/account_customer_invoice_demo.xml:112
+#: demo/account_customer_invoice_demo.xml:131
+#: views/account_journal_views.xml:16 views/account_move_views.xml:12
+#: views/account_move_views.xml:112
+#. module: l10n_py_account
+msgid "l10n_py_authorization_id"
+msgstr ""
+
+#: views/account_journal_views.xml:17
+#. module: l10n_py_account
+msgid "l10n_py_authorization_validity"
+msgstr ""
+
+#: demo/account_authorization_demo.xml:20
+#: demo/account_authorization_demo.xml:39
+#: demo/account_authorization_demo.xml:58
+#: demo/account_authorization_demo.xml:77
+#: demo/account_authorization_demo.xml:96
+#: demo/account_authorization_demo.xml:115
+#: views/account_authorization_views.xml:38
+#: views/account_authorization_views.xml:82
+#: views/account_authorization_views.xml:111
+#: views/account_authorization_views.xml:139 views/account_move_views.xml:10
+#. module: l10n_py_account
+msgid "l10n_latam_document_type_id"
+msgstr ""
+
+#: views/account_move_views.xml:16 views/account_move_views.xml:104
+#. module: l10n_py_account
+msgid "l10n_py_full_invoice_number"
+msgstr ""
+
+#: views/account_move_views.xml:25
+#. module: l10n_py_account
+msgid "Paraguayan Tax Information"
+msgstr ""
+
+#: views/account_move_views.xml:26
+#. module: l10n_py_account
+msgid "l10n_py_fiscal"
+msgstr ""
+
+#: views/account_move_views.xml:30
+#. module: l10n_py_account
+msgid "VAT Breakdown (SIFEN)"
+msgstr ""
+
+#: views/account_move_views.xml:32
+#. module: l10n_py_account
+msgid "l10n_py_amount_exempt"
+msgstr ""
+
+#: views/account_move_views.xml:33
+#. module: l10n_py_account
+msgid "Exempt (F003)"
+msgstr ""
+
+#: views/account_move_views.xml:37
+#. module: l10n_py_account
+msgid "l10n_py_amount_subtotal_5"
+msgstr ""
+
+#: views/account_move_views.xml:38
+#. module: l10n_py_account
+msgid "Total Gravado 5% (F004)"
+msgstr ""
+
+#: views/account_move_views.xml:41
+#. module: l10n_py_account
+msgid "l10n_py_base_5"
+msgstr ""
+
+#: views/account_move_views.xml:42
+#. module: l10n_py_account
+msgid "Base Gravada 5% (F018)"
+msgstr ""
+
+#: views/account_move_views.xml:45
+#. module: l10n_py_account
+msgid "l10n_py_amount_iva_5"
+msgstr ""
+
+#: views/account_move_views.xml:46
+#. module: l10n_py_account
+msgid "Liq. VAT 5% (F015)"
+msgstr ""
+
+#: views/account_move_views.xml:50
+#. module: l10n_py_account
+msgid "l10n_py_amount_subtotal_10"
+msgstr ""
+
+#: views/account_move_views.xml:51
+#. module: l10n_py_account
+msgid "Total Gravado 10% (F005)"
+msgstr ""
+
+#: views/account_move_views.xml:54
+#. module: l10n_py_account
+msgid "l10n_py_base_10"
+msgstr ""
+
+#: views/account_move_views.xml:55
+#. module: l10n_py_account
+msgid "Base Gravada 10% (F019)"
+msgstr ""
+
+#: views/account_move_views.xml:58
+#. module: l10n_py_account
+msgid "l10n_py_amount_iva_10"
+msgstr ""
+
+#: views/account_move_views.xml:59
+#. module: l10n_py_account
+msgid "Liq. VAT 10% (F016)"
+msgstr ""
+
+#: views/account_move_views.xml:63
+#. module: l10n_py_account
+msgid "l10n_py_amount_iva_total"
+msgstr ""
+
+#: views/account_move_views.xml:68
+#. module: l10n_py_account
+msgid "l10n_py_base_total"
+msgstr ""
+
+#: views/account_move_views.xml:69
+#. module: l10n_py_account
+msgid "Total Base Gravada (F020)"
+msgstr ""
+
+#: views/account_move_views.xml:72
+#. module: l10n_py_account
+msgid "l10n_py_total_operation"
+msgstr ""
+
+#: views/account_move_views.xml:78
+#. module: l10n_py_account
+msgid "Tipo de Cambio"
+msgstr ""
+
+#: views/account_move_views.xml:79
+#. module: l10n_py_account
+msgid "l10n_py_exchange_rate"
+msgstr ""
+
+#: views/account_move_views.xml:81
+#. module: l10n_py_account
+msgid "l10n_py_amount_total_pyg"
+msgstr ""
+
+#: views/account_move_views.xml:82
+#. module: l10n_py_account
+msgid "Total en Gs. (F023)"
+msgstr ""
+
+#: views/account_move_views.xml:85
+#. module: l10n_py_account
+msgid "Total en Letras"
+msgstr ""
+
+#: views/account_move_views.xml:86
+#. module: l10n_py_account
+msgid "l10n_py_amount_total_words"
+msgstr ""
+
+#: views/account_move_views.xml:106
+#. module: l10n_py_account
+msgid "Nro. Factura"
+msgstr ""
+
+#: demo/account_customer_invoice_demo.xml:11
+#: demo/account_customer_invoice_demo.xml:36
+#: demo/account_customer_invoice_demo.xml:61
+#: demo/account_customer_invoice_demo.xml:92
+#: demo/account_customer_invoice_demo.xml:111
+#: demo/account_customer_invoice_demo.xml:130
+#: demo/account_supplier_invoice_demo.xml:12
+#: demo/account_supplier_invoice_demo.xml:31
+#: demo/account_supplier_invoice_demo.xml:50 views/account_move_views.xml:111
+#. module: l10n_py_account
+msgid "invoice_date"
+msgstr ""
+
+#: views/account_authorization_views.xml:11
+#: views/account_authorization_views.xml:91
+#. module: l10n_py_account
+msgid "state"
+msgstr ""
+
+#: views/account_authorization_views.xml:17
+#. module: l10n_py_account
+msgid "button_box"
+msgstr ""
+
+#: views/account_authorization_views.xml:19
+#. module: l10n_py_account
+msgid "check_validity"
+msgstr ""
+
+#: views/account_authorization_views.xml:21
+#. module: l10n_py_account
+msgid "Verify Validity"
+msgstr ""
+
+#: views/account_authorization_views.xml:33
+#. module: l10n_py_account
+msgid "main_info"
+msgstr ""
+
+#: data/account_authorization_sequence.xml:9
+#: views/account_authorization_views.xml:35
+#. module: l10n_py_account
+msgid "company_id"
+msgstr ""
+
+#: demo/account_authorization_demo.xml:21
+#: demo/account_authorization_demo.xml:40
+#: demo/account_authorization_demo.xml:59
+#: demo/account_authorization_demo.xml:78
+#: demo/account_authorization_demo.xml:97
+#: demo/account_authorization_demo.xml:116
+#: views/account_authorization_views.xml:39
+#: views/account_authorization_views.xml:97
+#: views/account_authorization_views.xml:130
+#. module: l10n_py_account
+msgid "active"
+msgstr ""
+
+#: views/account_authorization_views.xml:41
+#. module: l10n_py_account
+msgid "dates"
+msgstr ""
+
+#: demo/account_authorization_demo.xml:9 demo/account_authorization_demo.xml:28
+#: demo/account_authorization_demo.xml:47
+#: demo/account_authorization_demo.xml:66
+#: demo/account_authorization_demo.xml:85
+#: demo/account_authorization_demo.xml:104
+#: views/account_authorization_views.xml:42
+#: views/account_authorization_views.xml:83
+#. module: l10n_py_account
+msgid "date_from"
+msgstr ""
+
+#: demo/account_authorization_demo.xml:13
+#: demo/account_authorization_demo.xml:32
+#: demo/account_authorization_demo.xml:51
+#: demo/account_authorization_demo.xml:70
+#: demo/account_authorization_demo.xml:89
+#: demo/account_authorization_demo.xml:108
+#: views/account_authorization_views.xml:43
+#: views/account_authorization_views.xml:84
+#. module: l10n_py_account
+msgid "date_to"
+msgstr ""
+
+#: views/account_authorization_views.xml:46
+#. module: l10n_py_account
+msgid "Authorized Numbering"
+msgstr ""
+
+#: demo/account_authorization_demo.xml:18
+#: demo/account_authorization_demo.xml:37
+#: demo/account_authorization_demo.xml:56
+#: demo/account_authorization_demo.xml:75
+#: demo/account_authorization_demo.xml:94
+#: demo/account_authorization_demo.xml:113
+#: views/account_authorization_views.xml:48
+#: views/account_authorization_views.xml:79
+#: views/account_authorization_views.xml:109
+#. module: l10n_py_account
+msgid "establishment"
+msgstr ""
+
+#: demo/account_authorization_demo.xml:19
+#: demo/account_authorization_demo.xml:38
+#: demo/account_authorization_demo.xml:57
+#: demo/account_authorization_demo.xml:76
+#: demo/account_authorization_demo.xml:95
+#: demo/account_authorization_demo.xml:114
+#: views/account_authorization_views.xml:49
+#: views/account_authorization_views.xml:80
+#: views/account_authorization_views.xml:110
+#. module: l10n_py_account
+msgid "expedition_point"
+msgstr ""
+
+#: views/account_authorization_views.xml:50
+#: views/account_authorization_views.xml:81
+#. module: l10n_py_account
+msgid "series"
+msgstr ""
+
+#: demo/account_authorization_demo.xml:16
+#: demo/account_authorization_demo.xml:35
+#: demo/account_authorization_demo.xml:54
+#: demo/account_authorization_demo.xml:73
+#: demo/account_authorization_demo.xml:92
+#: demo/account_authorization_demo.xml:111
+#: views/account_authorization_views.xml:53
+#: views/account_authorization_views.xml:85
+#. module: l10n_py_account
+msgid "invoice_number_from"
+msgstr ""
+
+#: demo/account_authorization_demo.xml:17
+#: demo/account_authorization_demo.xml:36
+#: demo/account_authorization_demo.xml:55
+#: demo/account_authorization_demo.xml:74
+#: demo/account_authorization_demo.xml:93
+#: demo/account_authorization_demo.xml:112
+#: views/account_authorization_views.xml:54
+#: views/account_authorization_views.xml:86
+#. module: l10n_py_account
+msgid "invoice_number_to"
+msgstr ""
+
+#: views/account_authorization_views.xml:57
+#. module: l10n_py_account
+msgid "Statistics"
+msgstr ""
+
+#: views/account_authorization_views.xml:58
+#: views/account_authorization_views.xml:87
+#. module: l10n_py_account
+msgid "next_number"
+msgstr ""
+
+#: views/account_authorization_views.xml:59
+#. module: l10n_py_account
+msgid "used_numbers"
+msgstr ""
+
+#: views/account_authorization_views.xml:60
+#: views/account_authorization_views.xml:88
+#. module: l10n_py_account
+msgid "remaining_numbers"
+msgstr ""
+
+#: views/account_authorization_views.xml:61
+#: views/account_authorization_views.xml:89
+#. module: l10n_py_account
+msgid "usage_percentage"
+msgstr ""
+
+#: views/account_authorization_views.xml:107
+#. module: l10n_py_account
+msgid "Buscar Authorizations"
+msgstr ""
+
+#: views/account_authorization_views.xml:113
+#. module: l10n_py_account
+msgid "Valids"
+msgstr ""
+
+#: views/account_authorization_views.xml:114
+#. module: l10n_py_account
+msgid "valid"
+msgstr ""
+
+#: views/account_authorization_views.xml:118
+#. module: l10n_py_account
+msgid "Expiring Soon"
+msgstr ""
+
+#: views/account_authorization_views.xml:119
+#. module: l10n_py_account
+msgid "to_expire"
+msgstr ""
+
+#: views/account_authorization_views.xml:123
+#. module: l10n_py_account
+msgid "Expireds"
+msgstr ""
+
+#: views/account_authorization_views.xml:124
+#. module: l10n_py_account
+msgid "expired"
+msgstr ""
+
+#: views/account_authorization_views.xml:129
+#. module: l10n_py_account
+msgid "Actives"
+msgstr ""
+
+#: views/account_authorization_views.xml:134
+#. module: l10n_py_account
+msgid "Inactivos"
+msgstr ""
+
+#: views/account_authorization_views.xml:135
+#. module: l10n_py_account
+msgid "inactive"
+msgstr ""
+
+#: views/account_authorization_views.xml:143
+#. module: l10n_py_account
+msgid "group_state"
+msgstr ""
+
+#: views/account_authorization_views.xml:148
+#. module: l10n_py_account
+msgid "group_type"
+msgstr ""
+
+#: views/account_authorization_views.xml:153
+#. module: l10n_py_account
+msgid "group_establishment"
+msgstr ""
+
+#: views/account_authorization_views.xml:163
+#. module: l10n_py_account
+msgid "res_model"
+msgstr ""
+
+#: views/account_authorization_views.xml:164
+#. module: l10n_py_account
+msgid "view_mode"
+msgstr ""
+
+#: views/account_authorization_views.xml:166
+#. module: l10n_py_account
+msgid "view_ids"
+msgstr ""
+
+#: views/account_authorization_views.xml:170
+#. module: l10n_py_account
+msgid "context"
+msgstr ""
+
+#: views/account_authorization_views.xml:172
+#. module: l10n_py_account
+msgid "help"
+msgstr ""
+
+#: views/account_authorization_views.xml:186
+#. module: l10n_py_account
+msgid "Paraguay"
+msgstr ""
+
+#: views/account_authorization_views.xml:193
+#. module: l10n_py_account
+msgid "Authorizations"
+msgstr ""
+
+#: demo/account_customer_invoice_demo.xml:9
+#: demo/account_customer_invoice_demo.xml:34
+#: demo/account_customer_invoice_demo.xml:59
+#: demo/account_customer_invoice_demo.xml:90
+#: demo/account_customer_invoice_demo.xml:109
+#: demo/account_customer_invoice_demo.xml:128
+#: demo/account_supplier_invoice_demo.xml:10
+#: demo/account_supplier_invoice_demo.xml:29
+#: demo/account_supplier_invoice_demo.xml:48
+#. module: l10n_py_account
+msgid "partner_id"
+msgstr ""
+
+#: demo/account_customer_invoice_demo.xml:10
+#: demo/account_customer_invoice_demo.xml:35
+#: demo/account_customer_invoice_demo.xml:60
+#: demo/account_customer_invoice_demo.xml:91
+#: demo/account_customer_invoice_demo.xml:110
+#: demo/account_customer_invoice_demo.xml:129
+#: demo/account_supplier_invoice_demo.xml:11
+#: demo/account_supplier_invoice_demo.xml:30
+#: demo/account_supplier_invoice_demo.xml:49
+#. module: l10n_py_account
+msgid "move_type"
+msgstr ""
+
+#: demo/account_supplier_invoice_demo.xml:13
+#: demo/account_supplier_invoice_demo.xml:32
+#: demo/account_supplier_invoice_demo.xml:51
+#. module: l10n_py_account
+msgid "ref"
+msgstr ""
+
+#: demo/account_customer_invoice_demo.xml:14
+#: demo/account_customer_invoice_demo.xml:39
+#: demo/account_customer_invoice_demo.xml:64
+#: demo/account_customer_invoice_demo.xml:95
+#: demo/account_customer_invoice_demo.xml:114
+#: demo/account_customer_invoice_demo.xml:133
+#: demo/account_supplier_invoice_demo.xml:15
+#: demo/account_supplier_invoice_demo.xml:34
+#: demo/account_supplier_invoice_demo.xml:53
+#. module: l10n_py_account
+msgid "invoice_line_ids"
+msgstr ""
+
+#: demo/res_partner_demo.xml:8 demo/res_partner_demo.xml:25
+#: demo/res_partner_demo.xml:42 demo/res_partner_demo.xml:61
+#: demo/res_partner_demo.xml:79 demo/res_partner_demo.xml:100
+#: demo/res_partner_demo.xml:114
+#. module: l10n_py_account
+msgid "is_company"
+msgstr ""
+
+#: data/l10n_latam_document_type_data.xml:6
+#: data/l10n_latam_document_type_data.xml:16
+#: data/l10n_latam_document_type_data.xml:26
+#: data/l10n_latam_document_type_data.xml:36
+#: data/l10n_latam_document_type_data.xml:46 demo/res_company_demo.xml:9
+#: demo/res_partner_demo.xml:9 demo/res_partner_demo.xml:26
+#: demo/res_partner_demo.xml:43 demo/res_partner_demo.xml:62
+#: demo/res_partner_demo.xml:80 demo/res_partner_demo.xml:101
+#: demo/res_partner_demo.xml:115
+#. module: l10n_py_account
+msgid "country_id"
+msgstr ""
+
+#: demo/res_company_demo.xml:13 demo/res_partner_demo.xml:10
+#: demo/res_partner_demo.xml:27 demo/res_partner_demo.xml:44
+#: demo/res_partner_demo.xml:63 demo/res_partner_demo.xml:81
+#: demo/res_partner_demo.xml:116
+#. module: l10n_py_account
+msgid "state_id"
+msgstr ""
+
+#: demo/res_company_demo.xml:11 demo/res_partner_demo.xml:11
+#: demo/res_partner_demo.xml:28 demo/res_partner_demo.xml:45
+#: demo/res_partner_demo.xml:64 demo/res_partner_demo.xml:82
+#: demo/res_partner_demo.xml:102 demo/res_partner_demo.xml:117
+#. module: l10n_py_account
+msgid "street"
+msgstr ""
+
+#: demo/res_company_demo.xml:12 demo/res_partner_demo.xml:12
+#: demo/res_partner_demo.xml:29 demo/res_partner_demo.xml:46
+#: demo/res_partner_demo.xml:65 demo/res_partner_demo.xml:83
+#: demo/res_partner_demo.xml:103 demo/res_partner_demo.xml:118
+#. module: l10n_py_account
+msgid "city"
+msgstr ""
+
+#: demo/res_company_demo.xml:14 demo/res_partner_demo.xml:13
+#: demo/res_partner_demo.xml:30 demo/res_partner_demo.xml:47
+#: demo/res_partner_demo.xml:66 demo/res_partner_demo.xml:84
+#: demo/res_partner_demo.xml:104 demo/res_partner_demo.xml:119
+#. module: l10n_py_account
+msgid "zip"
+msgstr ""
+
+#: demo/res_company_demo.xml:15 demo/res_partner_demo.xml:14
+#: demo/res_partner_demo.xml:31 demo/res_partner_demo.xml:48
+#: demo/res_partner_demo.xml:67 demo/res_partner_demo.xml:85
+#: demo/res_partner_demo.xml:105 demo/res_partner_demo.xml:120
+#. module: l10n_py_account
+msgid "phone"
+msgstr ""
+
+#: demo/res_company_demo.xml:16 demo/res_partner_demo.xml:15
+#: demo/res_partner_demo.xml:32 demo/res_partner_demo.xml:49
+#: demo/res_partner_demo.xml:68 demo/res_partner_demo.xml:106
+#. module: l10n_py_account
+msgid "email"
+msgstr ""
+
+#: demo/res_partner_demo.xml:16 demo/res_partner_demo.xml:33
+#: demo/res_partner_demo.xml:50 demo/res_partner_demo.xml:69
+#: demo/res_partner_demo.xml:87 demo/res_partner_demo.xml:121
+#. module: l10n_py_account
+msgid "l10n_latam_identification_type_id"
+msgstr ""
+
+#: demo/res_partner_demo.xml:17 demo/res_partner_demo.xml:34
+#: demo/res_partner_demo.xml:51 demo/res_partner_demo.xml:70
+#: demo/res_partner_demo.xml:90 demo/res_partner_demo.xml:122
+#. module: l10n_py_account
+msgid "vat"
+msgstr ""
+
+#: demo/res_partner_demo.xml:18 demo/res_partner_demo.xml:35
+#: demo/res_partner_demo.xml:52 demo/res_partner_demo.xml:71
+#: demo/res_partner_demo.xml:91 demo/res_partner_demo.xml:123
+#. module: l10n_py_account
+msgid "l10n_py_taxpayer_type"
+msgstr ""
+
+#: demo/res_partner_demo.xml:19 demo/res_partner_demo.xml:36
+#: demo/res_partner_demo.xml:53
+#. module: l10n_py_account
+msgid "l10n_py_activity_description"
+msgstr ""
+
+#: demo/res_partner_demo.xml:72 demo/res_partner_demo.xml:92
+#. module: l10n_py_account
+msgid "l10n_py_doc_type"
+msgstr ""
+
+#: demo/res_partner_demo.xml:73 demo/res_partner_demo.xml:93
+#. module: l10n_py_account
+msgid "l10n_py_doc_number"
+msgstr ""
+
+#: demo/res_company_demo.xml:17 demo/res_partner_demo.xml:107
+#. module: l10n_py_account
+msgid "website"
+msgstr ""
+
+#: demo/product_product_demo.xml:7 demo/product_product_demo.xml:46
+#: demo/product_product_demo.xml:65 demo/product_product_demo.xml:86
+#. module: l10n_py_account
+msgid "categ_id"
+msgstr ""
+
+#: demo/product_product_demo.xml:8 demo/product_product_demo.xml:26
+#: demo/product_product_demo.xml:47 demo/product_product_demo.xml:66
+#: demo/product_product_demo.xml:87
+#. module: l10n_py_account
+msgid "detailed_type"
+msgstr ""
+
+#: demo/product_product_demo.xml:9 demo/product_product_demo.xml:27
+#: demo/product_product_demo.xml:48 demo/product_product_demo.xml:67
+#: demo/product_product_demo.xml:88
+#. module: l10n_py_account
+msgid "default_code"
+msgstr ""
+
+#: demo/product_product_demo.xml:10 demo/product_product_demo.xml:28
+#: demo/product_product_demo.xml:49 demo/product_product_demo.xml:68
+#: demo/product_product_demo.xml:89
+#. module: l10n_py_account
+msgid "list_price"
+msgstr ""
+
+#: demo/product_product_demo.xml:11 demo/product_product_demo.xml:29
+#: demo/product_product_demo.xml:50 demo/product_product_demo.xml:69
+#: demo/product_product_demo.xml:90
+#. module: l10n_py_account
+msgid "standard_price"
+msgstr ""
+
+#: demo/product_product_demo.xml:12 demo/product_product_demo.xml:30
+#: demo/product_product_demo.xml:51 demo/product_product_demo.xml:70
+#: demo/product_product_demo.xml:91
+#. module: l10n_py_account
+msgid "uom_id"
+msgstr ""
+
+#: demo/product_product_demo.xml:13 demo/product_product_demo.xml:31
+#: demo/product_product_demo.xml:52 demo/product_product_demo.xml:71
+#: demo/product_product_demo.xml:92
+#. module: l10n_py_account
+msgid "uom_po_id"
+msgstr ""
+
+#: demo/product_product_demo.xml:15 demo/product_product_demo.xml:33
+#: demo/product_product_demo.xml:54 demo/product_product_demo.xml:73
+#: demo/product_product_demo.xml:94
+#. module: l10n_py_account
+msgid "taxes_id"
+msgstr ""
+
+#: demo/product_product_demo.xml:19 demo/product_product_demo.xml:37
+#: demo/product_product_demo.xml:58 demo/product_product_demo.xml:77
+#: demo/product_product_demo.xml:98
+#. module: l10n_py_account
+msgid "supplier_taxes_id"
+msgstr ""
+
+#: demo/account_customer_invoice_demo.xml:148
+#. module: l10n_py_account
+msgid "action_post"
+msgstr ""
+
+#: demo/res_company_demo.xml:10
+#. module: l10n_py_account
+msgid "account_fiscal_country_id"
+msgstr ""
+
+#: demo/res_company_demo.xml:21
+#. module: l10n_py_account
+msgid "try_loading"
+msgstr ""
+
+#: data/account_authorization_sequence.xml:6
+#: data/l10n_latam_document_type_data.xml:8
+#: data/l10n_latam_document_type_data.xml:18
+#: data/l10n_latam_document_type_data.xml:28
+#: data/l10n_latam_document_type_data.xml:38
+#: data/l10n_latam_document_type_data.xml:48
+#. module: l10n_py_account
+msgid "code"
+msgstr ""
+
+#: data/l10n_latam_document_type_data.xml:9
+#: data/l10n_latam_document_type_data.xml:19
+#: data/l10n_latam_document_type_data.xml:29
+#: data/l10n_latam_document_type_data.xml:39
+#: data/l10n_latam_document_type_data.xml:49
+#. module: l10n_py_account
+msgid "doc_code_prefix"
+msgstr ""
+
+#: data/l10n_latam_document_type_data.xml:10
+#: data/l10n_latam_document_type_data.xml:20
+#: data/l10n_latam_document_type_data.xml:30
+#: data/l10n_latam_document_type_data.xml:40
+#: data/l10n_latam_document_type_data.xml:50
+#. module: l10n_py_account
+msgid "report_name"
+msgstr ""
+
+#: data/l10n_latam_document_type_data.xml:11
+#: data/l10n_latam_document_type_data.xml:21
+#: data/l10n_latam_document_type_data.xml:31
+#: data/l10n_latam_document_type_data.xml:41
+#: data/l10n_latam_document_type_data.xml:51
+#. module: l10n_py_account
+msgid "internal_type"
+msgstr ""
+
+#: data/l10n_latam_document_type_data.xml:12
+#: data/l10n_latam_document_type_data.xml:22
+#: data/l10n_latam_document_type_data.xml:32
+#: data/l10n_latam_document_type_data.xml:42
+#: data/l10n_latam_document_type_data.xml:52
+#. module: l10n_py_account
+msgid "sequence"
+msgstr ""
+
+#: data/account_authorization_sequence.xml:7
+#. module: l10n_py_account
+msgid "prefix"
+msgstr ""
+
+#: data/account_authorization_sequence.xml:8
+#. module: l10n_py_account
+msgid "padding"
 msgstr ""
 
