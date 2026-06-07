@@ -1,105 +1,107 @@
-# Translations template for Odoo.
-# Copyright (C) 2026 Odoo Community Association (OCA)
-# This file is distributed under the same license as the Odoo project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_py_edi_sifen
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo 19.0\n"
-"Report-Msgid-Bugs-To: https://github.com/OCA/l10n-paraguay\n"
-"POT-Creation-Date: 2026-06-07 13:46-0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-07 16:58+0000\n"
+"PO-Revision-Date: 2026-06-07 16:58+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.18.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
 
-#: models/edi_connector.py:202
 #. module: l10n_py_edi_sifen
-msgid "Connection Successful"
-msgstr ""
-
-#: models/edi_connector.py:203
-#. module: l10n_py_edi_sifen
-msgid "SIFEN connection verified successfully."
-msgstr ""
-
-#: demo/edi_connector_demo.xml:5 views/edi_connector_views.xml:5
-#: views/res_company_views.xml:5
-#. module: l10n_py_edi_sifen
-msgid "name"
-msgstr ""
-
-#: views/edi_connector_views.xml:6 views/res_company_views.xml:6
-#. module: l10n_py_edi_sifen
-msgid "model"
-msgstr ""
-
-#: views/edi_connector_views.xml:7 views/res_company_views.xml:7
-#. module: l10n_py_edi_sifen
-msgid "inherit_id"
-msgstr ""
-
-#: views/edi_connector_views.xml:8 views/res_company_views.xml:8
-#. module: l10n_py_edi_sifen
-msgid "arch"
-msgstr ""
-
-#: views/edi_connector_views.xml:9
-#. module: l10n_py_edi_sifen
-msgid "credentials"
-msgstr ""
-
-#: views/edi_connector_views.xml:10
-#. module: l10n_py_edi_sifen
-msgid "SIFEN"
-msgstr ""
-
-#: views/res_company_views.xml:9
-#. module: l10n_py_edi_sifen
-msgid "l10n_py_fiscal"
-msgstr ""
-
-#: views/res_company_views.xml:10
-#. module: l10n_py_edi_sifen
+#: model_terms:ir.ui.view,arch_db:l10n_py_edi_sifen.view_company_form_sifen
 msgid "Certificado Digital (SIFEN)"
 msgstr ""
 
-#: demo/res_company_certificate_demo.xml:9 views/res_company_views.xml:12
 #. module: l10n_py_edi_sifen
-msgid "l10n_py_certificate"
+#: model:ir.model.fields,field_description:l10n_py_edi_sifen.field_res_company__l10n_py_certificate_password
+msgid "Certificate Password"
 msgstr ""
 
-#: demo/res_company_certificate_demo.xml:11 views/res_company_views.xml:15
 #. module: l10n_py_edi_sifen
-msgid "l10n_py_certificate_filename"
+#: model:ir.model,name:l10n_py_edi_sifen.model_res_company
+msgid "Companies"
 msgstr ""
 
-#: demo/res_company_certificate_demo.xml:12 views/res_company_views.xml:16
 #. module: l10n_py_edi_sifen
-msgid "l10n_py_certificate_password"
+#. odoo-python
+#: code:addons/l10n_py_edi_sifen/models/res_company.py:0
+msgid "Configure the PKCS12 certificate in company %s"
 msgstr ""
 
-#: demo/res_company_certificate_demo.xml:13 views/res_company_views.xml:17
 #. module: l10n_py_edi_sifen
-msgid "l10n_py_certificate_expiry"
+#. odoo-python
+#: code:addons/l10n_py_edi_sifen/models/edi_connector.py:0
+msgid "Connection Successful"
 msgstr ""
 
-#: demo/edi_connector_demo.xml:6
 #. module: l10n_py_edi_sifen
-msgid "company_id"
+#: model:ir.model,name:l10n_py_edi_sifen.model_l10n_py_edi_connector
+msgid "Connector EDI Paraguay"
 msgstr ""
 
-#: demo/edi_connector_demo.xml:7
 #. module: l10n_py_edi_sifen
-msgid "provider_type"
+#: model:ir.model.fields,field_description:l10n_py_edi_sifen.field_l10n_py_edi_connector__display_name
+#: model:ir.model.fields,field_description:l10n_py_edi_sifen.field_res_company__display_name
+msgid "Display Name"
 msgstr ""
 
-#: demo/edi_connector_demo.xml:8
 #. module: l10n_py_edi_sifen
-msgid "environment"
+#: model_terms:ir.ui.view,arch_db:l10n_py_edi_sifen.view_edi_connector_form_sifen
+msgid "El certificado digital PKCS12 se configura en la ficha de la empresa."
 msgstr ""
 
+#. module: l10n_py_edi_sifen
+#: model:ir.model.fields,field_description:l10n_py_edi_sifen.field_res_company__l10n_py_certificate_expiry
+msgid "Expiry Date"
+msgstr ""
+
+#. module: l10n_py_edi_sifen
+#: model:ir.model.fields,field_description:l10n_py_edi_sifen.field_l10n_py_edi_connector__id
+#: model:ir.model.fields,field_description:l10n_py_edi_sifen.field_res_company__id
+msgid "ID"
+msgstr ""
+
+#. module: l10n_py_edi_sifen
+#: model:ir.model.fields,field_description:l10n_py_edi_sifen.field_res_company__l10n_py_certificate_filename
+msgid "L10N Py Certificate Filename"
+msgstr ""
+
+#. module: l10n_py_edi_sifen
+#: model:ir.model.fields,field_description:l10n_py_edi_sifen.field_res_company__l10n_py_certificate
+msgid "PKCS12 Certificate (.pfx)"
+msgstr ""
+
+#. module: l10n_py_edi_sifen
+#: model:ir.model.fields,field_description:l10n_py_edi_sifen.field_l10n_py_edi_connector__provider_type
+msgid "Proveedor"
+msgstr ""
+
+#. module: l10n_py_edi_sifen
+#: model_terms:ir.ui.view,arch_db:l10n_py_edi_sifen.view_edi_connector_form_sifen
+msgid "SIFEN"
+msgstr ""
+
+#. module: l10n_py_edi_sifen
+#: model:ir.model.fields.selection,name:l10n_py_edi_sifen.selection__l10n_py_edi_connector__provider_type__sifen
+msgid "SIFEN Direct"
+msgstr ""
+
+#. module: l10n_py_edi_sifen
+#. odoo-python
+#: code:addons/l10n_py_edi_sifen/models/edi_connector.py:0
+msgid "SIFEN connection error: %s"
+msgstr ""
+
+#. module: l10n_py_edi_sifen
+#. odoo-python
+#: code:addons/l10n_py_edi_sifen/models/edi_connector.py:0
+msgid "SIFEN connection verified successfully."
+msgstr ""
