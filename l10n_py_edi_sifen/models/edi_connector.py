@@ -34,6 +34,74 @@ _DOC_TYPE_TO_EVENTO = {
     6: TiTiDeev.VALUE_6,
 }
 
+# SIFEN error code → (short_message, action_for_user)
+_SIFEN_ERROR_CODES = {
+    # Document errors
+    "E001": (
+        "Emitter RUC not found in SET",
+        "Verify your company RUC is registered at SET.",
+    ),
+    "E002": (
+        "Authorization not valid or expired",
+        "Check your authorization validity period at SET.",
+    ),
+    "E003": (
+        "CDC calculation error",
+        "Contact technical support to verify the CDC algorithm.",
+    ),
+    "E004": (
+        "Receiver RUC not found in SET",
+        "Update the customer partner with a valid RUC.",
+    ),
+    "E005": (
+        "Document already received",
+        "Check if the document was already submitted.",
+    ),
+    "E506": (
+        "Document type does not match authorization",
+        "Verify the document type matches the authorization.",
+    ),
+    # Field validation errors
+    "EA018": (
+        "Required field missing",
+        "Review the document data and fill all required fields.",
+    ),
+    "EA019": (
+        "Invalid field format",
+        "Check the format of the indicated field.",
+    ),
+    "EA020": (
+        "Field value out of range",
+        "Verify the value is within the allowed range.",
+    ),
+    # Fiscal validation errors
+    "EF001": (
+        "Tax amount mismatch",
+        "Verify the IVA calculation for this document.",
+    ),
+    "EF002": (
+        "Invoice total does not match sum of lines",
+        "Recalculate the document totals.",
+    ),
+    "EF003": (
+        "RUC check digit (DV) invalid",
+        "Verify the DV of the emitter or receiver RUC.",
+    ),
+    # Generic errors
+    "9999": (
+        "Internal SET error",
+        "Wait a few minutes and retry. If the problem persists, contact SET.",
+    ),
+}
+
+
+def _interpret_sifen_error(code, message):
+    """Return (interpreted_message, action) for a SIFEN error code."""
+    if code and code in _SIFEN_ERROR_CODES:
+        short_msg, action = _SIFEN_ERROR_CODES[code]
+        return f"[{code}] {short_msg}. {message}", action
+    return f"[{code}] {message}" if code else message, ""
+
 
 class EDIConnector(models.Model):
     _inherit = "l10n_py.edi.connector"
@@ -320,11 +388,20 @@ class EDIConnector(models.Model):
             }
 
         errors = []
+        actions = []
         if hasattr(result, "rProtDe") and result.rProtDe:
             if hasattr(result.rProtDe, "gResProc"):
                 for proc in result.rProtDe.gResProc:
-                    errors.append(
-                        f"[{getattr(proc, 'dCodRes', '')}] "
-                        f"{getattr(proc, 'dMsgRes', '')}"
-                    )
-        return {"success": False, "error": "\n".join(errors) or "SIFEN Error"}
+                    code = getattr(proc, "dCodRes", "")
+                    message = getattr(proc, "dMsgRes", "Unknown error")
+                    interpreted, action = _interpret_sifen_error(code, message)
+                    errors.append(interpreted)
+                    if action:
+                        actions.append(action)
+
+        if errors:
+            error_str = "\n".join(errors)
+            if actions:
+                error_str += "\n" + " ".join(actions)
+            return {"success": False, "error": error_str}
+        return {"success": False, "error": "SIFEN Error"}
