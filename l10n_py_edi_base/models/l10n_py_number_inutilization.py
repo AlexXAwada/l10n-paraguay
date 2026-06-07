@@ -1,6 +1,7 @@
 # l10n_py_edi_base/models/l10n_py_number_inutilization.py
 
 import logging
+import time
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
@@ -167,7 +168,23 @@ class NumberInutilization(models.Model):
         }
 
         try:
+            t0 = time.time()
             response = connector.inutilize_range(data)
+            duration_ms = (time.time() - t0) * 1000
+
+            # Log operation
+            try:
+                self.env["l10n_py.edi.log"].log_operation(
+                    operation_type="inutilize",
+                    provider="sifen",
+                    response_data=response,
+                    success=response.get("success", False),
+                    error_message=response.get("error"),
+                    execution_time=duration_ms,
+                )
+            except Exception as log_err:
+                _logger.warning("Failed to log inutilization: %s", str(log_err))
+
             if response.get("success"):
                 self.state = "accepted"
             else:

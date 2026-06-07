@@ -5,6 +5,7 @@ import io
 import logging
 import secrets
 import string
+import time
 
 import qrcode
 from dateutil.relativedelta import relativedelta
@@ -977,6 +978,38 @@ class AccountMove(models.Model):
 
         return True
 
+    def _log_edi_operation(
+        self,
+        operation_type,
+        provider,
+        response_data=None,
+        success=True,
+        error_message=None,
+        duration_ms=0,
+    ):
+        """Log an EDI operation to l10n_py_edi_log.
+
+        Args:
+            operation_type: send | status | cancel | event | validate
+            provider: sifen | factpy | facturasend | local
+            response_data: dict response from connector
+            success: whether the operation succeeded
+            error_message: error string if failed
+            duration_ms: execution time in milliseconds
+        """
+        try:
+            self.env["l10n_py.edi.log"].log_operation(
+                operation_type=operation_type,
+                provider=provider,
+                document=self,
+                response_data=response_data,
+                success=success,
+                error_message=error_message,
+                execution_time=duration_ms,
+            )
+        except Exception as e:
+            _logger.warning("Failed to log EDI operation: %s", str(e))
+
     # ============== PUBLIC METHODS ==============
 
     def _get_edi_connector(self):
@@ -1062,11 +1095,25 @@ class AccountMove(models.Model):
 
         # Obtener conector configurado
         connector = self._get_edi_connector()
+        provider = connector.provider_type or "sifen"
 
         try:
             # Send documento
             self.l10n_py_edi_status = "sent"
+
+            t0 = time.time()
             response = connector.send_document(document_data)
+            duration_ms = (time.time() - t0) * 1000
+
+            # Log operation
+            self._log_edi_operation(
+                "send",
+                provider,
+                response_data=response,
+                success=response.get("success", False),
+                error_message=response.get("error"),
+                duration_ms=duration_ms,
+            )
 
             # Procesar respuesta
             if response.get("success"):
@@ -1174,7 +1221,22 @@ class AccountMove(models.Model):
         self._validate_cancel_deadline()
 
         connector = self._get_edi_connector()
+        provider = connector.provider_type or "sifen"
+
+        t0 = time.time()
         response = connector.cancel_document(self.l10n_py_cdc, reason=motive or "")
+        duration_ms = (time.time() - t0) * 1000
+
+        # Log operation
+        self._log_edi_operation(
+            "cancel",
+            provider,
+            response_data=response,
+            success=response.get("success", False),
+            error_message=response.get("error"),
+            duration_ms=duration_ms,
+        )
+
         if response.get("success"):
             self.l10n_py_edi_status = "cancelled"
             self.l10n_py_edi_message = self.env._(
