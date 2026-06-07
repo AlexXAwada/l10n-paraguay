@@ -1,0 +1,1379 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_py_edi_base
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-06 00:00+0000\n"
+"PO-Revision-Date: 2026-06-06 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);"
+
+msgid "<strong>Cond. Venta: </strong>"
+msgstr "<strong>Cond. Venta: </strong>"
+
+msgid "<strong>Dir.: </strong>"
+msgstr "<strong>Dir.: </strong>"
+
+msgid "<strong>Email: </strong>"
+msgstr "<strong>Email: </strong>"
+
+msgid "<strong>Issue Date: </strong>"
+msgstr "<strong>Fecha Emisión: </strong>"
+
+msgid "<strong>Moneda: </strong>"
+msgstr "<strong>Moneda: </strong>"
+
+msgid "<strong>RUC: </strong>"
+msgstr "<strong>RUC: </strong>"
+
+msgid "<strong>Business Name: </strong>"
+msgstr "<strong>Razón Social: </strong>"
+
+msgid "<strong>Tel: </strong>"
+msgstr "<strong>Tel: </strong>"
+
+msgid "<strong>Timbrado Nro.:</strong>"
+msgstr "<strong>Timbrado Nro.:</strong>"
+
+msgid "<strong>Tipo Trans.: </strong>"
+msgstr "<strong>Tipo Trans.: </strong>"
+
+msgid "<strong>Total en Letras: </strong>"
+msgstr "<strong>Total en Letras: </strong>"
+
+msgid "<strong>Vigencia:</strong>"
+msgstr "<strong>Vigencia:</strong>"
+
+msgid "ELECTRONIC SELF-INVOICE"
+msgstr "AUTOFACTURA ELECTRÓNICA"
+
+msgid "Aceptado"
+msgstr "Aceptado"
+
+msgid "Act. Econ.:"
+msgstr "Act. Econ.:"
+
+msgid "Active"
+msgstr "Active"
+
+msgid "Agente intermediario del transporte"
+msgstr "Agente intermediario del transporte"
+
+msgid "Anticipo"
+msgstr "Anticipo"
+
+msgid "Autofactura (AFE)"
+msgstr "Autofactura (AFE)"
+
+msgid "Electronic Self-Invoice"
+msgstr "Autofactura Electrónica"
+
+msgid "Autofactura: %s es obligatorio."
+msgstr "Autofactura: %s es obligatorio."
+
+msgid "Autofactura: debe tener exactamente 1 documento asociado."
+msgstr "Autofactura: debe tener exactamente 1 documento asociado."
+
+msgid "\nSelf-Invoice: the associated document must be an electronic receipt."
+msgstr "\nAutofactura: el documento asociado debe ser una constancia electrónica."
+
+msgid "Air"
+msgstr "Aéreo"
+
+msgid "Electronic Wallet"
+msgstr "Billetera electrónica"
+
+msgid "Borrador"
+msgstr "Borrador"
+
+msgid "CDC"
+msgstr "CDC"
+
+msgid "CFR"
+msgstr "CFR"
+
+msgid "CI:"
+msgstr "CI:"
+
+msgid "CIF"
+msgstr "CIF"
+
+msgid "CIP"
+msgstr "CIP"
+
+msgid "CPT"
+msgstr "CPT"
+
+msgid "Cancel"
+msgstr "Cancelación"
+
+msgid "Cancelation Successful"
+msgstr "Cancelación Exitosa"
+
+msgid "Cancelado"
+msgstr "Cancelado"
+
+msgid "Cancelar"
+msgstr "Cancelar"
+
+msgid "Cancelar Documento"
+msgstr "Cancelar Documento"
+
+msgid "Cancelar EDI"
+msgstr "Cancelar EDI"
+
+msgid "Cant."
+msgstr "Cant."
+
+msgid "Cantidad"
+msgstr "Cantidad"
+
+msgid "Carnet Res.:"
+msgstr "Carnet Res.:"
+
+msgid "Carnet de residencia"
+msgstr "Carnet de residencia"
+
+msgid "Cerrar"
+msgstr "Cerrar"
+
+msgid "Cheque"
+msgstr "Cheque"
+
+msgid "Ciudad (E938)"
+msgstr "Ciudad (E938)"
+
+msgid "Supply City (EA023)"
+msgstr "Ciudad Provisión (EA023)"
+
+msgid "Ciudad Salida (E928)"
+msgstr "Ciudad Salida (E928)"
+
+msgid "Ciudad Vendedor (EA016)"
+msgstr "Ciudad Vendedor (EA016)"
+
+msgid "Companies"
+msgstr "Companies"
+
+msgid "Company"
+msgstr "Company"
+
+msgid "Company"
+msgstr "Compañía"
+
+msgid "Compensation"
+msgstr "Compensación"
+
+msgid "Input tax purchase"
+msgstr "Compra de crédito fiscal"
+
+msgid "Compra de divisas"
+msgstr "Compra de divisas"
+
+msgid "Compra de productos"
+msgstr "Compra de productos"
+
+msgid "Compra de servicios"
+msgstr "Compra de servicios"
+
+msgid "Withholding receipt"
+msgstr "Comprobante de retención"
+
+msgid "Exchange Rate Condition"
+msgstr "Condición Tipo de Cambio"
+
+msgid "Negotiation Condition (E906)"
+msgstr "Condición de Negociación (E906)"
+
+msgid "Exchange rate condition (D015)"
+msgstr "Condición del tipo de cambio (D015)"
+
+msgid "Conector EDI Paraguay"
+msgstr "Conector EDI Paraguay"
+
+msgid "Conectores"
+msgstr "Conectores"
+
+msgid "Conectores EDI"
+msgstr "Conectores EDI"
+
+msgid "Configuration"
+msgstr "Configuración"
+
+msgid "Configure el RUC de la empresa"
+msgstr "Configure el RUC de la empresa"
+
+msgid "Configure el timbrado en el diario"
+msgstr "Configure el timbrado en el diario"
+
+msgid "Receipt"
+msgstr "Constancia"
+
+msgid "Electronic Receipt"
+msgstr "Constancia Electrónica"
+
+msgid "Constancia de microproductor"
+msgstr "Constancia de microproductor"
+
+msgid "Constancia de no ser contribuyente"
+msgstr "Constancia de no ser contribuyente"
+
+msgid "Electronic receipt: type and number are required."
+msgstr "Constancia electrónica: tipo y número son obligatorios."
+
+msgid "Consulta de Status"
+msgstr "Consulta de Status"
+
+msgid "Consulte en: https://ekuatia.set.gov.py/consultas/qr?cdc="
+msgstr "Consulte en: https://ekuatia.set.gov.py/consultas/qr?cdc="
+
+msgid "Contado"
+msgstr "Contado"
+
+msgid "Contingency"
+msgstr "Contingencia"
+
+msgid "Contribuyente"
+msgstr "Contribuyente"
+
+msgid "Create a new inutilization"
+msgstr "Crear una nueva inutilización"
+
+msgid "Created by"
+msgstr "Created by"
+
+msgid "Created on"
+msgstr "Created on"
+
+msgid "Credenciales"
+msgstr "Credenciales"
+
+msgid "Credit -"
+msgstr "Crédito -"
+
+msgid "Foreign ID"
+msgstr "Cédula extranjera"
+
+msgid "Paraguayan ID"
+msgstr "Cédula paraguaya"
+
+msgid "Code"
+msgstr "Cód."
+
+msgid "Code"
+msgstr "Código"
+
+msgid "Economic Activity Code"
+msgstr "Código Actividad Económica"
+
+msgid "SET City Code"
+msgstr "Código Ciudad SET"
+
+msgid "SET Department Code"
+msgstr "Código Departamento SET"
+
+msgid "SET District Code"
+msgstr "Código Distrito SET"
+
+msgid "NCM Code"
+msgstr "Código NCM"
+
+msgid "QR Code"
+msgstr "Código QR"
+
+msgid "Measurement Unit Code"
+msgstr "Código Unidad de Medida"
+
+msgid "Control Code (CDC)"
+msgstr "Código de Control (CDC)"
+
+msgid "Electronic Document Control Code (44 digits)"
+msgstr "Código de Control del Documento Electrónico (44 dígitos)"
+
+msgid "Document Control Code"
+msgstr "Código de Control del documento"
+
+msgid "Electronic Document Control Code"
+msgstr "Código de Control del documento electrónico"
+
+msgid "Error Code"
+msgstr "Código de Erro"
+
+msgid "Security Code"
+msgstr "Código de Seguridad"
+
+msgid "Status Code"
+msgstr "Código de Status"
+
+msgid "Main economic activity code according to SET"
+msgstr "Código de actividad económica principal según SET"
+
+msgid "Provider error code"
+msgstr "Código de erro do provedor"
+
+msgid "Establishment code (H006)"
+msgstr "Código de establecimiento (H006)"
+
+msgid "City code according to SET"
+msgstr "Código de la ciudad según SET"
+
+msgid "HTTP status code"
+msgstr "Código de status HTTP"
+
+msgid "Measurement unit code according to SET (77 = UNI - Unit)"
+msgstr "Código de unidad de medida según SET (77 = UNI - Unidad)"
+
+msgid "Department code according to SET"
+msgstr "Código del departamento según SET"
+
+msgid "District code according to SET"
+msgstr "Código del distrito según SET"
+
+msgid "DAP"
+msgstr "DAP"
+
+msgid "DAT"
+msgstr "DAT"
+
+msgid "DDP"
+msgstr "DDP"
+
+msgid "DELETE"
+msgstr "DELETE"
+
+msgid "ELECTRONIC DOCUMENT"
+msgstr "DOCUMENTO ELECTRÓNICO"
+
+msgid "DV"
+msgstr "DV"
+
+msgid "DV del Transportista (E943)"
+msgstr "DV del Transportista (E943)"
+
+msgid "Dados Enviados"
+msgstr "Dados Enviados"
+
+msgid "Dados da %s"
+msgstr "Dados da %s"
+
+msgid "Datos EDI"
+msgstr "Datos EDI"
+
+msgid "Datos Fiscales Paraguay"
+msgstr "Datos Fiscales Paraguay"
+
+msgid "Datos Paraguay"
+msgstr "Datos Paraguay"
+
+msgid "Datos de Solicitud"
+msgstr "Datos de Solicitud"
+
+msgid "Datos de Transporte"
+msgstr "Datos de Transporte"
+
+msgid "Transport data for Dispatch Note (Group G SIFEN)"
+msgstr "Datos de transporte para Nota de Remisión (Grupo G SIFEN)"
+
+msgid "Datos del Vendedor"
+msgstr "Datos del Vendedor"
+
+msgid "Departamento (E934)"
+msgstr "Departamento (E934)"
+
+msgid "Supply Department (EA019)"
+msgstr "Departamento Provisión (EA019)"
+
+msgid "Departamento Salida (E924)"
+msgstr "Departamento Salida (E924)"
+
+msgid "Departamento Vendedor (EA012)"
+msgstr "Departamento Vendedor (EA012)"
+
+msgid "Descargar KUDE"
+msgstr "Descargar KUDE"
+
+msgid "Descargar XML"
+msgstr "Descargar XML"
+
+msgid "Description"
+msgstr "Descripción"
+
+msgid "Economic Activity Description"
+msgstr "Descripción Actividad Económica"
+
+msgid "Description of the main economic activity"
+msgstr "Descripción de la actividad económica principal"
+
+msgid "Descrição do erro se houver"
+msgstr "Descrição do erro se houver"
+
+msgid "Supply Address (EA018)"
+msgstr "Dirección Provisión (EA018)"
+
+msgid "Seller Address (EA010)"
+msgstr "Dirección Vendedor (EA010)"
+
+msgid "Delivery Address (E930)"
+msgstr "Dirección de Entrega (E930)"
+
+msgid "Exit Address (E920)"
+msgstr "Dirección de Salida (E920)"
+
+msgid "Display Name"
+msgstr "Display Name"
+
+msgid "Distrito (E936)"
+msgstr "Distrito (E936)"
+
+msgid "Supply District (EA021)"
+msgstr "Distrito Provisión (EA021)"
+
+msgid "Distrito Salida (E926)"
+msgstr "Distrito Salida (E926)"
+
+msgid "Distrito Vendedor (EA014)"
+msgstr "Distrito Vendedor (EA014)"
+
+msgid "Doc. del Chofer (E950)"
+msgstr "Doc. del Chofer (E950)"
+
+msgid "Doc:"
+msgstr "Doc:"
+
+msgid "Document"
+msgstr "Documento"
+
+msgid "Documento Asociado (Grupo H SIFEN)"
+msgstr "Documento Asociado (Grupo H SIFEN)"
+
+msgid "Electronic document: CDC is required."
+msgstr "Documento electrónico: el CDC es obligatorio."
+
+msgid "Electronic tax document that records a sale"
+msgstr "Documento fiscal electrónico que documenta una venta"
+
+msgid "Documento fiscal relacionado"
+msgstr "Documento fiscal relacionado"
+
+msgid "Documento impreso: campos obligatorios faltantes: %(fields)s"
+msgstr "Documento impreso: campos obligatorios faltantes: %(fields)s"
+
+msgid "Document that certifies the transfer of goods"
+msgstr "Documento que acredita el traslado de mercaderías"
+
+msgid "Documento que anula o corrige una factura"
+msgstr "Documento que anula o corrige una factura"
+
+msgid "Documento que incrementa el valor de una factura"
+msgstr "Documento que incrementa el valor de una factura"
+
+msgid "Documentos Asociados"
+msgstr "Documentos Asociados"
+
+msgid "Documentos Asociados (Grupo H)"
+msgstr "Documentos Asociados (Grupo H)"
+
+msgid "Documentos asociados al DTE (Grupo H del SIFEN)"
+msgstr "Documentos asociados al DTE (Grupo H del SIFEN)"
+
+msgid "\nElectronic documents or receipts cannot have printed document fields."
+msgstr "\nDocumentos electrónicos o constancias no pueden tener campos de documento \nimpreso."
+
+msgid "Donation"
+msgstr "Donación"
+
+msgid "Download PDF"
+msgstr "Download PDF"
+
+msgid "Download XML"
+msgstr "Download XML"
+
+msgid "Dto."
+msgstr "Dto."
+
+msgid "Duração"
+msgstr "Duração"
+
+msgid "Duration in readable format"
+msgstr "Duração em formato legível"
+
+msgid "Tax ID check digit"
+msgstr "Dígito Verificador del RUC"
+
+msgid "EDI Manager"
+msgstr "EDI Manager"
+
+msgid "EXW"
+msgstr "EXW"
+
+msgid "Efectivo"
+msgstr "Efectivo"
+
+msgid "Ej: 84713000"
+msgstr "Ej: 84713000"
+
+msgid "The CDC must contain exactly 44 numeric digits."
+msgstr "El CDC debe contener exactamente 44 dígitos numéricos."
+
+msgid "El cliente contribuyente debe tener RUC"
+msgstr "El cliente contribuyente debe tener RUC"
+
+msgid "\nEl cliente no contribuyente debe tener número de documento de identidad"
+msgstr "\nEl cliente no contribuyente debe tener número de documento de identidad"
+
+msgid "The security code must have exactly 9 characters"
+msgstr "El código de seguridad debe tener exactamente 9 caracteres"
+
+msgid "The document type code must be unique"
+msgstr "El código del tipo de documento debe ser único"
+
+msgid "El documento ha sido cancelado"
+msgstr "El documento ha sido cancelado"
+
+msgid "The end number must be greater than or equal to the start number."
+msgstr "El número final debe ser mayor o igual al inicial."
+
+msgid "The end number is outside the authorization range (maximum: %(max)s)."
+msgstr "El número final está fuera del rango del timbrado (máximo: %(max)s)."
+
+msgid "The start number is outside the authorization range (minimum: %(min)s)."
+msgstr "El número inicial está fuera del rango del timbrado (mínimo: %(min)s)."
+
+msgid "\nEl plazo de cancelación ha expirado. Límite: %(deadline)s (%(hours)s horas \ndesde emisión)."
+msgstr "\nEl plazo de cancelación ha expirado. Límite: %(deadline)s (%(hours)s horas \ndesde emisión)."
+
+msgid "\nEl plazo de cancelación ha expirado. Tipo %(doc_type)s permite cancelación \nhasta %(limit)s horas después de la aceptación (han transcurrido \n%(elapsed).0f horas)."
+msgstr "\nEl plazo de cancelación ha expirado. Tipo %(doc_type)s permite cancelación \nhasta %(limit)s horas después de la aceptación (han transcurrido \n%(elapsed).0f horas)."
+
+msgid "Product %s does not have an NCM code"
+msgstr "El producto %s no tiene código NCM"
+
+msgid "Provider '%s' does not implement document sending"
+msgstr "El proveedor '%s' no implementa el envío de documentos"
+
+msgid "Provider '%s' does not implement cancellation"
+msgstr "El proveedor '%s' no implementa la cancelación"
+
+msgid "El proveedor '%s' no implementa la consulta de estado"
+msgstr "El proveedor '%s' no implementa la consulta de estado"
+
+msgid "Provider '%s' does not implement inutilization"
+msgstr "El proveedor '%s' no implementa la inutilización"
+
+msgid "Provider '%s' does not implement preview"
+msgstr "El proveedor '%s' no implementa la previsualización"
+
+msgid "Provider '%s' does not implement connection testing"
+msgstr "El proveedor '%s' no implementa la prueba de conexión"
+
+msgid "\nEl rango máximo de inutilización es %(max)s números (solicitados: %(qty)s)."
+msgstr "\nEl rango máximo de inutilización es %(max)s números (solicitados: %(qty)s)."
+
+msgid "The authorization has expired"
+msgstr "El timbrado está vencido"
+
+msgid "Electronic"
+msgstr "Electrónico"
+
+msgid "Electronic Invoice Issuer"
+msgstr "Emisor de la Factura Electrónica"
+
+msgid "Endpoint"
+msgstr "Endpoint"
+
+msgid "Entregas"
+msgstr "Entregas"
+
+msgid "Sent"
+msgstr "Enviado"
+
+msgid "Send"
+msgstr "Enviar"
+
+msgid "Enviar a EDI"
+msgstr "Enviar a EDI"
+
+msgid "Enviar al SIFEN"
+msgstr "Enviar al SIFEN"
+
+msgid "Envio de Documento"
+msgstr "Envio de Documento"
+
+msgid "Environment"
+msgstr "Environment"
+
+msgid "Successful Send"
+msgstr "Envío Exitoso"
+
+msgid "Error"
+msgstr "Error"
+
+msgid "Error cancelando documento: %s"
+msgstr "Error cancelando documento: %s"
+
+msgid "Inutilization error: %s"
+msgstr "Error de inutilización: %s"
+
+msgid "Error enviando documento: %s"
+msgstr "Error enviando documento: %s"
+
+msgid "Error sending inutilization: %s"
+msgstr "Error enviando inutilización: %s"
+
+msgid "Establishment"
+msgstr "Establecimiento"
+
+msgid "State"
+msgstr "Estado"
+
+msgid "Estado EDI"
+msgstr "Estado EDI"
+
+msgid "\nEste documento es una representación gráfica de un Documento Electrónico \n(DE)"
+msgstr "\nEste documento es una representación gráfica de un Documento Electrónico \n(DE)"
+
+msgid "Evento"
+msgstr "Evento"
+
+msgid "Exenta"
+msgstr "Exenta"
+
+msgid "ELECTRONIC INVOICE"
+msgstr "FACTURA ELECTRÓNICA"
+
+msgid "FAS"
+msgstr "FAS"
+
+msgid "FCA"
+msgstr "FCA"
+
+msgid "FOB"
+msgstr "FOB"
+
+msgid "FactPy"
+msgstr "FactPy"
+
+msgid "Factura"
+msgstr "Factura"
+
+msgid "Electronic Invoice"
+msgstr "Factura Electrónica"
+
+msgid "Factura emitida por el comprador"
+msgstr "Factura emitida por el comprador"
+
+msgid "FacturaSend"
+msgstr "FacturaSend"
+
+msgid "Electronic Invoicing"
+msgstr "Facturación Electrónica"
+
+msgid "\nFacturas superiores a Gs. 7.000.000 no pueden ser innominadas. Debe \nidentificar al receptor."
+msgstr "\nFacturas superiores a Gs. 7.000.000 no pueden ser innominadas. Debe \nidentificar al receptor."
+
+msgid "Estimated Billing Date (E506)"
+msgstr "Fecha Estimada de Facturación (E506)"
+
+msgid "Fecha Fin Transporte (E910)"
+msgstr "Fecha Fin Transporte (E910)"
+
+msgid "Fecha Inicio Transporte (E909)"
+msgstr "Fecha Inicio Transporte (E909)"
+
+msgid "Fecha del Documento (H010)"
+msgstr "Fecha del Documento (H010)"
+
+msgid "Estimated billing date for NRE without associated invoice"
+msgstr "Fecha estimada de facturación para NRE sin factura asociada"
+
+msgid "Fluvial"
+msgstr "Fluvial"
+
+msgid "GET"
+msgstr "GET"
+
+msgid "Giro"
+msgstr "Giro"
+
+msgid "Global"
+msgstr "Global"
+
+msgid "\nHay %(count)s número(s) en el rango que ya fueron usados en facturas \nconfirmadas."
+msgstr "\nHay %(count)s número(s) en el rango que ya fueron usados en facturas \nconfirmadas."
+
+msgid "Headers HTTP enviados"
+msgstr "Headers HTTP enviados"
+
+msgid "Headers HTTP recebidos"
+msgstr "Headers HTTP recebidos"
+
+msgid "Headers da Requisição"
+msgstr "Headers da Requisição"
+
+msgid "Headers da Resposta"
+msgstr "Headers da Resposta"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "ID de Lote"
+msgstr "ID de Lote"
+
+msgid "ID do Lote"
+msgstr "ID do Lote"
+
+msgid "Unique client system ID"
+msgstr "ID único del sistema cliente"
+
+msgid "VAT 10%"
+msgstr "IVA 10%"
+
+msgid "VAT 5%"
+msgstr "IVA 5%"
+
+msgid "Tax Identification"
+msgstr "Identificación Fiscal"
+
+msgid "Identificador de lote do provedor"
+msgstr "Identificador de lote do provedor"
+
+msgid "Impreso"
+msgstr "Impreso"
+
+msgid "Indica se a operação foi bem-sucedida"
+msgstr "Indica se a operação foi bem-sucedida"
+
+msgid "Indica se houve erro na operação"
+msgstr "Indica se houve erro na operação"
+
+msgid "Enter the cancelation reason..."
+msgstr "Ingrese el motivo de cancelación..."
+
+msgid "Number Inutilization"
+msgstr "Inutilización de Números"
+
+msgid "Journal Entry"
+msgstr "Journal Entry"
+
+msgid "KUDE (PDF)"
+msgstr "KUDE (PDF)"
+
+msgid "KUDE (Representación Impresa)"
+msgstr "KUDE (Representación Impresa)"
+
+msgid "KUDE Filename"
+msgstr "KUDE Filename"
+
+msgid "L10N Py Doc Type Code"
+msgstr "L10N Py Doc Type Code"
+
+msgid "La dirección del cliente es obligatoria"
+msgstr "La dirección del cliente es obligatoria"
+
+msgid "La factura ha sido enviada al sistema EDI"
+msgstr "La factura ha sido enviada al sistema EDI"
+
+msgid "La factura no tiene CDC, no se puede cancelar"
+msgstr "La factura no tiene CDC, no se puede cancelar"
+
+msgid "\nLa fecha estimada de facturación no puede exceder el mes siguiente al de \nemisión."
+msgstr "\nLa fecha estimada de facturación no puede exceder el mes siguiente al de \nemisión."
+
+msgid "\nLa inutilización permite informar al SIFEN que ciertos números\\n\n                de la faja autorizada no serán utilizados."
+msgstr "\nLa inutilización permite informar al SIFEN que ciertos números\\n\n                de la faja autorizada no serán utilizados."
+
+msgid "Last Modified on"
+msgstr "Last Modified on"
+
+msgid "Last Updated by"
+msgstr "Last Updated by"
+
+msgid "Last Updated on"
+msgstr "Last Updated on"
+
+msgid "Liq. IVA 10% (F016):"
+msgstr "Liq. IVA 10% (F016):"
+
+msgid "Liq. IVA 5% (F015):"
+msgstr "Liq. IVA 5% (F015):"
+
+msgid "Log de Operações EDI Paraguay"
+msgstr "Log de Operações EDI Paraguay"
+
+msgid "EDI Logs"
+msgstr "Logs EDI"
+
+msgid "Los números deben ser mayores a cero."
+msgstr "Los números deben ser mayores a cero."
+
+msgid "Lugar de Provisión"
+msgstr "Lugar de Provisión"
+
+msgid "Marca (E961)"
+msgstr "Marca (E961)"
+
+msgid "Mensagem de Erro"
+msgstr "Mensagem de Erro"
+
+msgid "Mensaje EDI"
+msgstr "Mensaje EDI"
+
+msgid "Microproductor"
+msgstr "Microproductor"
+
+msgid "Mixin para Logging Automático EDI"
+msgstr "Mixin para Logging Automático EDI"
+
+msgid "Mixto"
+msgstr "Mixto"
+
+msgid "Mixto (Venta de mercadería y servicios)"
+msgstr "Mixto (Venta de mercadería y servicios)"
+
+msgid "Modalidad de Transporte (E901)"
+msgstr "Modalidad de Transporte (E901)"
+
+msgid "Reason"
+msgstr "Motivo"
+
+msgid "Cancelation Reason"
+msgstr "Motivo de Cancelación"
+
+msgid "Motivo de Contingencia"
+msgstr "Motivo de Contingencia"
+
+msgid "Motivo de Remisión (E501)"
+msgstr "Motivo de Remisión (E501)"
+
+msgid "Multimodal"
+msgstr "Multimodal"
+
+msgid "Método HTTP"
+msgstr "Método HTTP"
+
+msgid "NOTA DE CRÉDITO ELECTRÓNICA"
+msgstr "NOTA DE CRÉDITO ELECTRÓNICA"
+
+msgid "NOTA DE DÉBITO ELECTRÓNICA"
+msgstr "NOTA DE DÉBITO ELECTRÓNICA"
+
+msgid "NOTA DE REMISIÓN ELECTRÓNICA"
+msgstr "NOTA DE REMISIÓN ELECTRÓNICA"
+
+msgid "\nNRE traslado por venta sin documento asociado: debe indicar fecha estimada \nde facturación."
+msgstr "\nNRE traslado por venta sin documento asociado: debe indicar fecha estimada \nde facturación."
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Naturaleza del Transportista (E940)"
+msgstr "Naturaleza del Transportista (E940)"
+
+msgid "No contribuyente"
+msgstr "No contribuyente"
+
+msgid "No hay KUDE disponible para este documento"
+msgstr "No hay KUDE disponible para este documento"
+
+msgid "No hay XML disponible para este documento"
+msgstr "No hay XML disponible para este documento"
+
+msgid "No hay XML disponible para generar el KuDE"
+msgstr "No hay XML disponible para generar el KuDE"
+
+msgid "No hay un conector EDI configurado para esta empresa"
+msgstr "No hay un conector EDI configurado para esta empresa"
+
+msgid "No hay un conector EDI configurado para esta empresa."
+msgstr "No hay un conector EDI configurado para esta empresa."
+
+msgid "No se puede cancelar un documento sin CDC"
+msgstr "No se puede cancelar un documento sin CDC"
+
+msgid "No se seleccionó una factura"
+msgstr "No se seleccionó una factura"
+
+msgid "Name"
+msgstr "Nombre"
+
+msgid "Nombre Fantasía"
+msgstr "Nombre Fantasía"
+
+msgid "Nombre Vendedor (EA009)"
+msgstr "Nombre Vendedor (EA009)"
+
+msgid "Nombre comercial o de fantasía de la empresa"
+msgstr "Nombre comercial o de fantasía de la empresa"
+
+msgid "Nombre del Chofer (E951)"
+msgstr "Nombre del Chofer (E951)"
+
+msgid "Nombre del Transportista (E941)"
+msgstr "Nombre del Transportista (E941)"
+
+msgid "Nombre del conector"
+msgstr "Nombre del conector"
+
+msgid "Nomenclatura Común del Mercosur (8 dígitos)"
+msgstr "Nomenclatura Común del Mercosur (8 dígitos)"
+
+msgid "Normal"
+msgstr "Normal"
+
+msgid "Nota de Crédito Electrónica"
+msgstr "Nota de Crédito Electrónica"
+
+msgid "\nNota de Crédito Electrónica: debe tener exactamente 1 documento asociado."
+msgstr "\nNota de Crédito Electrónica: debe tener exactamente 1 documento asociado."
+
+msgid "Nota de Débito Electrónica"
+msgstr "Nota de Débito Electrónica"
+
+msgid "\nNota de Débito Electrónica: debe tener exactamente 1 documento asociado."
+msgstr "\nNota de Débito Electrónica: debe tener exactamente 1 documento asociado."
+
+msgid "Nota de Remisión (NRE)"
+msgstr "Nota de Remisión (NRE)"
+
+msgid "Nota de Remisión Electrónica"
+msgstr "Nota de Remisión Electrónica"
+
+msgid "Nota de Remisión: el motivo es obligatorio."
+msgstr "Nota de Remisión: el motivo es obligatorio."
+
+msgid "Nota de crédito"
+msgstr "Nota de crédito"
+
+msgid "Nota de débito"
+msgstr "Nota de débito"
+
+msgid "Nota de remisión"
+msgstr "Nota de remisión"
+
+msgid "Nro. Casa Vendedor (EA011)"
+msgstr "Nro. Casa Vendedor (EA011)"
+
+msgid "Nro. Doc. Vendedor (EA008)"
+msgstr "Nro. Doc. Vendedor (EA008)"
+
+msgid "Número Desde"
+msgstr "Número Desde"
+
+msgid "Número Hasta"
+msgstr "Número Hasta"
+
+msgid "Número de Casa (E931)"
+msgstr "Número de Casa (E931)"
+
+msgid "Número de Casa Salida (E921)"
+msgstr "Número de Casa Salida (E921)"
+
+msgid "Número de Constancia (EA004)"
+msgstr "Número de Constancia (EA004)"
+
+msgid "Número de Constancia (H012)"
+msgstr "Número de Constancia (H012)"
+
+msgid "Número de Control (EA005)"
+msgstr "Número de Control (EA005)"
+
+msgid "Document Number"
+msgstr "Número de Documento"
+
+msgid "Número de Identificación (E962)"
+msgstr "Número de Identificación (E962)"
+
+msgid "Número de Manifiesto / Conocimiento (E907)"
+msgstr "Número de Manifiesto / Conocimiento (E907)"
+
+msgid "Número de tentativas realizadas"
+msgstr "Número de tentativas realizadas"
+
+msgid "Número de timbrado del documento impreso (H005)"
+msgstr "Número de timbrado del documento impreso (H005)"
+
+msgid "Número del documento (H008)"
+msgstr "Número del documento (H008)"
+
+msgid "Operación bancaria"
+msgstr "Operación bancaria"
+
+msgid "Operación electrónica"
+msgstr "Operación electrónica"
+
+msgid "Operación presencial"
+msgstr "Operación presencial"
+
+msgid "Operación telemarketing"
+msgstr "Operación telemarketing"
+
+msgid "Otros"
+msgstr "Otros"
+
+msgid "P. Unit."
+msgstr "P. Unit."
+
+msgid "PATCH"
+msgstr "PATCH"
+
+msgid "POST"
+msgstr "POST"
+
+msgid "PUT"
+msgstr "PUT"
+
+msgid "Pago bancario"
+msgstr "Pago bancario"
+
+msgid "Para Enviar"
+msgstr "Para Enviar"
+
+msgid "Pasaporte"
+msgstr "Pasaporte"
+
+msgid "Pasaporte:"
+msgstr "Pasaporte:"
+
+msgid "Payload da requisição"
+msgstr "Payload da requisição"
+
+msgid "Payload da resposta"
+msgstr "Payload da resposta"
+
+msgid "Permuta"
+msgstr "Permuta"
+
+msgid "Plazo de Transmisión"
+msgstr "Plazo de Transmisión"
+
+msgid "Plazo máximo para transmitir el DTE (72 horas desde emisión)"
+msgstr "Plazo máximo para transmitir el DTE (72 horas desde emisión)"
+
+msgid "Por Ítem"
+msgstr "Por Ítem"
+
+msgid "Prestación de servicios"
+msgstr "Prestación de servicios"
+
+msgid "Preview KuDE"
+msgstr "Preview KuDE"
+
+msgid "Preview XML"
+msgstr "Preview XML"
+
+msgid "Test Connection"
+msgstr "Probar Conexión"
+
+msgid "Processing"
+msgstr "Procesando"
+
+msgid "Processamento Local"
+msgstr "Processamento Local"
+
+msgid "Producción"
+msgstr "Producción"
+
+msgid "Product"
+msgstr "Product"
+
+msgid "Promoción o entrega de muestras"
+msgstr "Promoción o entrega de muestras"
+
+msgid "Propio"
+msgstr "Propio"
+
+msgid "Provedor"
+msgstr "Provedor"
+
+msgid "Provider"
+msgstr "Proveedor"
+
+msgid "Pruebas"
+msgstr "Pruebas"
+
+msgid "Punto de Entrega"
+msgstr "Punto de Entrega"
+
+msgid "Expedition Point"
+msgstr "Punto de Expedición"
+
+msgid "Punto de Salida"
+msgstr "Punto de Salida"
+
+msgid "Punto de expedición (H007)"
+msgstr "Punto de expedición (H007)"
+
+msgid "Puntos de Entrega"
+msgstr "Puntos de Entrega"
+
+msgid "QR"
+msgstr "QR"
+
+msgid "Tax ID"
+msgstr "RUC"
+
+msgid "RUC Completo"
+msgstr "RUC Completo"
+
+msgid "RUC con dígito verificador"
+msgstr "RUC con dígito verificador"
+
+msgid "RUC del Transportista (E942)"
+msgstr "RUC del Transportista (E942)"
+
+msgid "RUC:"
+msgstr "RUC:"
+
+msgid "Receipt ID"
+msgstr "Receipt ID"
+
+msgid "Receptor de la Factura Electrónica"
+msgstr "Receptor de la Factura Electrónica"
+
+msgid "Rejected"
+msgstr "Rechazado"
+
+msgid "Registro Único del Contribuyente sin dígito verificador"
+msgstr "Registro Único del Contribuyente sin dígito verificador"
+
+msgid "Retry"
+msgstr "Reintentar"
+
+msgid "Responsable del Flete (E905)"
+msgstr "Responsable del Flete (E905)"
+
+msgid "Resposta Recebida"
+msgstr "Resposta Recebida"
+
+msgid "Response"
+msgstr "Respuesta"
+
+msgid "Retención"
+msgstr "Retención"
+
+msgid "SIFEN Directo"
+msgstr "SIFEN Directo"
+
+msgid "Sem dados"
+msgstr "Sem dados"
+
+msgid "Serv."
+msgstr "Serv."
+
+msgid "\nSolo constancias electrónicas pueden tener tipo y número de constancia."
+msgstr "\nSolo constancias electrónicas pueden tener tipo y número de constancia."
+
+msgid "Solo documentos electrónicos pueden tener CDC."
+msgstr "Solo documentos electrónicos pueden tener CDC."
+
+msgid "Solo se pueden enviar inutilizaciones en estado borrador."
+msgstr "Solo se pueden enviar inutilizaciones en estado borrador."
+
+msgid "Solo se pueden reintentar documentos con error o rechazados"
+msgstr "Solo se pueden reintentar documentos con error o rechazados"
+
+msgid "Solo un conector EDI por empresa"
+msgstr "Solo un conector EDI por empresa"
+
+msgid "String QR"
+msgstr "String QR"
+
+msgid "Sub-total Exento (F003):"
+msgstr "Sub-total Exento (F003):"
+
+msgid "Sub-total Gravado 10% (F005):"
+msgstr "Sub-total Gravado 10% (F005):"
+
+msgid "Sub-total Gravado 5% (F004):"
+msgstr "Sub-total Gravado 5% (F004):"
+
+msgid "Sucesso"
+msgstr "Sucesso"
+
+msgid "Tarjeta de crédito"
+msgstr "Tarjeta de crédito"
+
+msgid "Tarjeta de débito"
+msgstr "Tarjeta de débito"
+
+msgid "Tarjeta empresarial"
+msgstr "Tarjeta empresarial"
+
+msgid "Tel:"
+msgstr "Tel:"
+
+msgid "Tempo de Execução (ms)"
+msgstr "Tempo de Execução (ms)"
+
+msgid "Tempo de execução em milissegundos"
+msgstr "Tempo de execução em milissegundos"
+
+msgid "Tentativas"
+msgstr "Tentativas"
+
+msgid "Tercero"
+msgstr "Tercero"
+
+msgid "Terrestre"
+msgstr "Terrestre"
+
+msgid "Authorization"
+msgstr "Timbrado"
+
+msgid "Timeout"
+msgstr "Timeout"
+
+msgid "Tipo Doc. Vendedor (EA006)"
+msgstr "Tipo Doc. Vendedor (EA006)"
+
+msgid "Tipo de Asociación (H002)"
+msgstr "Tipo de Asociación (H002)"
+
+msgid "Tipo de Constancia (EA002)"
+msgstr "Tipo de Constancia (EA002)"
+
+msgid "Tipo de Constancia (H011)"
+msgstr "Tipo de Constancia (H011)"
+
+msgid "Tipo de Documento Electrónico"
+msgstr "Tipo de Documento Electrónico"
+
+msgid "Tipo de Documento Impreso (H009)"
+msgstr "Tipo de Documento Impreso (H009)"
+
+msgid "Tipo de Emisión"
+msgstr "Tipo de Emisión"
+
+msgid "Tipo de Operação"
+msgstr "Tipo de Operação"
+
+msgid "Tipo de Pago"
+msgstr "Tipo de Pago"
+
+msgid "Tipo de Presencia"
+msgstr "Tipo de Presencia"
+
+msgid "Tipo de Transacción"
+msgstr "Tipo de Transacción"
+
+msgid "Tipo de Transporte (E903)"
+msgstr "Tipo de Transporte (E903)"
+
+msgid "Tipo de Vehículo (E960)"
+msgstr "Tipo de Vehículo (E960)"
+
+msgid "Tipo de pago para condición contado (E606)"
+msgstr "Tipo de pago para condición contado (E606)"
+
+msgid "Total Liq. IVA (F017):"
+msgstr "Total Liq. IVA (F017):"
+
+msgid "Total Operación (F008):"
+msgstr "Total Operación (F008):"
+
+msgid "Total en Gs. (F023):"
+msgstr "Total en Gs. (F023):"
+
+msgid "Transferencia"
+msgstr "Transferencia"
+
+msgid "Transport"
+msgstr "Transporte"
+
+msgid "Transporte de Mercaderías"
+msgstr "Transporte de Mercaderías"
+
+msgid "Transportista"
+msgstr "Transportista"
+
+msgid "Traslado entre locales"
+msgstr "Traslado entre locales"
+
+msgid "\nTraslado entre locales: el RUC del receptor debe coincidir con el del \nemisor."
+msgstr "\nTraslado entre locales: el RUC del receptor debe coincidir con el del \nemisor."
+
+msgid "Traslado por consignación"
+msgstr "Traslado por consignación"
+
+msgid "Traslado por exportación"
+msgstr "Traslado por exportación"
+
+msgid "Traslado por importación"
+msgstr "Traslado por importación"
+
+msgid "Traslado por venta"
+msgstr "Traslado por venta"
+
+msgid "URL ou endpoint da API"
+msgstr "URL ou endpoint da API"
+
+msgid "Ubicación"
+msgstr "Ubicación"
+
+msgid "Vale"
+msgstr "Vale"
+
+msgid "Validação"
+msgstr "Validação"
+
+msgid "Valor comercial"
+msgstr "Valor comercial"
+
+msgid "Valor fiscal"
+msgstr "Valor fiscal"
+
+msgid "Vehículo de Transporte"
+msgstr "Vehículo de Transporte"
+
+msgid "Vehículos"
+msgstr "Vehículos"
+
+msgid "Venta a domicilio"
+msgstr "Venta a domicilio"
+
+msgid "Venta de activo fijo"
+msgstr "Venta de activo fijo"
+
+msgid "Venta de crédito fiscal"
+msgstr "Venta de crédito fiscal"
+
+msgid "Venta de divisas"
+msgstr "Venta de divisas"
+
+msgid "Venta de mercadería"
+msgstr "Venta de mercadería"
+
+msgid "Venta merc."
+msgstr "Venta merc."
+
+msgid "Verificar Estado EDI"
+msgstr "Verificar Estado EDI"
+
+msgid "Wizard para cancelar documento EDI"
+msgstr "Wizard para cancelar documento EDI"
+
+msgid "Wizard para enviar factura a EDI"
+msgstr "Wizard para enviar factura a EDI"
+
+msgid "XML Filename"
+msgstr "XML Filename"
+
+msgid "XML Firmado"
+msgstr "XML Firmado"
+
+msgid "al"
+msgstr "al"
+
+msgid "| T.C.:"
+msgstr "| T.C.:"
+
+msgid "É Erro"
+msgstr "É Erro"

@@ -7,7 +7,7 @@
             <form>
                 <sheet>
                     <group>
-                        <group string="Datos de Transporte">
+                        <group string="Data de Transport">
                             <field name="move_id" readonly="1" />
                             <field name="transport_mode" />
                             <field name="transport_type" />
@@ -26,7 +26,7 @@
                         </group>
                     </group>
                     <group>
-                        <group string="Transportista">
+                        <group string="Carrier">
                             <field name="transporter_nature" />
                             <field name="transporter_name" />
                             <field name="transporter_ruc" />
@@ -36,7 +36,7 @@
                         </group>
                     </group>
                     <notebook>
-                        <page string="Vehículos">
+                        <page string="Vehicles">
                             <field name="vehicle_ids">
                                 <list editable="bottom">
                                     <field name="vehicle_type" />

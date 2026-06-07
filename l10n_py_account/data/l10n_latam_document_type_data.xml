@@ -24,7 +24,7 @@
 
     <record id="dc_py_nc" model="l10n_latam.document.type">
         <field name="country_id" ref="base.py" />
-        <field name="name">Nota de Crédito</field>
+        <field name="name">Nota de Input</field>
         <field name="code">5</field>
         <field name="doc_code_prefix">NC</field>
         <field name="report_name">NOTA DE CRÉDITO ELECTRÓNICA</field>
@@ -34,7 +34,7 @@
 
     <record id="dc_py_nd" model="l10n_latam.document.type">
         <field name="country_id" ref="base.py" />
-        <field name="name">Nota de Débito</field>
+        <field name="name">Nota de Output</field>
         <field name="code">6</field>
         <field name="doc_code_prefix">ND</field>
         <field name="report_name">NOTA DE DÉBITO ELECTRÓNICA</field>

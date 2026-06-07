@@ -6,7 +6,7 @@ from ..validators.ruc_validator import RUCValidator
 
 
 class ResPartner(models.Model):
-    """Extensión de res.partner para Paraguay con campos fiscales"""
+    """Extension of res.partner for Paraguay with fiscal fields"""
 
     _inherit = "res.partner"
 
@@ -25,15 +25,15 @@ class ResPartner(models.Model):
             else False
         )
 
-    # ============== CAMPOS FISCALES PY ==============
+    # ============== PY FISCAL FIELDS ==============
 
     l10n_py_ruc = fields.Char(
-        string="RUC",
+        string="Tax ID (RUC)",
         size=20,
         compute="_compute_l10n_py_ruc_fields",
         inverse="_inverse_l10n_py_ruc",
         store=True,
-        help="Registro Único del Contribuyente (sin dígito verificador)",
+        help="Single Taxpayer Registry (without check digit)",
     )
 
     l10n_py_ruc_dv = fields.Char(
@@ -41,74 +41,74 @@ class ResPartner(models.Model):
         size=1,
         compute="_compute_l10n_py_ruc_fields",
         store=True,
-        help="Dígito verificador del RUC",
+        help="RUC check digit",
     )
 
     l10n_py_taxpayer_type = fields.Selection(
         [
-            ("1", "Contribuyente"),
-            ("2", "No Contribuyente"),
+            ("1", "Taxpayer"),
+            ("2", "Non-Taxpayer"),
         ],
-        string="Tipo de Contribuyente",
-        help="Tipo de contribuyente según la SET",
+        string="Taxpayer Type",
+        help="Taxpayer type according to SET",
     )
 
     l10n_py_fantasy_name = fields.Char(
-        string="Nombre de Fantasía",
-        help="Nombre comercial o de fantasía",
+        string="Trade Name",
+        help="Commercial or trade name",
     )
 
     l10n_py_activity_description = fields.Char(
-        string="Actividad Económica",
-        help="Descripción de la actividad económica principal",
+        string="Economic Activity",
+        help="Description of the main economic activity",
     )
 
     l10n_py_doc_type = fields.Selection(
         [
-            ("1", "Cédula de Identidad"),
-            ("2", "Pasaporte"),
-            ("3", "Carnet de Residencia"),
-            ("4", "Innominado"),
+            ("1", "Identity Card"),
+            ("2", "Passport"),
+            ("3", "Residence Permit"),
+            ("4", "Unnamed"),
         ],
-        string="Tipo de Documento de Identidad",
-        help="Tipo de documento de identidad para no contribuyentes (SIFEN D024)",
+        string="Identity Document Type",
+        help="Identity document type for non-taxpayers (SIFEN D024)",
     )
 
     l10n_py_doc_number = fields.Char(
-        string="Número de Documento",
+        string="Document Number",
         size=20,
-        help="Número de documento de identidad para no contribuyentes (SIFEN D025)",
+        help="Identity document number for non-taxpayers (SIFEN D025)",
     )
 
-    # ============== CAMPOS DE UBICACIÓN (RELATED) ==============
+    # ============== LOCATION FIELDS (RELATED) ==============
 
     l10n_py_department_code = fields.Integer(
-        string="Código Departamento SET",
+        string="SET Department Code",
         related="state_id.l10n_py_code",
         store=True,
         readonly=True,
-        help="Código del departamento según SET",
+        help="Department code according to SET",
     )
 
     l10n_py_city_code = fields.Char(
-        string="Código Ciudad SET",
+        string="SET City Code",
         related="city_id.l10n_py_code",
         store=True,
         readonly=True,
-        help="Código de la ciudad según SET",
+        help="City code according to SET",
     )
 
-    # ============== CAMPOS BARRIO ==============
+    # ============== NEIGHBORHOOD FIELDS ==============
 
     l10n_py_neighborhood_id = fields.Many2one(
         comodel_name="l10n_py.neighborhood",
-        string="Barrio",
+        string="Neighborhood",
         domain="[('city_id', '=', city_id)]",
-        help="Barrio o distrito del contacto",
+        help="Neighborhood or district of the contact",
     )
 
     l10n_py_neighborhood_name = fields.Char(
-        string="Nombre del Barrio",
+        string="Neighborhood Name",
         related="l10n_py_neighborhood_id.name",
         store=True,
         readonly=True,
@@ -332,7 +332,7 @@ class ResPartner(models.Model):
 
     @api.onchange("l10n_py_neighborhood_id")
     def _onchange_l10n_py_neighborhood_id(self):
-        """Actualizar ciudad y código postal cuando cambia el barrio"""
+        """Update city and zip code when neighborhood changes"""
         if self.l10n_py_neighborhood_id:
             if not self.city_id:
                 self.city_id = self.l10n_py_neighborhood_id.city_id
@@ -341,7 +341,7 @@ class ResPartner(models.Model):
 
     @api.onchange("city_id")
     def _onchange_city_id(self):
-        """Limpiar barrio si cambia la ciudad y no coincide"""
+        """Clear neighborhood if city changes and doesn't match"""
         if (
             self.l10n_py_neighborhood_id
             and self.city_id
@@ -351,7 +351,7 @@ class ResPartner(models.Model):
 
     @api.onchange("state_id")
     def _onchange_state_id_l10n_py(self):
-        """Limpiar ciudad y barrio si cambia el departamento y no coinciden"""
+        """Clear city and neighborhood if state changes and doesn't match"""
         if self.state_id:
             if self.city_id and self.city_id.state_id != self.state_id:
                 self.city_id = False
@@ -363,21 +363,21 @@ class ResPartner(models.Model):
 
     @api.onchange("zip")
     def _onchange_zip_l10n_py(self):
-        """Buscar barrio por código postal y auto-completar ubicación"""
+        """Search neighborhood by zip code and auto-fill location"""
         if self.zip and self.country_id and self.country_id.code == "PY":
             zipcode = self.zip.strip()
-            # Buscar match exato primeiro, depois por zipcode padded com zeros
+            # Search exact match first, then by padded zipcode
             neighborhood = self.env["l10n_py.neighborhood"].search(
                 [("zipcode", "=", zipcode)], limit=1
             )
             if not neighborhood:
-                # Tentar com padding (ex: "1001" → "001001")
+                # Try with padding (e.g., "1001" -> "001001")
                 zipcode_padded = zipcode.zfill(6)
                 neighborhood = self.env["l10n_py.neighborhood"].search(
                     [("zipcode", "=", zipcode_padded)], limit=1
                 )
             if not neighborhood:
-                # Tentar busca por prefixo (ex: "1001" encontra "001001")
+                # Try prefix search (e.g., "1001" matches "001001")
                 neighborhood = self.env["l10n_py.neighborhood"].search(
                     [("zipcode", "=like", f"%{zipcode}")], limit=1
                 )

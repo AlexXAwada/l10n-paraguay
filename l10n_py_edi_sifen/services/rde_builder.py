@@ -3,7 +3,7 @@
 """
 RDeBuilder: Converts invoice_data dict → pysifen RDe binding object.
 
-Mapping follows SIFEN v150 Manual Técnico.
+Mapping follows SIFEN v150 Technical Manual.
 """
 
 import logging
@@ -172,11 +172,11 @@ def _get_currency_desc(currency_name: str) -> str:
     """Get human description for currency."""
     _CURRENCY_DESC = {
         "PYG": "Guarani",
-        "USD": "Dólar americano",
+        "USD": "US Dollar",
         "BRL": "Real",
         "EUR": "Euro",
-        "ARS": "Peso argentino",
-        "UYU": "Peso uruguayo",
+        "ARS": "Argentine Peso",
+        "UYU": "Uruguayan Peso",
     }
     return _CURRENCY_DESC.get(currency_name, currency_name)
 
@@ -352,7 +352,7 @@ class RDeBuilder:
 
         doc_type = self.data.get("tipoDocumento", 1)
 
-        # Factura electrónica (tipo 1)
+        # Electronic invoice (type 1)
         if doc_type == 1:
             factura = self.data.get("factura", {})
             presencia = factura.get("presencia", 1)
@@ -363,7 +363,7 @@ class RDeBuilder:
                 ),
             )
 
-        # Autofactura electrónica (tipo 4)
+        # Electronic self-invoice (type 4)
         elif doc_type == 4:
             factura = self.data.get("factura", {})
             presencia = factura.get("presencia", 1)
@@ -378,7 +378,7 @@ class RDeBuilder:
             if afe_data:
                 dtip.gCamAE = self._build_gCamAE(afe_data)
 
-        # Nota de crédito (tipo 5) or Nota de débito (tipo 6)
+        # Credit note (type 5) or Debit note (type 6)
         elif doc_type in (5, 6):
             mot_emi = self.data.get("motivoEmision", 1)
             dtip.gCamNCDE = TgCamNcde(
@@ -386,7 +386,7 @@ class RDeBuilder:
                 dDesMotEmi=_MOT_EMI_DESC.get(mot_emi, TdDesMotEmi.ANULACI_N),
             )
 
-        # Nota de remisión (tipo 7)
+        # Remission note (type 7)
         elif doc_type == 7:
             remision = self.data.get("remision", {})
             dtip.gCamNRE = TgCamNre(
@@ -407,7 +407,7 @@ class RDeBuilder:
             # Contado — build gPaConEIni
             cam_cond.gPaConEIni = self._build_gPaConEIni(cond)
         elif cond_ope == 2:
-            # Crédito — build gPagCred
+            # Credit — build gPagCred
             cam_cond.gPagCred = self._build_gPagCred(cond)
 
         dtip.gCamCond = cam_cond

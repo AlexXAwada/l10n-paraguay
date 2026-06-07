@@ -7,7 +7,7 @@ from odoo.tests.common import TransactionCase
 
 @tagged("post_install", "-at_install", "l10n_py")
 class TestAccountMove(TransactionCase):
-    """Tests para account.move (extensión paraguaya) — Cenários BDD"""
+    """Tests for account.move (Paraguayan extension) — BDD Scenarios"""
 
     @classmethod
     def setUpClass(cls):
@@ -22,7 +22,7 @@ class TestAccountMove(TransactionCase):
         cls.company = cls.env.ref("base.main_company")
         cls.country_py = cls.env.ref("base.py")
 
-        # Configurar empresa como paraguaya
+        # Configurar company como paraguaya
         cls.company.write(
             {
                 "country_id": cls.country_py.id,
@@ -30,7 +30,7 @@ class TestAccountMove(TransactionCase):
             }
         )
 
-        # Tipo de documento factura
+        # Tipo de documento invoice
         cls.doc_type_invoice = cls.env["l10n_latam.document.type"].search(
             [("country_id", "=", cls.country_py.id), ("code", "=", "1")],
             limit=1,
@@ -83,7 +83,7 @@ class TestAccountMove(TransactionCase):
 
         # Journal de ventas (con LATAM documents habilitado)
         # Crear journal propio para evitar conflictos con journals que ya
-        # tienen facturas confirmadas (no se puede cambiar use_documents)
+        # tienen invoices confirmadas (no se puede cambiar use_documents)
         cls.journal = cls.Journal.create(
             {
                 "name": "Ventas PY Test",
@@ -94,7 +94,7 @@ class TestAccountMove(TransactionCase):
             }
         )
 
-        # Timbrado válido
+        # Valid authorization
         today = date.today()
         cls.authorization = cls.Authorization.create(
             {
@@ -122,13 +122,13 @@ class TestAccountMove(TransactionCase):
 
         # Ensure there's a tax group with country_id = PY
         tax_group = cls.env["account.tax.group"].search(
-            [("country_id", "=", cls.country_py.id), ("name", "=", "IVA 10%")],
+            [("country_id", "=", cls.country_py.id), ("name", "=", "VAT 10%")],
             limit=1,
         )
         if not tax_group:
             tax_group = cls.env["account.tax.group"].create(
                 {
-                    "name": "IVA 10%",
+                    "name": "VAT 10%",
                     "country_id": cls.country_py.id,
                 }
             )
@@ -136,7 +136,7 @@ class TestAccountMove(TransactionCase):
         # Impuestos (incluidos en el precio para SIFEN)
         cls.tax_10 = cls.Tax.create(
             {
-                "name": "IVA 10%",
+                "name": "VAT 10%",
                 "amount": 10.0,
                 "amount_type": "percent",
                 "type_tax_use": "sale",
@@ -146,7 +146,7 @@ class TestAccountMove(TransactionCase):
         )
         cls.tax_5 = cls.Tax.create(
             {
-                "name": "IVA 5%",
+                "name": "VAT 5%",
                 "amount": 5.0,
                 "amount_type": "percent",
                 "type_tax_use": "sale",
@@ -156,7 +156,7 @@ class TestAccountMove(TransactionCase):
         )
         cls.tax_exempt = cls.Tax.create(
             {
-                "name": "Exento",
+                "name": "Exempt",
                 "amount": 0.0,
                 "amount_type": "percent",
                 "type_tax_use": "sale",
@@ -167,28 +167,28 @@ class TestAccountMove(TransactionCase):
         # Productos
         cls.product_10 = cls.Product.create(
             {
-                "name": "Producto IVA 10%",
+                "name": "Producto VAT 10%",
                 "list_price": 1100.0,
                 "taxes_id": [(6, 0, [cls.tax_10.id])],
             }
         )
         cls.product_5 = cls.Product.create(
             {
-                "name": "Producto IVA 5%",
+                "name": "Producto VAT 5%",
                 "list_price": 525.0,
                 "taxes_id": [(6, 0, [cls.tax_5.id])],
             }
         )
         cls.product_exempt = cls.Product.create(
             {
-                "name": "Producto Exento",
+                "name": "Producto Exempt",
                 "list_price": 100.0,
                 "taxes_id": [(6, 0, [cls.tax_exempt.id])],
             }
         )
 
     def _create_invoice(self, products_prices=None, **kwargs):
-        """Helper para crear factura de prueba.
+        """Helper para crear invoice de prueba.
 
         products_prices: lista de tuplas (product, tax, price_unit)
         """
@@ -223,10 +223,10 @@ class TestAccountMove(TransactionCase):
         vals.update(kwargs)
         return self.AccountMove.create(vals)
 
-    # ============== F02: Número ao confirmar ==============
+    # ============== F02: Number on confirm ==============
 
     def test_action_post_assigns_first_number(self):
-        """F02: Confirmar factura asigna número = 1 (primer uso del timbrado)"""
+        """F02: Confirm invoice assigns number = 1 (first use of authorization)"""
         invoice = self._create_invoice()
         self.assertFalse(invoice.l10n_py_invoice_number)
         invoice.action_post()
@@ -234,7 +234,7 @@ class TestAccountMove(TransactionCase):
         self.assertEqual(invoice.l10n_py_full_invoice_number, "001-001-0000001")
 
     def test_action_post_sequential(self):
-        """F02: 3 facturas confirmadas → números 1, 2, 3"""
+        """F02: 3 invoices confirmed → numbers 1, 2, 3"""
         invoices = []
         for _i in range(3):
             inv = self._create_invoice()
@@ -246,8 +246,8 @@ class TestAccountMove(TransactionCase):
         self.assertEqual(invoices[2].l10n_py_invoice_number, 3)
 
     def test_action_post_exhausted_range(self):
-        """F02: Faja agotada → UserError"""
-        # Crear timbrado con rango mínimo
+        """F02: Faja exhausted → UserError"""
+        # Create authorization with minimum range
         today = date.today()
         auth_small = self.Authorization.create(
             {
@@ -263,13 +263,13 @@ class TestAccountMove(TransactionCase):
             }
         )
 
-        # Usar los 2 números disponibles
+        # Use the 2 available numbers
         inv1 = self._create_invoice(l10n_py_authorization_id=auth_small.id)
         inv1.action_post()
         inv2 = self._create_invoice(l10n_py_authorization_id=auth_small.id)
         inv2.action_post()
 
-        # Tercera factura debe fallar
+        # Tercera invoice debe fallar
         inv3 = self._create_invoice(l10n_py_authorization_id=auth_small.id)
         with self.assertRaises(UserError):
             inv3.action_post()
@@ -361,10 +361,10 @@ class TestAccountMove(TransactionCase):
         purchase_invoice.action_post()
         self.assertEqual(purchase_invoice.state, "posted")
 
-    # ============== F09 / F03: IVA SIFEN ==============
+    # ============== F09 / F03: VAT SIFEN ==============
 
     def test_iva_10_sifen_formula(self):
-        """F09: Item Gs 1.100.000 con 10% → base=1.000.000, IVA=100.000"""
+        """F09: Item Gs 1.100.000 con 10% → base=1.000.000, VAT=100.000"""
         invoice = self._create_invoice(
             products_prices=[
                 (self.product_10, self.tax_10, 1100000.0),
@@ -375,7 +375,7 @@ class TestAccountMove(TransactionCase):
         self.assertAlmostEqual(invoice.l10n_py_amount_iva_10, 100000.0, places=0)
 
     def test_iva_5_sifen_formula(self):
-        """F09: Item Gs 525.000 con 5% → base=500.000, IVA=25.000"""
+        """F09: Item Gs 525.000 con 5% → base=500.000, VAT=25.000"""
         invoice = self._create_invoice(
             products_prices=[
                 (self.product_5, self.tax_5, 525000.0),
@@ -396,22 +396,22 @@ class TestAccountMove(TransactionCase):
         self.assertEqual(invoice.l10n_py_amount_iva_total, 0.0)
 
     def test_iva_mixed_rates(self):
-        """F09: Cenário com 4 itens — verificar F003 até F020"""
+        """F09: Scenario with 4 items — verify F003 to F020"""
         invoice = self._create_invoice(
             products_prices=[
-                (self.product_10, self.tax_10, 1100000.0),  # IVA 10%
-                (self.product_10, self.tax_10, 550000.0),  # IVA 10%
-                (self.product_5, self.tax_5, 525000.0),  # IVA 5%
-                (self.product_exempt, self.tax_exempt, 200000.0),  # Exento
+                (self.product_10, self.tax_10, 1100000.0),  # VAT 10%
+                (self.product_10, self.tax_10, 550000.0),  # VAT 10%
+                (self.product_5, self.tax_5, 525000.0),  # VAT 5%
+                (self.product_exempt, self.tax_exempt, 200000.0),  # Exempt
             ]
         )
-        # F003: Exento
+        # F003: Exempt
         self.assertAlmostEqual(invoice.l10n_py_amount_exempt, 200000.0, places=0)
         # F004: Total gravado 5% (tax-inclusive)
         self.assertAlmostEqual(invoice.l10n_py_amount_subtotal_5, 525000.0, places=0)
         # F005: Total gravado 10% (tax-inclusive)
         self.assertAlmostEqual(invoice.l10n_py_amount_subtotal_10, 1650000.0, places=0)
-        # F014: Total IVA
+        # F014: Total VAT
         expected_iva_10 = 1650000.0 - (1650000.0 / 1.1)  # = 150000
         expected_iva_5 = 525000.0 - (525000.0 / 1.05)  # = 25000
         self.assertAlmostEqual(
@@ -425,7 +425,7 @@ class TestAccountMove(TransactionCase):
         self.assertAlmostEqual(invoice.l10n_py_base_10, 1500000.0, places=0)
         # F020: Total base gravada
         self.assertAlmostEqual(invoice.l10n_py_base_total, 2000000.0, places=0)
-        # F008: Total operación
+        # F008: Total operation
         self.assertAlmostEqual(
             invoice.l10n_py_total_operation,
             200000.0 + 525000.0 + 1650000.0,
@@ -433,7 +433,7 @@ class TestAccountMove(TransactionCase):
         )
 
     def test_total_in_words(self):
-        """F03: Total en letras en español"""
+        """F03: Total in words in Spanish"""
         invoice = self._create_invoice(
             products_prices=[
                 (self.product_exempt, self.tax_exempt, 100.0),
@@ -451,7 +451,7 @@ class TestAccountMove(TransactionCase):
         )
         self.assertAlmostEqual(invoice.l10n_py_amount_total_pyg, 3650000.0, places=0)
 
-    # ============== Formato número completo ==============
+    # ============== Complete number format ==============
 
     def test_full_invoice_number_format(self):
         """F02: Formato 001-001-0000001"""

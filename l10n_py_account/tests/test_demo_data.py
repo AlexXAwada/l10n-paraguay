@@ -48,7 +48,7 @@ class TestDemoData(TransactionCase):
         self.assertTrue(product_exempt)
 
     def test_demo_authorizations_exist(self):
-        """Timbrados demo foram criados com ranges corretos"""
+        """Authorizations demo foram criados com ranges corretos"""
         auth_001 = _ref_or_skip(self, "l10n_py_account.demo_authorization_001")
         self.assertTrue(auth_001)
         self.assertEqual(auth_001.name, "12345678")
@@ -71,7 +71,7 @@ class TestDemoData(TransactionCase):
             "l10n_py_account.demo_invoice_fe_mixta",
             "l10n_py_account.demo_invoice_fe_no_contribuyente",
             "l10n_py_account.demo_invoice_fe_exenta",
-            "l10n_py_account.demo_invoice_fe_punto2",
+            "l10n_py_account.demo_invoice_fe_point2",
         ]
         for xml_id in invoice_ids:
             invoice = _ref_or_skip(self, xml_id)
@@ -83,7 +83,7 @@ class TestDemoData(TransactionCase):
             self.assertEqual(invoice.move_type, "out_invoice")
 
     def test_demo_invoice_fe_iva10_amounts(self):
-        """FE IVA 10%: montos calculados correctamente"""
+        """FE VAT 10%: montos calculados correctamente"""
         invoice = _ref_or_skip(self, "l10n_py_account.demo_invoice_fe_iva10")
         # 2 × 5.500.000 + 5 × 1.100.000 = 16.500.000
         self.assertGreater(invoice.amount_total, 0)
@@ -91,7 +91,7 @@ class TestDemoData(TransactionCase):
         self.assertEqual(len(product_lines), 2)
 
     def test_demo_invoice_fe_mixta_has_all_rates(self):
-        """FE Mixta: tiene líneas con IVA 10%, 5% y exento"""
+        """FE Mixed: has lines with VAT 10%, 5% and exempt"""
         invoice = _ref_or_skip(self, "l10n_py_account.demo_invoice_fe_mixta")
         product_lines = invoice.invoice_line_ids.filtered(lambda line: line.product_id)
         self.assertEqual(len(product_lines), 3)
@@ -121,7 +121,7 @@ class TestDemoData(TransactionCase):
             )
 
     def test_authorization_validity_dates(self):
-        """Timbrados demo têm datas de validade coerentes"""
+        """Authorizations demo têm datas de validade coerentes"""
         auth = _ref_or_skip(self, "l10n_py_account.demo_authorization_001")
         self.assertTrue(auth.date_from)
         self.assertTrue(auth.date_to)

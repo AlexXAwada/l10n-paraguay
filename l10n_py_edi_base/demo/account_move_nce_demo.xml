@@ -28,7 +28,7 @@
         />
     </record>
 
-    <!-- Documento asociado electrónico para NCE 1 -->
+    <!-- Document asociado electrónico para NCE 1 -->
     <record id="demo_nce_electronic_assoc_doc" model="l10n_py.associated.document">
         <field name="move_id" ref="demo_nce_electronic" />
         <field name="association_type">1</field>
@@ -61,7 +61,7 @@
         />
     </record>
 
-    <!-- Documento asociado impreso para NCE 2 -->
+    <!-- Document asociado impreso para NCE 2 -->
     <record id="demo_nce_printed_assoc_doc" model="l10n_py.associated.document">
         <field name="move_id" ref="demo_nce_printed" />
         <field name="association_type">2</field>
@@ -73,7 +73,7 @@
         <field name="doc_date" eval="time.strftime('%Y-%m') + '-01'" />
     </record>
 
-    <!-- NCE 3: Nota de crédito mixta (IVA 10% + IVA 5%) -->
+    <!-- NCE 3: Nota de crédito mixta (VAT 10% + VAT 5%) -->
     <record id="demo_nce_mixed" model="account.move">
         <field name="partner_id" ref="l10n_py_account.partner_contribuyente_general" />
         <field name="move_type">out_refund</field>
@@ -102,7 +102,7 @@
         />
     </record>
 
-    <!-- Documento asociado electrónico para NCE 3 -->
+    <!-- Document asociado electrónico para NCE 3 -->
     <record id="demo_nce_mixed_assoc_doc" model="l10n_py.associated.document">
         <field name="move_id" ref="demo_nce_mixed" />
         <field name="association_type">1</field>

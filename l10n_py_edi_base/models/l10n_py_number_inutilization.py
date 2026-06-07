@@ -11,46 +11,46 @@ MAX_INUTILIZATION_RANGE = 1000
 
 
 class NumberInutilization(models.Model):
-    """Inutilización de números de documentos electrónicos.
+    """Inutilization of electronic document numbers.
 
-    Permite inutilizar rangos de números que no serán usados,
-    comunicando al SIFEN para mantener la secuencia consistente.
+    Allows inutilizing ranges of numbers that will not be used,
+    comunicando al SIFEN para mantener la sequence consistente.
     """
 
     _name = "l10n_py.number.inutilization"
-    _description = "Inutilización de Números"
+    _description = "Number Inutilization"
     _order = "create_date desc"
 
     authorization_id = fields.Many2one(
         "account.authorization",
-        string="Timbrado",
+        string="Authorization Number",
         required=True,
         ondelete="restrict",
     )
 
     number_from = fields.Integer(
-        string="Número Desde",
+        string="Number From",
         required=True,
     )
 
     number_to = fields.Integer(
-        string="Número Hasta",
+        string="Number To",
         required=True,
     )
 
     motive = fields.Text(
-        string="Motivo",
+        string="Reason",
         required=True,
     )
 
     state = fields.Selection(
         [
             ("draft", "Borrador"),
-            ("sent", "Enviado"),
+            ("sent", "Sent"),
             ("accepted", "Aceptado"),
-            ("rejected", "Rechazado"),
+            ("rejected", "Rejected"),
         ],
-        string="Estado",
+        string="State",
         default="draft",
         readonly=True,
     )
@@ -61,7 +61,7 @@ class NumberInutilization(models.Model):
     )
 
     quantity = fields.Integer(
-        string="Cantidad",
+        string="Quantity",
         compute="_compute_quantity",
     )
 
@@ -75,19 +75,20 @@ class NumberInutilization(models.Model):
     def _check_range(self):
         for rec in self:
             if rec.number_from <= 0 or rec.number_to <= 0:
-                raise ValidationError(
-                    self.env._("Los números deben ser mayores a cero.")
-                )
+                raise ValidationError(self.env._("Numbers must be greater than zero."))
             if rec.number_to < rec.number_from:
                 raise ValidationError(
-                    self.env._("El número final debe ser mayor o igual al inicial.")
+                    self.env._(
+                        "The ending number must be greater than or "
+                        "equal to the starting number."
+                    )
                 )
             quantity = rec.number_to - rec.number_from + 1
             if quantity > MAX_INUTILIZATION_RANGE:
                 raise ValidationError(
                     self.env._(
-                        "El rango máximo de inutilización es "
-                        "%(max)s números (solicitados: %(qty)s).",
+                        "The maximum inutilization range es "
+                        "%(max)s numbers (requested: %(qty)s).",
                         max=MAX_INUTILIZATION_RANGE,
                         qty=quantity,
                     )
@@ -95,29 +96,29 @@ class NumberInutilization(models.Model):
 
     @api.constrains("number_from", "number_to", "authorization_id")
     def _check_within_authorization_range(self):
-        """Verificar que la faja está dentro del rango del timbrado."""
+        """Verify that the range is within the authorization range."""
         for rec in self:
             auth = rec.authorization_id
             if rec.number_from < auth.invoice_number_from:
                 raise ValidationError(
                     self.env._(
-                        "El número inicial está fuera del rango "
-                        "del timbrado (mínimo: %(min)s).",
+                        "The starting number is outside the range "
+                        "of the authorization (minimum: %(min)s).",
                         min=auth.invoice_number_from,
                     )
                 )
             if rec.number_to > auth.invoice_number_to:
                 raise ValidationError(
                     self.env._(
-                        "El número final está fuera del rango "
-                        "del timbrado (máximo: %(max)s).",
+                        "The ending number is outside the range "
+                        "of the authorization (maximum: %(max)s).",
                         max=auth.invoice_number_to,
                     )
                 )
 
     @api.constrains("number_from", "number_to", "authorization_id")
     def _check_no_used_numbers(self):
-        """Verificar que ningún número de la faja ya fue usado."""
+        """Verify that no number in the range has already been used."""
         for rec in self:
             used = self.env["account.move"].search_count(
                 [
@@ -130,7 +131,7 @@ class NumberInutilization(models.Model):
             if used:
                 raise ValidationError(
                     self.env._(
-                        "Hay %(count)s número(s) en el rango que "
+                        "Hay %(count)s number(s) en el rango que "
                         "ya fueron usados en facturas confirmadas.",
                         count=used,
                     )
@@ -139,7 +140,7 @@ class NumberInutilization(models.Model):
     # ============== ACTIONS ==============
 
     def action_send(self):
-        """Enviar inutilización al SIFEN a través del conector EDI."""
+        """Send inutilization to SIFEN via EDI connector."""
         self.ensure_one()
         if self.state != "draft":
             raise UserError(
@@ -159,11 +160,11 @@ class NumberInutilization(models.Model):
         auth = self.authorization_id
         data = {
             "timbrado": auth.name or "",
-            "establecimiento": auth.establishment or "001",
-            "punto": auth.expedition_point or "001",
-            "numeroDesde": str(self.number_from).zfill(7),
-            "numeroHasta": str(self.number_to).zfill(7),
-            "tipoDocumento": 1,  # FE por defecto
+            "establishment": auth.establishment or "001",
+            "point": auth.expedition_point or "001",
+            "numeroFrom": str(self.number_from).zfill(7),
+            "numeroTo": str(self.number_to).zfill(7),
+            "tipoDocument": 1,  # FE por defecto
             "motivo": self.motive or "",
         }
 
@@ -173,14 +174,12 @@ class NumberInutilization(models.Model):
                 self.state = "accepted"
             else:
                 self.state = "rejected"
-                _logger.warning("Inutilización rechazada: %s", response.get("error"))
+                _logger.warning("Inutilization rechazada: %s", response.get("error"))
                 raise UserError(
-                    self.env._("Error de inutilización: %s", response.get("error"))
+                    self.env._("Error inutilization: %s", response.get("error"))
                 )
         except UserError:
             raise
         except Exception as e:
             self.state = "rejected"
-            raise UserError(
-                self.env._("Error enviando inutilización: %s", str(e))
-            ) from e
+            raise UserError(self.env._("Errorviando inutilization: %s", str(e))) from e

@@ -4,10 +4,10 @@ from odoo.tests.common import TransactionCase
 
 @tagged("post_install", "-at_install", "l10n_py")
 class TestResCompany(TransactionCase):
-    """Tests para res.company (extensión paraguaya)"""
+    """Tests for res.company (Paraguayan extension)"""
 
     def test_localization_use_documents_py(self):
-        """Retorna True para empresa PY"""
+        """Retorna True para company PY"""
         country_py = self.env.ref("base.py")
         company = self.env["res.company"].create(
             {
@@ -19,7 +19,7 @@ class TestResCompany(TransactionCase):
         self.assertTrue(company._localization_use_documents())
 
     def test_localization_use_documents_non_py(self):
-        """No afecta empresas de otros países"""
+        """Does not affect companies from other countries"""
         country_us = self.env.ref("base.us")
         company = self.env["res.company"].create(
             {

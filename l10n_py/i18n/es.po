@@ -4,6 +4,7 @@
 #
 msgid ""
 msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-07 00:00+0000\n"
 "PO-Revision-Date: 2026-06-07 00:00+0000\n"
@@ -12,41 +13,50 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: l10n_py
 #: model:account.tax.group,name:l10n_py.tax_group_iva_10
 msgid "VAT 10%"
-msgstr ""
+msgstr "IVA 10%"
+
 #. module: l10n_py
 #: model:account.tax.group,name:l10n_py.tax_group_iva_5
 msgid "VAT 5%"
-msgstr ""
+msgstr "IVA 5%"
+
 #. module: l10n_py
 #: model:account.tax.group,name:l10n_py.tax_group_exempt
 msgid "Exempt"
-msgstr ""
+msgstr "Exento"
+
 #. module: l10n_py
 #: model:account.tax,name:l10n_py.tax_py_iva_10_sale
 msgid "VAT 10% Output Tax"
-msgstr ""
+msgstr "IVA 10% Débito Fiscal"
+
 #. module: l10n_py
 #: model:account.tax,name:l10n_py.tax_py_iva_10_purchase
 msgid "VAT 10% Input Tax"
-msgstr ""
+msgstr "IVA 10% Crédito Fiscal"
+
 #. module: l10n_py
 #: model:account.tax,name:l10n_py.tax_py_iva_5_sale
 msgid "VAT 5% Output Tax"
-msgstr ""
+msgstr "IVA 5% Débito Fiscal"
+
 #. module: l10n_py
 #: model:account.tax,name:l10n_py.tax_py_iva_5_purchase
 msgid "VAT 5% Input Tax"
-msgstr ""
+msgstr "IVA 5% Crédito Fiscal"
+
 #. module: l10n_py
 #: model:account.tax,name:l10n_py.tax_py_exempt_sale
 msgid "Exempt - Sales"
-msgstr ""
+msgstr "Exento - Ventas"
+
 #. module: l10n_py
 #: model:account.tax,name:l10n_py.tax_py_exempt_purchase
 msgid "Exempt - Purchases"
-msgstr ""
+msgstr "Exento - Compras"

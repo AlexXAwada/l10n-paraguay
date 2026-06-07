@@ -34,7 +34,7 @@ class TestKudeGeneration(TransactionCase):
         if not cls.doc_type_invoice:
             cls.doc_type_invoice = cls.env["l10n_latam.document.type"].create(
                 {
-                    "name": "Factura",
+                    "name": "Invoice",
                     "code": "1",
                     "country_id": cls.country_py.id,
                     "internal_type": "invoice",
@@ -216,7 +216,7 @@ class TestKudeGeneration(TransactionCase):
 
         xml_with_accents = (
             '<?xml version="1.0" encoding="UTF-8"?>'
-            "<rDE><dNomEmi>Compañía Test SA</dNomEmi></rDE>"
+            "<rDE><dNomEmi>Test Company SA</dNomEmi></rDE>"
         )
         move = self._create_invoice_with_xml()
         move.l10n_py_edi_xml = base64.b64encode(xml_with_accents.encode("utf-8"))

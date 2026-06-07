@@ -20,7 +20,7 @@ class TestDocumentTypeValidation(TransactionCase):
             }
         )
         ruc_type = cls.env.ref("l10n_py_base.it_ruc", raise_if_not_found=False)
-        # Setear el RUC en el partner de la compañía (via vat field)
+        # Set the RUC on the company partner (via vat field)
         cls.company.partner_id.write(
             {
                 "l10n_latam_identification_type_id": ruc_type.id if ruc_type else False,
@@ -31,11 +31,11 @@ class TestDocumentTypeValidation(TransactionCase):
         # Document types
         cls.doc_types = {}
         for code, name in [
-            ("1", "Factura electrónica"),
-            ("4", "Autofactura electrónica"),
-            ("5", "Nota de crédito electrónica"),
-            ("6", "Nota de débito electrónica"),
-            ("7", "Nota de remisión electrónica"),
+            ("1", "Electronic Invoice"),
+            ("4", "Electronic Self-Invoice"),
+            ("5", "Electronic Credit Note"),
+            ("6", "Electronic Debit Note"),
+            ("7", "Electronic Remission Note"),
         ]:
             dt = cls.env["l10n_latam.document.type"].search(
                 [("country_id", "=", cls.country_py.id), ("code", "=", code)],
@@ -97,7 +97,7 @@ class TestDocumentTypeValidation(TransactionCase):
         cls.valid_cdc = "0" * 44
 
     def _create_move(self, doc_type_code, **kwargs):
-        """Helper para criar move com tipo de documento específico"""
+        """Helper to create move with specific document type"""
         # NCE (code=5) uses out_refund because its internal_type is credit_note
         move_type = "out_refund" if doc_type_code == "5" else "out_invoice"
         vals = {
@@ -120,7 +120,7 @@ class TestDocumentTypeValidation(TransactionCase):
             l10n_py_afe_constancia_control="12345678",
             l10n_py_afe_vendor_doc_type="1",
             l10n_py_afe_vendor_doc_number="1234567",
-            l10n_py_afe_vendor_name="Juan Pérez",
+            l10n_py_afe_vendor_name="Juan Perez",
             l10n_py_afe_vendor_address="Calle 1",
         )
         self.env["l10n_py.associated.document"].create(
@@ -142,7 +142,7 @@ class TestDocumentTypeValidation(TransactionCase):
         self.assertIn("exactamente 1", errors[0])
 
     def test_afe_wrong_association_type(self):
-        """F04: AFE com tipo errado (electrónico em vez de constancia) → erro"""
+        """F04: AFE with wrong type (electronic instead of certificate) → error"""
         move = self._create_move("4")
         self.env["l10n_py.associated.document"].create(
             {
@@ -156,7 +156,7 @@ class TestDocumentTypeValidation(TransactionCase):
         self.assertIn("constancia", errors[0])
 
     def test_afe_multiple_associations(self):
-        """F04: AFE com múltiplos documentos → erro"""
+        """F04: AFE with multiple documents → error"""
         move = self._create_move("4")
         for i in range(2):
             self.env["l10n_py.associated.document"].create(
@@ -171,10 +171,10 @@ class TestDocumentTypeValidation(TransactionCase):
         self.assertTrue(errors)
         self.assertIn("exactamente 1", errors[0])
 
-    # ============== F05: NCE (Nota de Crédito) ==============
+    # ============== F05: NCE (Credit Note) ==============
 
     def test_nce_electronic_association(self):
-        """F05: NCE com doc electrónico → sem erros"""
+        """F05: NCE with electronic doc → no errors"""
         move = self._create_move("5")
         self.env["l10n_py.associated.document"].create(
             {
@@ -211,7 +211,7 @@ class TestDocumentTypeValidation(TransactionCase):
         self.assertTrue(errors)
 
     def test_nce_multiple_associations(self):
-        """F05: NCE com múltiplos documentos → erro"""
+        """F05: NCE with multiple documents → error"""
         move = self._create_move("5")
         for _i in range(2):
             self.env["l10n_py.associated.document"].create(
@@ -224,10 +224,10 @@ class TestDocumentTypeValidation(TransactionCase):
         errors = move._validate_edi_document_type()
         self.assertTrue(errors)
 
-    # ============== F06: NDE (Nota de Débito) ==============
+    # ============== F06: NDE (Debit Note) ==============
 
     def test_nde_electronic_association(self):
-        """F06: NDE com doc electrónico → sem erros"""
+        """F06: NDE with electronic doc → no errors"""
         move = self._create_move("6")
         self.env["l10n_py.associated.document"].create(
             {
@@ -246,7 +246,7 @@ class TestDocumentTypeValidation(TransactionCase):
         self.assertTrue(errors)
 
     def test_nde_multiple_associations(self):
-        """F06: NDE com múltiplos documentos → erro"""
+        """F06: NDE with multiple documents → error"""
         move = self._create_move("6")
         for _i in range(2):
             self.env["l10n_py.associated.document"].create(
@@ -259,7 +259,7 @@ class TestDocumentTypeValidation(TransactionCase):
         errors = move._validate_edi_document_type()
         self.assertTrue(errors)
 
-    # ============== F07: NRE (Nota de Remisión) ==============
+    # ============== F07: NRE (Electronic Remission Note) ==============
 
     def test_nre_traslado_venta_with_fe(self):
         """F07: NRE traslado por venta com FE associada → sem erros"""
@@ -300,7 +300,7 @@ class TestDocumentTypeValidation(TransactionCase):
 
     def test_nre_same_ruc_transfer(self):
         """F07: NRE entre locales com mesmo RUC → sem erros"""
-        # Setear el RUC directamente en el partner_id de la compañía
+        # Set the RUC directly on the company partner_id
         ruc_type = self.env.ref("l10n_py_base.it_ruc", raise_if_not_found=False)
         self.company.partner_id.write(
             {
@@ -331,7 +331,7 @@ class TestDocumentTypeValidation(TransactionCase):
         """F07: NRE entre locales com RUC diferente → erro"""
         partner_other = self.env["res.partner"].create(
             {
-                "name": "Otra Empresa",
+                "name": "Otra Company",
                 "country_id": self.country_py.id,
                 "l10n_py_ruc": "99999999",
                 "l10n_py_taxpayer_type": "1",
@@ -347,7 +347,7 @@ class TestDocumentTypeValidation(TransactionCase):
         self.assertTrue(any("RUC" in e for e in errors))
 
     def test_nre_multiple_associations(self):
-        """F07: NRE permite múltiplos documentos asociados"""
+        """F07: NRE allows multiple associated documents"""
         move = self._create_move("7", l10n_py_nre_motive="1")
         for _i in range(3):
             self.env["l10n_py.associated.document"].create(
@@ -358,5 +358,5 @@ class TestDocumentTypeValidation(TransactionCase):
                 }
             )
         errors = move._validate_edi_document_type()
-        # NRE aceita múltiplos — sem erro por quantidade
+        # NRE accepts multiple — no error for quantity
         self.assertFalse(errors)

@@ -19,7 +19,7 @@
 
     <!-- Aplicar plano de contas PY à empresa demo (padrão l10n_br) -->
     <function model="account.chart.template" name="try_loading">
-        <value eval="[ref('l10n_py.py_chart_template')]" />
+        <value eval="['py']" />
         <value model="res.company" eval="obj().env.ref('base.main_company')" />
     </function>
 </odoo>

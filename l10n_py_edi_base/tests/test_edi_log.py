@@ -9,7 +9,7 @@ class TestEDILog(TransactionCase):
     """Tests para l10n_py.edi.log"""
 
     def test_log_operation_success(self):
-        """Crear log de operación exitosa"""
+        """Create successful operation log"""
         log = self.env["l10n_py.edi.log"].log_operation(
             operation_type="send",
             provider="factpy",
@@ -21,7 +21,7 @@ class TestEDILog(TransactionCase):
         self.assertFalse(log.error)
 
     def test_log_operation_error(self):
-        """Crear log de operación con error"""
+        """Create error operation log"""
         log = self.env["l10n_py.edi.log"].log_operation(
             operation_type="send",
             provider="factpy",
@@ -35,7 +35,7 @@ class TestEDILog(TransactionCase):
         self.assertEqual(log.error_message, "Connection timeout")
 
     def test_error_computed(self):
-        """Campo error computed correctamente"""
+        """Error field computed correctly"""
         log = self.env["l10n_py.edi.log"].create(
             {
                 "operation_type": "send",

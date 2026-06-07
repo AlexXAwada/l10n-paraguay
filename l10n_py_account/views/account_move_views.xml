@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <!-- Extensión de la vista de formulario de facturas -->
+    <!-- Invoice form view extension -->
     <record id="view_move_form_py" model="ir.ui.view">
         <field name="name">account.move.form.py</field>
         <field name="model">account.move</field>
         <field name="inherit_id" ref="account.view_move_form" />
         <field name="arch" type="xml">
-            <!-- Agregar timbrado debajo del document type (añadido por l10n_latam_invoice_document) -->
+            <!-- Add authorization below document type (added by l10n_latam_invoice_document) -->
             <xpath expr="//field[@name='l10n_latam_document_type_id']" position="after">
                 <field
                     name="l10n_py_authorization_id"
@@ -19,18 +19,18 @@
                 />
             </xpath>
 
-            <!-- Agregar notebook con información fiscal paraguaya -->
+            <!-- Add notebook with Paraguayan fiscal information -->
             <xpath expr="//notebook" position="inside">
                 <page
-                    string="Información Fiscal Paraguay"
+                    string="Paraguayan Tax Information"
                     name="l10n_py_fiscal"
                     invisible="move_type not in ['out_invoice', 'out_refund']"
                 >
                     <group>
-                        <group string="Discriminación de IVA (SIFEN)">
+                        <group string="VAT Breakdown (SIFEN)">
                             <field
                                 name="l10n_py_amount_exempt"
-                                string="Exento (F003)"
+                                string="Exempt (F003)"
                             />
                             <separator />
                             <field
@@ -43,7 +43,7 @@
                             />
                             <field
                                 name="l10n_py_amount_iva_5"
-                                string="Liq. IVA 5% (F015)"
+                                string="Liq. VAT 5% (F015)"
                             />
                             <separator />
                             <field
@@ -56,12 +56,12 @@
                             />
                             <field
                                 name="l10n_py_amount_iva_10"
-                                string="Liq. IVA 10% (F016)"
+                                string="Liq. VAT 10% (F016)"
                             />
                             <separator />
                             <field
                                 name="l10n_py_amount_iva_total"
-                                string="Total IVA (F014)"
+                                string="Total VAT (F014)"
                                 style="font-weight: bold;"
                             />
                             <field
@@ -70,7 +70,7 @@
                             />
                             <field
                                 name="l10n_py_total_operation"
-                                string="Total Operación (F008)"
+                                string="Operation Total (F008)"
                                 style="font-weight: bold;"
                             />
                         </group>
@@ -92,13 +92,13 @@
         </field>
     </record>
 
-    <!-- Extensión de la vista de lista de facturas -->
+    <!-- Invoice list view extension -->
     <record id="view_invoice_tree_py" model="ir.ui.view">
         <field name="name">account.move.tree.py</field>
         <field name="model">account.move</field>
         <field name="inherit_id" ref="account.view_invoice_tree" />
         <field name="arch" type="xml">
-            <!-- Agregar columna de número completo de factura -->
+            <!-- Add complete invoice number column -->
             <xpath expr="//field[@name='name']" position="after">
                 <field
                     name="l10n_py_full_invoice_number"

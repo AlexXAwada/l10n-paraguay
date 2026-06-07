@@ -26,6 +26,9 @@ class AccountChartTemplate(models.AbstractModel):
             "bank_account_code_prefix": "1.01.01.04",
             "cash_account_code_prefix": "1.01.01.02",
             "transfer_account_code_prefix": "1.01.01.03",
+            # Additional property accounts for complete chart
+            "expense_debit_account_id": "account_py_50101_expense",
+            "income_debit_account_id": "account_py_40101_income",
         }
 
     @template("py", "res.company")
@@ -38,3 +41,13 @@ class AccountChartTemplate(models.AbstractModel):
                 "transfer_account_code_prefix": "1.01.01.03",
             },
         }
+
+    @template(model="account.account")
+    def _get_py_account_account(self, template_code):
+        # Additional accounts not in CSV (for journals, etc.)
+        return {}
+
+    @template(model="account.tax")
+    def _get_py_account_tax(self, template_code):
+        # Additional tax configuration if needed
+        return {}

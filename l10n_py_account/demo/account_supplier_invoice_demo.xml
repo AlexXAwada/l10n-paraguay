@@ -5,7 +5,7 @@
     <!-- Se mantienen en borrador — requieren documento LATAM          -->
     <!-- ============================================================ -->
 
-    <!-- Compra con IVA 10% -->
+    <!-- Compra con VAT 10% -->
     <record id="demo_bill_iva10" model="account.move">
         <field name="partner_id" ref="partner_proveedor_py" />
         <field name="move_type">in_invoice</field>
@@ -24,7 +24,7 @@
         />
     </record>
 
-    <!-- Compra con IVA 5% -->
+    <!-- Compra con VAT 5% -->
     <record id="demo_bill_iva5" model="account.move">
         <field name="partner_id" ref="partner_proveedor_py" />
         <field name="move_type">in_invoice</field>

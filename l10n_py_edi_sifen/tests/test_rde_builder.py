@@ -73,13 +73,11 @@ class TestRDeBuilder(TransactionCase):
             "email": "test@empresa.com",
         }
 
-    @patch("odoo.addons.l10n_py_edi_sifen.services.rde_builder.RDe")
-    @patch("odoo.addons.l10n_py_edi_sifen.services.rde_builder.TDe")
+    @patch(".services.rde_builder.RDe")
+    @patch(".services.rde_builder.TDe")
     def test_build_creates_rde(self, mock_tde, mock_rde):
         """Test that build() creates an RDe object."""
-        from odoo.addons.l10n_py_edi_sifen.services.rde_builder import (
-            RDeBuilder,  # noqa: E501,W8150
-        )
+        from .services.rde_builder import RDeBuilder
 
         builder = RDeBuilder(
             self._get_sample_invoice_data(),

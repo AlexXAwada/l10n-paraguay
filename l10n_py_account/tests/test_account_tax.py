@@ -1,11 +1,11 @@
-"""Tests para los impuestos Paraguay: IVA 10%, IVA 5%, Exento.
+"""Tests para los impuestos Paraguay: VAT 10%, VAT 5%, Exempt.
 
-En Paraguay el IVA se calcula sobre el precio bruto dividiendo:
-- IVA 10% = precio / 11  (equivalente a ~9.0909%)
-- IVA 5%  = precio / 22  (equivalente a ~4.5454%)
-- Exento  = 0%
+En Paraguay el VAT se calcula sobre el precio bruto dividiendo:
+- VAT 10% = precio / 11  (equivalente a ~9.0909%)
+- VAT 5%  = precio / 22  (equivalente a ~4.5454%)
+- Exempt  = 0%
 
-Los tests usan el motor de impuestos de Odoo para verificar el cálculo.
+Tests use the Odoo tax engine to verify the calculation.
 """
 
 import csv
@@ -45,7 +45,7 @@ class TestTaxTemplatesCSV(TransactionCase):
             self.assertIn("repartition_line_ids/repartition_type", headers)
 
     def test_csv_has_required_tax_templates(self):
-        """El CSV tiene templates para IVA 10%, IVA 5% y Exento (sale y purchase)."""
+        """El CSV tiene templates para VAT 10%, VAT 5% y Exempt (sale y purchase)."""
         csv_path = _csv_path("account.tax-py.csv")
         with open(csv_path, newline="", encoding="utf-8") as f:
             reader = csv.DictReader(f)
@@ -73,37 +73,37 @@ class TestTaxTemplatesCSV(TransactionCase):
             reader = csv.DictReader(f)
             rows = {r["id"]: r for r in reader if r.get("id", "").strip()}
 
-        # IVA 10%: precio / 11 → (1/11)*100 = 9.090909...%
+        # VAT 10%: precio / 11 → (1/11)*100 = 9.090909...%
         expected_iva10 = round(100.0 / 11, 4)
         actual_iva10 = float(rows["tax_py_iva_10_sale"]["amount"])
         self.assertAlmostEqual(
             actual_iva10,
             expected_iva10,
             places=2,
-            msg="IVA 10% debe ser precio/11 ≈ 9.0909%",
+            msg="VAT 10% debe ser precio/11 ≈ 9.0909%",
         )
         self.assertEqual(
             float(rows["tax_py_iva_10_purchase"]["amount"]),
             expected_iva10,
         )
 
-        # IVA 5%: precio / 22 → (1/22)*100 = 4.5454...%
+        # VAT 5%: precio / 22 → (1/22)*100 = 4.5454...%
         actual_iva5 = float(rows["tax_py_iva_5_sale"]["amount"])
         theoretical = 100.0 / 22
         self.assertAlmostEqual(
             actual_iva5,
             theoretical,
             places=2,
-            msg="IVA 5% debe ser 100/22 ≈ 4.5454",
+            msg="VAT 5% debe ser 100/22 ≈ 4.5454",
         )
         # El valor exacto en CSV debe estar truncado o redondeado correctamente
         self.assertIn(
             actual_iva5,
             [4.5454, 4.5455],
-            f"Valor IVA 5% debe ser 4.5454 o 4.5455, got {actual_iva5}",
+            f"Valor VAT 5% debe ser 4.5454 o 4.5455, got {actual_iva5}",
         )
 
-        # Exento: 0%
+        # Exempt: 0%
         self.assertEqual(float(rows["tax_py_exempt_sale"]["amount"]), 0.0)
         self.assertEqual(float(rows["tax_py_exempt_purchase"]["amount"]), 0.0)
 
@@ -143,12 +143,12 @@ class TestTaxTemplatesCSV(TransactionCase):
 
 @tagged("post_install", "-at_install", "l10n_py")
 class TestAccountTaxPY(TransactionCase):
-    """Tests de cálculo de impuestos Paraguay usando el motor de Odoo.
+    """Paraguay tax calculation tests using the Odoo engine.
 
-    Paraguay IVA rules:
-    - IVA 10% → precio / 11 = 9.0909%
-    - IVA 5%  → precio / 22 = 4.5454%
-    - Exento  → 0%
+    Paraguay VAT rules:
+    - VAT 10% → precio / 11 = 9.0909%
+    - VAT 5%  → precio / 22 = 4.5454%
+    - Exempt  → 0%
     """
 
     @classmethod
@@ -162,40 +162,40 @@ class TestAccountTaxPY(TransactionCase):
         cls.purchase_account = cls.env["account.account"].browse(
             26
         )  # reuse for purchase test
-        # Crear grupos de impuesto específicos para el test
+        # Create specific tax groups for the test
         cls.tg_iva10 = cls.env["account.tax.group"].create(
             {
-                "name": "IVA 10% Test",
+                "name": "VAT 10% Test",
                 "country_id": cls.env.ref("base.py").id,
             }
         )
         cls.tg_iva5 = cls.env["account.tax.group"].create(
             {
-                "name": "IVA 5% Test",
+                "name": "VAT 5% Test",
                 "country_id": cls.env.ref("base.py").id,
             }
         )
         cls.tg_exempt = cls.env["account.tax.group"].create(
             {
-                "name": "Exento Test",
+                "name": "Exempt Test",
                 "country_id": cls.env.ref("base.py").id,
             }
         )
-        # Crear taxes para test (IVA real Paraguaya: precio/11 y precio/22)
-        cls.tax_iva10_sale = cls._make_tax("IVA 10%", 9.0909, "sale", cls.tg_iva10)
+        # Crear taxes para test (VAT real Paraguaya: precio/11 y precio/22)
+        cls.tax_iva10_sale = cls._make_tax("VAT 10%", 9.0909, "sale", cls.tg_iva10)
         cls.tax_iva10_pur = cls._make_tax(
-            "IVA 10% Compra",
+            "VAT 10% Compra",
             9.0909,
             "purchase",
             cls.tg_iva10,
         )
-        cls.tax_iva5_sale = cls._make_tax("IVA 5%", 4.5454, "sale", cls.tg_iva5)
+        cls.tax_iva5_sale = cls._make_tax("VAT 5%", 4.5454, "sale", cls.tg_iva5)
         cls.tax_iva5_pur = cls._make_tax(
-            "IVA 5% Compra", 4.5454, "purchase", cls.tg_iva5
+            "VAT 5% Compra", 4.5454, "purchase", cls.tg_iva5
         )
-        cls.tax_exempt_sale = cls._make_tax("Exento Venta", 0.0, "sale", cls.tg_exempt)
+        cls.tax_exempt_sale = cls._make_tax("Exempt Venta", 0.0, "sale", cls.tg_exempt)
         cls.tax_exempt_pur = cls._make_tax(
-            "Exento Compra", 0.0, "purchase", cls.tg_exempt
+            "Exempt Compra", 0.0, "purchase", cls.tg_exempt
         )
 
     @classmethod
@@ -229,7 +229,7 @@ class TestAccountTaxPY(TransactionCase):
         )
 
     def test_iva_10_on_price_11000_is_1000(self):
-        """IVA 10% sobre 11.000 Gs = 1.000 Gs (11.000 / 11 = 1.000)."""
+        """VAT 10% sobre 11.000 Gs = 1.000 Gs (11.000 / 11 = 1.000)."""
         move = self.env["account.move"].create(
             {
                 "move_type": "out_invoice",
@@ -252,11 +252,11 @@ class TestAccountTaxPY(TransactionCase):
             self._tax_amount(move),
             1_000.0,
             places=0,
-            msg="IVA 10% sobre 11.000 = 1.000",
+            msg="VAT 10% sobre 11.000 = 1.000",
         )
 
     def test_iva_10_on_price_110_is_10(self):
-        """IVA 10% sobre 110 Gs = 10 Gs."""
+        """VAT 10% sobre 110 Gs = 10 Gs."""
         move = self.env["account.move"].create(
             {
                 "move_type": "out_invoice",
@@ -276,11 +276,11 @@ class TestAccountTaxPY(TransactionCase):
         )
 
         self.assertAlmostEqual(
-            self._tax_amount(move), 10.0, places=2, msg="IVA 10% sobre 110 = 10"
+            self._tax_amount(move), 10.0, places=2, msg="VAT 10% sobre 110 = 10"
         )
 
     def test_iva_5_on_price_22000_is_1000(self):
-        """IVA 5% sobre 22.000 Gs = 1.000 Gs (22.000 / 22 = 1.000)."""
+        """VAT 5% sobre 22.000 Gs = 1.000 Gs (22.000 / 22 = 1.000)."""
         move = self.env["account.move"].create(
             {
                 "move_type": "out_invoice",
@@ -303,11 +303,11 @@ class TestAccountTaxPY(TransactionCase):
             self._tax_amount(move),
             1_000.0,
             places=0,
-            msg="IVA 5% sobre 22.000 = 1.000",
+            msg="VAT 5% sobre 22.000 = 1.000",
         )
 
     def test_iva_5_on_price_220_is_10(self):
-        """IVA 5% sobre 220 Gs = 10 Gs."""
+        """VAT 5% sobre 220 Gs = 10 Gs."""
         move = self.env["account.move"].create(
             {
                 "move_type": "out_invoice",
@@ -327,7 +327,7 @@ class TestAccountTaxPY(TransactionCase):
         )
 
         self.assertAlmostEqual(
-            self._tax_amount(move), 10.0, places=2, msg="IVA 5% sobre 220 = 10"
+            self._tax_amount(move), 10.0, places=2, msg="VAT 5% sobre 220 = 10"
         )
 
     def test_exempt_generates_no_tax(self):
@@ -353,11 +353,11 @@ class TestAccountTaxPY(TransactionCase):
         self.assertEqual(
             self._tax_amount(move),
             0.0,
-            "Exento debe generar 0 impuesto",
+            "Exempt debe generar 0 impuesto",
         )
 
     def test_iva_10_purchase_generates_credit_fiscal(self):
-        """IVA 10% en compra genera crédito fiscal (débito en cuenta)."""
+        """VAT 10% on purchase generates input tax (debit to account)."""
         move = self.env["account.move"].create(
             {
                 "move_type": "in_invoice",
@@ -382,17 +382,17 @@ class TestAccountTaxPY(TransactionCase):
         self.assertGreater(
             sum(tax_line.mapped("debit")),
             0.0,
-            "IVA compra debe generar débito en cuenta de crédito fiscal",
+            "VAT purchase must generate debit to input tax account",
         )
         self.assertAlmostEqual(
             sum(tax_line.mapped("debit")),
             1_000.0,
             places=0,
-            msg="Crédito fiscal IVA 10% sobre 11.000 = 1.000",
+            msg="Input tax VAT 10% on 11,000 = 1,000",
         )
 
     def test_iva_5_purchase_credit_fiscal(self):
-        """IVA 5% en compra genera crédito fiscal: 22.000 / 22 = 1.000 Gs."""
+        """VAT 5% on purchase generates input tax: 22,000 / 22 = 1,000 Gs."""
         move = self.env["account.move"].create(
             {
                 "move_type": "in_invoice",
@@ -416,17 +416,17 @@ class TestAccountTaxPY(TransactionCase):
         self.assertGreater(
             sum(tax_line.mapped("debit")),
             0.0,
-            "IVA 5% compra debe generar crédito fiscal",
+            "VAT 5% purchase must generate input tax",
         )
         self.assertAlmostEqual(
             sum(tax_line.mapped("debit")),
             1_000.0,
             places=0,
-            msg="Crédito fiscal IVA 5% sobre 22.000 = 1.000",
+            msg="Input tax VAT 5% on 22,000 = 1,000",
         )
 
     def test_exempt_purchase_no_tax(self):
-        """Compras exentas no generan crédito fiscal."""
+        """Exempt purchases do not generate input tax."""
         move = self.env["account.move"].create(
             {
                 "move_type": "in_invoice",
@@ -450,5 +450,5 @@ class TestAccountTaxPY(TransactionCase):
         self.assertEqual(
             sum(tax_line.mapped("debit")),
             0.0,
-            "Compra exenta debe generar 0 crédito fiscal",
+            "Exempt purchase must generate 0 input tax",
         )

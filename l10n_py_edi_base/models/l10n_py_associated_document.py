@@ -5,21 +5,21 @@ from odoo.exceptions import ValidationError
 
 
 class AssociatedDocument(models.Model):
-    """Documento Asociado (Grupo H del SIFEN v150).
+    """Document Associated (Grupo H del SIFEN v150).
 
-    Permite vincular documentos de referencia a facturas electrónicas:
-    - Electrónico: referencia por CDC (44 dígitos)
-    - Impreso: referencia por timbrado/establecimiento/punto/número
-    - Constancia Electrónica: tipo y número de constancia
+    Allows linking reference documents to electronic invoices:
+    - Electronic: referencia por CDC (44 digits)
+    - Printed: referencia por timbrado/establishment/point/number
+    - Electronic Certificate: tipo y number de constancia
     """
 
     _name = "l10n_py.associated.document"
-    _description = "Documento Asociado (Grupo H SIFEN)"
+    _description = "Document Associated (Grupo H SIFEN)"
     _order = "id"
 
     move_id = fields.Many2one(
         "account.move",
-        string="Factura",
+        string="Invoice",
         required=True,
         ondelete="cascade",
         index=True,
@@ -27,61 +27,61 @@ class AssociatedDocument(models.Model):
 
     association_type = fields.Selection(
         [
-            ("1", "Electrónico"),
-            ("2", "Impreso"),
-            ("3", "Constancia Electrónica"),
+            ("1", "Electronic"),
+            ("2", "Printed"),
+            ("3", "Electronic Certificate"),
         ],
-        string="Tipo de Asociación (H002)",
+        string="Association Type (H002)",
         required=True,
     )
 
-    # === Electrónico (H004) ===
+    # === Electronic (H004) ===
     cdc = fields.Char(
         string="CDC",
         size=44,
-        help="Código de Control del Documento Electrónico (44 dígitos)",
+        help="Code de Control del Document Electronic (44 digits)",
     )
 
-    # === Impreso (H005-H012) ===
+    # === Printed (H005-H012) ===
     timbrado = fields.Char(
         size=8,
-        help="Número de timbrado del documento impreso (H005)",
+        help="Number de timbrado del documento impreso (H005)",
     )
 
     establishment = fields.Char(
-        string="Establecimiento",
+        string="Establishment",
         size=3,
-        help="Código de establecimiento (H006)",
+        help="Code de establishment (H006)",
     )
 
     expedition_point = fields.Char(
-        string="Punto de Expedición",
+        string="Expedition Point",
         size=3,
-        help="Punto de expedición (H007)",
+        help="Punto de expedition (H007)",
     )
 
     doc_number = fields.Char(
-        string="Número de Documento",
+        string="Number de Document",
         size=7,
-        help="Número del documento (H008)",
+        help="Number del documento (H008)",
     )
 
     doc_type_code = fields.Selection(
         [
-            ("1", "Factura"),
-            ("2", "Nota de crédito"),
-            ("3", "Nota de débito"),
-            ("4", "Nota de remisión"),
-            ("5", "Comprobante de retención"),
+            ("1", "Invoice"),
+            ("2", "Credit Note"),
+            ("3", "Debit Note"),
+            ("4", "Remission Note"),
+            ("5", "Withholding receipt"),
         ],
-        string="Tipo de Documento Impreso (H009)",
+        string="Document Type Printed (H009)",
     )
 
     doc_date = fields.Date(
-        string="Fecha del Documento (H010)",
+        string="Date del Document (H010)",
     )
 
-    # === Constancia Electrónica (H011-H012) ===
+    # === Electronic Certificate (H011-H012) ===
     constancia_type = fields.Selection(
         [
             ("1", "Constancia de no ser contribuyente"),
@@ -91,7 +91,7 @@ class AssociatedDocument(models.Model):
     )
 
     constancia_number = fields.Char(
-        string="Número de Constancia (H012)",
+        string="Number de Constancia (H012)",
         size=20,
     )
 
@@ -99,23 +99,21 @@ class AssociatedDocument(models.Model):
 
     @api.constrains("association_type", "cdc")
     def _check_electronic_fields(self):
-        """Electrónico requiere CDC; impreso/constancia no permiten CDC."""
+        """Electronic requiere CDC; impreso/constancia no permiten CDC."""
         for rec in self:
             if rec.association_type == "1":
                 if not rec.cdc:
                     raise ValidationError(
-                        self.env._("Documento electrónico: el CDC es obligatorio.")
+                        self.env._("Electronic document: CDC is mandatory.")
                     )
                 if rec.cdc and (len(rec.cdc) != 44 or not rec.cdc.isdigit()):
                     raise ValidationError(
-                        self.env._(
-                            "El CDC debe contener exactamente 44 dígitos numéricos."
-                        )
+                        self.env._("CDC must contain exactly 44 numeric digits.")
                     )
             else:
                 if rec.cdc:
                     raise ValidationError(
-                        self.env._("Solo documentos electrónicos pueden tener CDC.")
+                        self.env._("Only electronic documents can have CDC.")
                     )
 
     @api.constrains(
@@ -128,14 +126,14 @@ class AssociatedDocument(models.Model):
         "doc_date",
     )
     def _check_printed_fields(self):
-        """Impreso requiere todos los campos; electrónico/constancia no permiten."""
+        """Printed requires all fields; electronic/certificate does not allow."""
         printed_fields = {
-            "timbrado": "Timbrado",
-            "establishment": "Establecimiento",
-            "expedition_point": "Punto de Expedición",
-            "doc_number": "Número de Documento",
-            "doc_type_code": "Tipo de Documento",
-            "doc_date": "Fecha del Documento",
+            "timbrado": "Authorization Number",
+            "establishment": "Establishment",
+            "expedition_point": "Expedition Point",
+            "doc_number": "Number de Document",
+            "doc_type_code": "Document Type",
+            "doc_date": "Date del Document",
         }
         for rec in self:
             if rec.association_type == "2":
@@ -147,7 +145,7 @@ class AssociatedDocument(models.Model):
                 if missing:
                     raise ValidationError(
                         self.env._(
-                            "Documento impreso: campos obligatorios "
+                            "Document impreso: campos obligatorios "
                             "faltantes: %(fields)s",
                             fields=", ".join(missing),
                         )
@@ -159,27 +157,27 @@ class AssociatedDocument(models.Model):
                 if has_printed:
                     raise ValidationError(
                         self.env._(
-                            "Documentos electrónicos o constancias no "
+                            "Electronic documents or certificates do not "
                             "pueden tener campos de documento impreso."
                         )
                     )
 
     @api.constrains("association_type", "constancia_type", "constancia_number")
     def _check_constancia_fields(self):
-        """Constancia requiere tipo y número; otros tipos no permiten."""
+        """Constancia requiere tipo y number; otros tipos no permiten."""
         for rec in self:
             if rec.association_type == "3":
                 if not rec.constancia_type or not rec.constancia_number:
                     raise ValidationError(
                         self.env._(
-                            "Constancia electrónica: tipo y número son obligatorios."
+                            "Electronic certificate: type and number are mandatory."
                         )
                     )
             else:
                 if rec.constancia_type or rec.constancia_number:
                     raise ValidationError(
                         self.env._(
-                            "Solo constancias electrónicas pueden tener "
-                            "tipo y número de constancia."
+                            "Only electronic certificates can have "
+                            "tipo y number de constancia."
                         )
                     )

@@ -1,7 +1,7 @@
 # l10n_py_edi_base/tests/test_cdc_generation.py
 
 """
-Tests para generación de CDC (Código de Control)
+Tests for CDC (Control Code) generation
 """
 
 from datetime import datetime
@@ -14,22 +14,22 @@ from ..services.cdc_generator import CDCGenerator
 
 @tagged("post_install", "-at_install", "l10n_py", "cdc")
 class TestCDCGeneration(TransactionCase):
-    """Tests para generación de CDC (Código de Control)"""
+    """Tests for CDC (Control Code) generation"""
 
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
 
-        # Datos de prueba
+        # Data de prueba
         cls.company_ruc = "80012345"
-        cls.doc_type = 1  # Factura Electrónica
+        cls.doc_type = 1  # Electronic Invoice
         cls.establishment = "001"
         cls.expedition_point = "001"
         cls.sequence = 1
         cls.emission_date = datetime(2025, 1, 15, 10, 30)
 
     def test_cdc_length(self):
-        """CDC tiene 44 dígitos (43 base + 1 dígito verificador)"""
+        """CDC has 44 digits (43 base + 1 check digit)"""
         cdc = CDCGenerator.generate(
             company_ruc=self.company_ruc,
             doc_type=self.doc_type,
@@ -41,7 +41,7 @@ class TestCDCGeneration(TransactionCase):
         self.assertEqual(len(cdc), 44)
 
     def test_cdc_only_digits(self):
-        """CDC contiene solo dígitos"""
+        """CDC contains only digits"""
         cdc = CDCGenerator.generate(
             company_ruc=self.company_ruc,
             doc_type=self.doc_type,
@@ -72,7 +72,7 @@ class TestCDCGeneration(TransactionCase):
         self.assertEqual(components["sequence"], str(self.sequence).zfill(7))
 
     def test_validate_valid_cdc(self):
-        """Validación pasa para CDC generado"""
+        """Validation passes for generated CDC"""
         cdc = CDCGenerator.generate(
             company_ruc=self.company_ruc,
             doc_type=self.doc_type,
@@ -82,13 +82,13 @@ class TestCDCGeneration(TransactionCase):
             emission_date=self.emission_date,
         )
         is_valid, error = CDCGenerator.validate_cdc(cdc)
-        self.assertTrue(is_valid, f"CDC válido fue rechazado: {error}")
+        self.assertTrue(is_valid, f"Valid CDC was rejected: {error}")
 
     def test_validate_invalid_cdc_length(self):
-        """Rechaza CDC con != 44 dígitos"""
+        """Reject CDC with != 44 digits"""
         is_valid, error = CDCGenerator.validate_cdc("123456789")
         self.assertFalse(is_valid)
-        self.assertIn("44 dígitos", error)
+        self.assertIn("44 digits", error)
 
     def test_validate_invalid_check_digit(self):
         """Rechaza DV incorrecto"""
@@ -101,17 +101,17 @@ class TestCDCGeneration(TransactionCase):
             emission_date=self.emission_date,
         )
 
-        # Cambiar último dígito
+        # Change last digit
         invalid_cdc = cdc[:-1] + ("0" if cdc[-1] != "0" else "1")
         is_valid, error = CDCGenerator.validate_cdc(invalid_cdc)
         self.assertFalse(is_valid)
-        self.assertIn("verificador inválido", error)
+        self.assertIn("invalid check digit", error)
 
     def test_validate_non_numeric(self):
-        """Rechaza CDC con caracteres no numéricos"""
+        """Reject CDC with non-numeric characters"""
         is_valid, error = CDCGenerator.validate_cdc("A" * 44)
         self.assertFalse(is_valid)
-        self.assertIn("números", error)
+        self.assertIn("digits", error)
 
     def test_parse_cdc_components(self):
         """Extrae RUC, tipo doc, etc."""
@@ -154,7 +154,7 @@ class TestCDCGeneration(TransactionCase):
         self.assertIn("-", formatted)
 
     def test_invalid_ruc_raises(self):
-        """ValueError para RUC inválido"""
+        """ValueError for invalid RUC"""
         with self.assertRaises(ValueError):
             CDCGenerator.generate(
                 company_ruc="12345",  # Muy corto
@@ -165,7 +165,7 @@ class TestCDCGeneration(TransactionCase):
             )
 
     def test_invalid_doc_type_raises(self):
-        """ValueError para tipo inválido"""
+        """ValueError for invalid type"""
         with self.assertRaises(ValueError):
             CDCGenerator.generate(
                 company_ruc=self.company_ruc,
@@ -176,7 +176,7 @@ class TestCDCGeneration(TransactionCase):
             )
 
     def test_cdc_uniqueness(self):
-        """CDCs generados son únicos"""
+        """Generated CDCs are unique"""
         cdcs = []
         for i in range(10):
             cdc = CDCGenerator.generate(

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo noupdate="1">
-    <!-- ============== PRODUCTOS CON IVA 10% ============== -->
+    <!-- ============== PRODUCTOS CON VAT 10% ============== -->
 
     <record id="product_iva_10_electronica" model="product.product">
         <field name="name">Notebook Dell Inspiron</field>
@@ -13,11 +13,11 @@
         <field name="uom_po_id" ref="uom.product_uom_unit" />
         <field
             name="taxes_id"
-            search="[('type_tax_use', '=', 'sale'), ('tax_group_id.name', '=', 'IVA 10%'), ('company_id', '=', ref('base.main_company'))]"
+            search="[('type_tax_use', '=', 'sale'), ('tax_group_id.name', '=', 'VAT 10%'), ('company_id', '=', ref('base.main_company'))]"
         />
         <field
             name="supplier_taxes_id"
-            search="[('type_tax_use', '=', 'purchase'), ('tax_group_id.name', '=', 'IVA 10%'), ('company_id', '=', ref('base.main_company'))]"
+            search="[('type_tax_use', '=', 'purchase'), ('tax_group_id.name', '=', 'VAT 10%'), ('company_id', '=', ref('base.main_company'))]"
         />
     </record>
 
@@ -31,15 +31,15 @@
         <field name="uom_po_id" ref="uom.product_uom_unit" />
         <field
             name="taxes_id"
-            search="[('type_tax_use', '=', 'sale'), ('tax_group_id.name', '=', 'IVA 10%'), ('company_id', '=', ref('base.main_company'))]"
+            search="[('type_tax_use', '=', 'sale'), ('tax_group_id.name', '=', 'VAT 10%'), ('company_id', '=', ref('base.main_company'))]"
         />
         <field
             name="supplier_taxes_id"
-            search="[('type_tax_use', '=', 'purchase'), ('tax_group_id.name', '=', 'IVA 10%'), ('company_id', '=', ref('base.main_company'))]"
+            search="[('type_tax_use', '=', 'purchase'), ('tax_group_id.name', '=', 'VAT 10%'), ('company_id', '=', ref('base.main_company'))]"
         />
     </record>
 
-    <!-- ============== PRODUCTOS CON IVA 5% ============== -->
+    <!-- ============== PRODUCTOS CON VAT 5% ============== -->
 
     <record id="product_iva_5_alimento" model="product.product">
         <field name="name">Yerba Mate Kurupí 1kg</field>
@@ -52,11 +52,11 @@
         <field name="uom_po_id" ref="uom.product_uom_unit" />
         <field
             name="taxes_id"
-            search="[('type_tax_use', '=', 'sale'), ('tax_group_id.name', '=', 'IVA 5%'), ('company_id', '=', ref('base.main_company'))]"
+            search="[('type_tax_use', '=', 'sale'), ('tax_group_id.name', '=', 'VAT 5%'), ('company_id', '=', ref('base.main_company'))]"
         />
         <field
             name="supplier_taxes_id"
-            search="[('type_tax_use', '=', 'purchase'), ('tax_group_id.name', '=', 'IVA 5%'), ('company_id', '=', ref('base.main_company'))]"
+            search="[('type_tax_use', '=', 'purchase'), ('tax_group_id.name', '=', 'VAT 5%'), ('company_id', '=', ref('base.main_company'))]"
         />
     </record>
 
@@ -71,11 +71,11 @@
         <field name="uom_po_id" ref="uom.product_uom_unit" />
         <field
             name="taxes_id"
-            search="[('type_tax_use', '=', 'sale'), ('tax_group_id.name', '=', 'IVA 5%'), ('company_id', '=', ref('base.main_company'))]"
+            search="[('type_tax_use', '=', 'sale'), ('tax_group_id.name', '=', 'VAT 5%'), ('company_id', '=', ref('base.main_company'))]"
         />
         <field
             name="supplier_taxes_id"
-            search="[('type_tax_use', '=', 'purchase'), ('tax_group_id.name', '=', 'IVA 5%'), ('company_id', '=', ref('base.main_company'))]"
+            search="[('type_tax_use', '=', 'purchase'), ('tax_group_id.name', '=', 'VAT 5%'), ('company_id', '=', ref('base.main_company'))]"
         />
     </record>
 
@@ -92,11 +92,11 @@
         <field name="uom_po_id" ref="uom.product_uom_unit" />
         <field
             name="taxes_id"
-            search="[('type_tax_use', '=', 'sale'), ('tax_group_id.name', '=', 'Exento'), ('company_id', '=', ref('base.main_company'))]"
+            search="[('type_tax_use', '=', 'sale'), ('tax_group_id.name', '=', 'Exempt'), ('company_id', '=', ref('base.main_company'))]"
         />
         <field
             name="supplier_taxes_id"
-            search="[('type_tax_use', '=', 'purchase'), ('tax_group_id.name', '=', 'Exento'), ('company_id', '=', ref('base.main_company'))]"
+            search="[('type_tax_use', '=', 'purchase'), ('tax_group_id.name', '=', 'Exempt'), ('company_id', '=', ref('base.main_company'))]"
         />
     </record>
 </odoo>

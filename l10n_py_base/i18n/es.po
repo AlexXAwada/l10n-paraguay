@@ -1,0 +1,154 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_py_base
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Economic Activity"
+msgstr "Actividad Económica"
+
+msgid "Neighborhood"
+msgstr "Barrio"
+
+msgid "Neighborhood or district of the contact"
+msgstr "Barrio o distrito del contacto"
+
+msgid "Neighborhood..."
+msgstr "Barrio..."
+
+msgid "Neighborhoods"
+msgstr "Barrios"
+
+msgid "Residence Permit"
+msgstr "Carnet de Residencia"
+
+msgid "City"
+msgstr "Ciudad"
+
+msgid "City the neighborhood belongs to"
+msgstr "Ciudad a la que pertenece el barrio"
+
+msgid "Taxpayer"
+msgstr "Contribuyente"
+
+msgid "Create a new neighborhood"
+msgstr "Crear un nuevo barrio"
+
+msgid "Identity Card"
+msgstr "Cédula de Identidad"
+
+msgid "Code"
+msgstr "Código"
+
+msgid "SET City Code"
+msgstr "Código Ciudad SET"
+
+msgid "SET Department Code"
+msgstr "Código Departamento SET"
+
+msgid "Zip Code"
+msgstr "Código Postal"
+
+msgid "SET Code"
+msgstr "Código SET"
+
+msgid "City code according to SET"
+msgstr "Código de la ciudad según SET"
+
+msgid "Neighborhood code"
+msgstr "Código del barrio"
+
+msgid "Department code according to SET"
+msgstr "Código del departamento según SET"
+
+msgid "Neighborhood zip code"
+msgstr "Código postal del barrio"
+
+msgid "Department"
+msgstr "Departamento"
+
+msgid "Department the neighborhood belongs to"
+msgstr "Departamento al que pertenece el barrio"
+
+msgid "Description of the main economic activity"
+msgstr "Descripción de la actividad económica principal"
+
+msgid "RUC check digit"
+msgstr "Dígito verificador del RUC"
+
+msgid "The SET code of the city must be unique per country"
+msgstr "El código SET de la ciudad debe ser único por país"
+
+msgid "The SET code of the department must be unique per country"
+msgstr "El código SET del departamento debe ser único por país"
+
+msgid "Unnamed"
+msgstr "Innominado"
+
+msgid "Neighborhoods are subdivisions of cities in Paraguay.
+                You can create neighborhoods to better organize addresses."
+msgstr "Los barrios son subdivisiones de las ciudades en Paraguay.
+                Puede crear barrios para organizar mejor las direcciones."
+
+msgid "Non-Taxpayer"
+msgstr "No Contribuyente"
+
+msgid "Name"
+msgstr "Nombre"
+
+msgid "Commercial or trade name"
+msgstr "Nombre comercial o de fantasía"
+
+msgid "Trade Name"
+msgstr "Nombre de Fantasía"
+
+msgid "Trade Name..."
+msgstr "Nombre de Fantasía..."
+
+msgid "Neighborhood Name"
+msgstr "Nombre del Barrio"
+
+msgid "Neighborhood name"
+msgstr "Nombre del barrio"
+
+msgid "Document Number"
+msgstr "Número de Documento"
+
+msgid "Country"
+msgstr "País"
+
+msgid "Country the neighborhood belongs to"
+msgstr "País al que pertenece el barrio"
+
+msgid "By City"
+msgstr "Por Ciudad"
+
+msgid "By Department"
+msgstr "Por Departamento"
+
+msgid "Tax ID (RUC)"
+msgstr "RUC"
+
+msgid "Single Taxpayer Registry (without check digit)"
+msgstr "Registro Único del Contribuyente (sin dígito verificador)"
+
+msgid "Taxpayer Type"
+msgstr "Tipo de Contribuyente"
+
+msgid "Identity Document Type"
+msgstr "Tipo de Documento de Identidad"
+
+msgid "Taxpayer type according to SET"
+msgstr "Tipo de contribuyente según la SET"
+
+msgid "Identity document type for non-taxpayers (SIFEN D024)"
+msgstr "Tipo de documento de identidad para no contribuyentes (SIFEN D024)"

@@ -8,7 +8,7 @@ class AccountMoveSendEDIWizard(models.TransientModel):
     _name = "account.move.send.edi.wizard"
     _description = "Wizard para enviar factura a EDI"
 
-    invoice_id = fields.Many2one("account.move", string="Factura", required=True)
+    invoice_id = fields.Many2one("account.move", string="Invoice", required=True)
 
     @api.model
     def default_get(self, fields_list):
@@ -18,10 +18,10 @@ class AccountMoveSendEDIWizard(models.TransientModel):
         return res
 
     def action_send(self):
-        """Enviar factura a EDI"""
+        """Send factura a EDI"""
         self.ensure_one()
         if not self.invoice_id:
-            raise UserError(self.env._("No se seleccionó una factura"))
+            raise UserError(self.env._("No invoice selected"))
 
         self.invoice_id.action_send_edi()
 
@@ -29,7 +29,7 @@ class AccountMoveSendEDIWizard(models.TransientModel):
             "type": "ir.actions.client",
             "tag": "display_notification",
             "params": {
-                "title": self.env._("Envío Exitoso"),
+                "title": self.env._("Sending Exitoso"),
                 "message": self.env._("La factura ha sido enviada al sistema EDI"),
                 "type": "success",
                 "sticky": False,

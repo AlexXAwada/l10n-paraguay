@@ -4,25 +4,22 @@ from odoo import fields, models
 
 
 class City(models.Model):
-    """Extensión de res.city para Paraguay con código SET.
+    """Extension of res.city for Paraguay with SET code.
 
-    Este objeto extiende res.city para incluir el código SET
-    (Subsecretaría de Estado de Tributación) necesario para
-    documentos fiscales en Paraguay.
+    This object extends res.city to include the SET code
+    (SET - Paraguay Tax Authority) required for
+    tax documents in Paraguay.
     """
 
     _inherit = "res.city"
 
     l10n_py_code = fields.Char(
-        string="Código SET",
+        string="SET Code",
         size=4,
-        help=("Código de la ciudad según SET (Subsecretaría de Estado de Tributación)"),
+        help=("City code according to SET - Paraguay Tax Authority"),
     )
 
-    _sql_constraints = [
-        (
-            "l10n_py_code_unique",
-            "unique(l10n_py_code, country_id)",
-            "El código SET de la ciudad debe ser único por país",
-        )
-    ]
+    _l10n_py_code_unique = models.Constraint(
+        "unique(l10n_py_code, country_id)",
+        "The SET code of the city must be unique per country",
+    )

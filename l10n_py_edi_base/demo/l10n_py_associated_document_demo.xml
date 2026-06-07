@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo noupdate="1">
     <!-- ============================================================ -->
-    <!-- Documentos Asociados adicionales (Grupo H SIFEN)             -->
+    <!-- Documents Associateds adicionales (Grupo H SIFEN)             -->
     <!-- Ejemplos de los 3 tipos de asociación                        -->
     <!-- ============================================================ -->
 
@@ -11,7 +11,7 @@
          archivos de demo de NCE, NDE, NRE y AFE.
          Aquí se muestran ejemplos adicionales para referencia. -->
 
-    <!-- Documento impreso asociado a la FE de IVA 10% -->
+    <!-- Document impreso asociado a la FE de VAT 10% -->
     <record id="demo_assoc_printed_remito" model="l10n_py.associated.document">
         <field name="move_id" ref="l10n_py_account.demo_invoice_fe_iva10" />
         <field name="association_type">2</field>

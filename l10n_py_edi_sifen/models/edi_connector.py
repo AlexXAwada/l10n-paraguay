@@ -39,7 +39,7 @@ class EDIConnector(models.Model):
     _inherit = "l10n_py.edi.connector"
 
     provider_type = fields.Selection(
-        selection_add=[("sifen", "SIFEN Directo")],
+        selection_add=[("sifen", "SIFEN Direct")],
         ondelete={"sifen": "cascade"},
     )
 
@@ -100,10 +100,10 @@ class EDIConnector(models.Model):
             if hasattr(result, "rProtDe") and result.rProtDe:
                 estado = getattr(result.rProtDe, "dEstRes", "")
                 return {
-                    "success": estado == "Aprobado",
+                    "success": estado == "Approved",
                     "result": {"status": estado, "cdc": cdc},
                 }
-            return {"success": False, "error": "Sin respuesta del SIFEN"}
+            return {"success": False, "error": "No response from SIFEN"}
         except Exception as e:
             _logger.error("SIFEN check_status error: %s", str(e))
             return {"success": False, "error": str(e)}
@@ -117,7 +117,7 @@ class EDIConnector(models.Model):
         try:
             cancel_event = TrGeVeCan(
                 Id=cdc,
-                mOtEve=reason or "Cancelación solicitada por el emisor",
+                mOtEve=reason or "Cancellation requested by issuer",
             )
             now_str = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
             r_eve = TrEve(
@@ -136,10 +136,10 @@ class EDIConnector(models.Model):
                 proc = result.gResProcEVe
                 if hasattr(proc, "dEstRes") and proc.dEstRes == "Aprobado":
                     return {"success": True}
-                error_msg = getattr(proc, "dMsgRes", "Error desconocido")
+                error_msg = getattr(proc, "dMsgRes", "Unknown error")
                 return {"success": False, "error": error_msg}
 
-            return {"success": False, "error": "Sin respuesta del SIFEN"}
+            return {"success": False, "error": "No response from SIFEN"}
         except Exception as e:
             _logger.error("SIFEN cancel error: %s", str(e))
             return {"success": False, "error": str(e)}
@@ -159,7 +159,7 @@ class EDIConnector(models.Model):
                 dNumIn=data.get("numeroDesde", "0000001"),
                 dNumFin=data.get("numeroHasta", "0000001"),
                 iTiDE=_DOC_TYPE_TO_EVENTO.get(doc_type, TiTiDeev.VALUE_1),
-                mOtEve=data.get("motivo", "Inutilización de números"),
+                mOtEve=data.get("motivo", "Inutilization of numbers"),
             )
             now_str = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
             r_eve = TrEve(
@@ -178,10 +178,10 @@ class EDIConnector(models.Model):
                 proc = result.gResProcEVe
                 if hasattr(proc, "dEstRes") and proc.dEstRes == "Aprobado":
                     return {"success": True}
-                error_msg = getattr(proc, "dMsgRes", "Error desconocido")
+                error_msg = getattr(proc, "dMsgRes", "Unknown error")
                 return {"success": False, "error": error_msg}
 
-            return {"success": False, "error": "Sin respuesta del SIFEN"}
+            return {"success": False, "error": "No response from SIFEN"}
         except Exception as e:
             _logger.error("SIFEN inutilize error: %s", str(e))
             return {"success": False, "error": str(e)}
@@ -199,18 +199,14 @@ class EDIConnector(models.Model):
                 "type": "ir.actions.client",
                 "tag": "display_notification",
                 "params": {
-                    "title": self.env._("Conexión Exitosa"),
-                    "message": self.env._(
-                        "La conexión con SIFEN fue verificada correctamente."
-                    ),
+                    "title": self.env._("Connection Successful"),
+                    "message": self.env._("SIFEN connection verified successfully."),
                     "type": "success",
                     "sticky": False,
                 },
             }
         except Exception as e:
-            raise UserError(
-                self.env._("Error de conexión con SIFEN: %s", str(e))
-            ) from e
+            raise UserError(self.env._("SIFEN connection error: %s", str(e))) from e
         finally:
             consulta.cleanup()
 
@@ -330,4 +326,4 @@ class EDIConnector(models.Model):
                         f"[{getattr(proc, 'dCodRes', '')}] "
                         f"{getattr(proc, 'dMsgRes', '')}"
                     )
-        return {"success": False, "error": "\n".join(errors) or "Error SIFEN"}
+        return {"success": False, "error": "\n".join(errors) or "SIFEN Error"}

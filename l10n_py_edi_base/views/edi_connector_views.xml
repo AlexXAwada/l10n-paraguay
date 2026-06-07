@@ -24,7 +24,7 @@
                 <header>
                     <button
                         name="test_connection"
-                        string="Probar Conexión"
+                        string="Test Connection"
                         type="object"
                         class="oe_highlight"
                     />
@@ -32,11 +32,11 @@
                 <sheet>
                     <div class="oe_title">
                         <h1>
-                            <field name="name" placeholder="Nombre del conector" />
+                            <field name="name" placeholder="Name del conector" />
                         </h1>
                     </div>
                     <group>
-                        <group string="Configuración">
+                        <group string="Configuration">
                             <field name="provider_type" />
                             <field
                                 name="company_id"
@@ -46,7 +46,7 @@
                             <field name="timeout" />
                             <field name="active" />
                         </group>
-                        <group name="credentials" string="Credenciales">
+                        <group name="credentials" string="Credentials">
                             <!-- Extended by provider modules via xpath -->
                         </group>
                     </group>
@@ -57,15 +57,19 @@
 
     <!-- Action -->
     <record id="action_edi_connector" model="ir.actions.act_window">
-        <field name="name">Conectores EDI</field>
+        <field name="name">Connectors EDI</field>
         <field name="res_model">l10n_py.edi.connector</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
+        <field
+            name="view_ids"
+            eval="[(5, 0, {'view_mode': 'list', 'view_id': ref('view_edi_connector_tree')}), (0, 0, {'view_mode': 'form', 'view_id': ref('view_edi_connector_form')})]"
+        />
     </record>
 
     <!-- Menu item under existing EDI menu -->
     <menuitem
         id="menu_edi_connector"
-        name="Conectores"
+        name="Connectors"
         parent="menu_edi_connectors"
         action="action_edi_connector"
         sequence="10"

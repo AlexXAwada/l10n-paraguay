@@ -1,0 +1,386 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_py_account
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-06 00:00+0000\n"
+"PO-Revision-Date: 2026-06-06 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);"
+
+msgid "Active"
+msgstr "Activo"
+
+msgid "Assets"
+msgstr "Activos"
+
+msgid "Group By"
+msgstr "Agrupar Por"
+
+msgid "Billing Authorization"
+msgstr "Autorización de Facturación (Timbrado)"
+
+msgid "Taxable Base 10% (F019)"
+msgstr "Base Gravada 10% (F019)"
+
+msgid "Taxable Base 5% (F018)"
+msgstr "Base Gravada 5% (F018)"
+
+msgid "Net taxable base 10% excl. VAT (SIFEN F019)"
+msgstr "Base gravada neta 10% sin IVA (SIFEN F019)"
+
+msgid "Net taxable base 5% excl. VAT (SIFEN F018)"
+msgstr "Base gravada neta 5% sin IVA (SIFEN F018)"
+
+msgid "Search Authorizations"
+msgstr "Buscar Timbrados"
+
+msgid "Quantity of numbers still available"
+msgstr "Cantidad de números aún disponibles"
+
+msgid "Quantity of numbers already used"
+msgstr "Cantidad de números ya utilizados"
+
+msgid "Companies"
+msgstr "Companies"
+
+msgid "Company"
+msgstr "Compañía"
+
+msgid "Paraguay EDI Configuration"
+msgstr "Configuración EDI Paraguay"
+
+msgid "Create a new authorization"
+msgstr "Crear un nuevo timbrado"
+
+msgid "Created by"
+msgstr "Created by"
+
+msgid "Created on"
+msgstr "Created on"
+
+msgid "Establishment code (3 digits)"
+msgstr "Código de establecimiento (3 dígitos)"
+
+msgid "Expedition point code (3 digits)"
+msgstr "Código de punto de expedición (3 dígitos)"
+
+msgid "You must select an authorization to confirm a sale invoice."
+msgstr "Debe seleccionar un timbrado para confirmar una factura de venta."
+
+msgid "VAT Breakdown (SIFEN)"
+msgstr "Discriminación de IVA (SIFEN)"
+
+msgid "Display Name"
+msgstr "Display Name"
+
+msgid "The establishment code must contain exactly 3 digits."
+msgstr "El código de establecimiento debe contener exactamente 3 dígitos."
+
+msgid "The expedition point code must contain exactly 3 digits."
+msgstr "El código de punto de expedición debe contener exactamente 3 dígitos."
+
+msgid "The establishment must be numeric"
+msgstr "El establecimiento debe ser numérico"
+
+msgid "The establishment must have 3 digits"
+msgstr "El establecimiento debe tener 3 dígitos"
+
+msgid "\nNumber %(number)s is outside the authorized range (%(from)s - %(to)s)."
+msgstr "\nEl número %(number)s está fuera del rango autorizado (%(from)s - %(to)s)."
+
+msgid "\nNumber %(number)s has already been used in invoice %(invoice_name)s."
+msgstr "\nEl número %(number)s ya ha sido utilizado en la factura %(invoice_name)s."
+
+msgid "The invoice number must be unique per authorization."
+msgstr "El número de factura debe ser único por timbrado."
+
+msgid "The authorization number must contain exactly 8 numeric digits."
+msgstr "El número de timbrado debe contener exactamente 8 dígitos numéricos."
+
+msgid "The end number must be greater than the start number."
+msgstr "El número final debe ser mayor al número inicial."
+
+msgid "The end number cannot exceed %(max)s."
+msgstr "El número final no puede exceder %(max)s."
+
+msgid "The start number must be greater than zero."
+msgstr "El número inicial debe ser mayor a cero."
+
+msgid "The expedition point must be numeric"
+msgstr "El punto de expedición debe ser numérico"
+
+msgid "The expedition point must have 3 digits"
+msgstr "El punto de expedición debe tener 3 dígitos"
+
+msgid "The authorization is not yet effective."
+msgstr "El timbrado aún no ha entrado en vigencia."
+
+msgid "The authorization is inactive."
+msgstr "El timbrado está inactivo."
+
+msgid "The authorization has expired."
+msgstr "El timbrado ha vencido."
+
+msgid "\nThe selected authorization does not match the establishment and expedition point configured in the journal."
+msgstr "\nEl timbrado seleccionado no corresponde al establecimiento y punto de \nexpedición configurados en el diario."
+
+msgid "Establishment"
+msgstr "Establecimiento"
+
+msgid "State"
+msgstr "Estado"
+
+msgid "Statistics"
+msgstr "Estadísticas"
+
+msgid "Exempt (F003)"
+msgstr "Exento (F003)"
+
+msgid "Start Date"
+msgstr "Fecha de Inicio"
+
+msgid "End Date"
+msgstr "Fecha de Vencimiento"
+
+msgid "Authorization end date"
+msgstr "Fecha de vencimiento del timbrado"
+
+msgid "Date from which the authorization is valid"
+msgstr "Fecha desde la cual el timbrado es válido"
+
+msgid "Date until which the authorization is valid"
+msgstr "Fecha hasta la cual el timbrado es válido"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Identification"
+msgstr "Identificación"
+
+msgid "Inactive"
+msgstr "Inactivos"
+
+msgid "Paraguay Tax Information"
+msgstr "Información Fiscal Paraguay"
+
+msgid "Journal"
+msgstr "Journal"
+
+msgid "Journal Entry"
+msgstr "Journal Entry"
+
+msgid "\nThe combination authorization/establishment/expedition-point/series/document-type must be unique."
+msgstr "\nLa combinación timbrado/establecimiento/punto de expedición/serie/tipo de \ndocumento debe ser única."
+
+msgid "The numbering range is exhausted for authorization %(timbrado)s."
+msgstr "La faja de numeración está agotada para el timbrado %(timbrado)s."
+
+msgid "The end date must be after the start date."
+msgstr "La fecha de vencimiento debe ser posterior a la fecha de inicio."
+
+msgid "The series must be exactly 2 uppercase letters (e.g., AA, AB, ZZ)."
+msgstr "La serie debe ser exactamente 2 letras mayúsculas (ej: AA, AB, ZZ)."
+
+msgid "Last Modified on"
+msgstr "Last Modified on"
+
+msgid "Last Updated by"
+msgstr "Last Updated by"
+
+msgid "Last Updated on"
+msgstr "Last Updated on"
+
+msgid "VAT 10% Liquidation (F016)"
+msgstr "Liq. IVA 10% (F016)"
+
+msgid "VAT 5% Liquidation (F015)"
+msgstr "Liq. IVA 5% (F015)"
+
+msgid "VAT 10% Liquidation (F016)"
+msgstr "Liquidación IVA 10% (F016)"
+
+msgid "VAT 10% Liquidation (SIFEN F016)"
+msgstr "Liquidación IVA 10% (SIFEN F016)"
+
+msgid "VAT 5% Liquidation (F015)"
+msgstr "Liquidación IVA 5% (F015)"
+
+msgid "VAT 5% Liquidation (SIFEN F015)"
+msgstr "Liquidación IVA 5% (SIFEN F015)"
+
+msgid "\nAuthorizations are permits granted by SET (Deputy Secretariat of State for Taxation)\\n\n                to issue invoices. Each authorization has a numbering range and specific validity dates."
+msgstr "\nLas autorizaciones son permisos otorgados por la SET (Subsecretaría de Estado de Tributación)\\n\n                para emitir facturas. Cada autorización tiene un rango de numeración y fechas de validez específicas."
+
+msgid "Mark as inactive to disable the authorization"
+msgstr "Marcar como inactivo para deshabilitar el timbrado"
+
+msgid "Invoice No."
+msgstr "Nro. Factura"
+
+msgid "Authorized Numbering"
+msgstr "Numeración Autorizada"
+
+msgid "Full Number"
+msgstr "Número Completo"
+
+msgid "Start Number"
+msgstr "Número Desde"
+
+msgid "End Number"
+msgstr "Número Hasta"
+
+msgid "Full invoice number (format: 001-001-0000001)"
+msgstr "Número completo de factura (formato: 001-001-0000001)"
+
+msgid "Invoice Number"
+msgstr "Número de Factura"
+
+msgid "Authorization Number"
+msgstr "Número de Timbrado"
+
+msgid "Invoice number according to authorized authorization"
+msgstr "Número de factura según timbrado autorizado"
+
+msgid "Authorization number granted by SET"
+msgstr "Número de timbrado otorgado por la SET"
+
+msgid "Available Numbers"
+msgstr "Números Disponibles"
+
+msgid "Used Numbers"
+msgstr "Números Utilizados"
+
+msgid "Paraguay"
+msgstr "Paraguay"
+
+msgid "To Expire"
+msgstr "Por Vencer"
+
+msgid "Usage Percentage"
+msgstr "Porcentaje de Uso"
+
+msgid "Percentage of numbers used relative to total authorized"
+msgstr "Porcentaje de números utilizados respecto al total autorizado"
+
+msgid "First authorized invoice number"
+msgstr "Primer número de factura autorizado"
+
+msgid "Next Number"
+msgstr "Próximo Número"
+
+msgid "Next invoice number to use"
+msgstr "Próximo número de factura a utilizar"
+
+msgid "Expedition Point"
+msgstr "Punto de Expedición"
+
+msgid "Series"
+msgstr "Serie"
+
+msgid "\nAuthorization series (2 uppercase letters, AA-ZZ). Allows restarting numbering when the range is exhausted."
+msgstr "\nSerie del timbrado (2 letras mayúsculas, AA-ZZ). Permite reiniciar \nnumeración cuando se agota la faja."
+
+msgid "Exempt/non-taxable subtotal (SIFEN F003)"
+msgstr "Subtotal exento/no gravado (SIFEN F003)"
+
+msgid "Taxable subtotal 10% — value with tax included (SIFEN F005)"
+msgstr "Subtotal gravado 10% — valor con impuesto incluido (SIFEN F005)"
+
+msgid "Taxable subtotal 5% — value with tax included (SIFEN F004)"
+msgstr "Subtotal gravado 5% — valor con impuesto incluido (SIFEN F004)"
+
+msgid "Authorization"
+msgstr "Timbrado"
+
+msgid "Authorization authorized by SET for this journal"
+msgstr "Timbrado autorizado por SET para este diario"
+
+msgid "Authorization used for this invoice"
+msgstr "Timbrado utilizado para esta factura"
+
+msgid "Authorizations"
+msgstr "Timbrados"
+
+msgid "Exchange Rate"
+msgstr "Tipo de Cambio"
+
+msgid "Document Type"
+msgstr "Tipo de Documento"
+
+msgid "Exchange rate to guaranies (PYG) for invoicing in foreign currency"
+msgstr "Tipo de cambio a guaranies (PYG) para facturación en moneda extranjera"
+
+msgid "LATAM document type (Invoice, Credit Note, Debit Note, etc.)"
+msgstr "Tipo de documento LATAM (Factura, NC, ND, etc.)"
+
+msgid "Total Taxable Base (F020)"
+msgstr "Total Base Gravada (F020)"
+
+msgid "Total Exempt (F003)"
+msgstr "Total Exento (F003)"
+
+msgid "Total Taxable 10% (F005)"
+msgstr "Total Gravado 10% (F005)"
+
+msgid "Total Taxable 5% (F004)"
+msgstr "Total Gravado 5% (F004)"
+
+msgid "Total VAT (F014)"
+msgstr "Total IVA (F014)"
+
+msgid "Total Operation (F008)"
+msgstr "Total Operación (F008)"
+
+msgid "Total taxable base (SIFEN F020 = F018 + F019)"
+msgstr "Total base gravada (SIFEN F020 = F018 + F019)"
+
+msgid "Total operation (SIFEN F008 = F003 + F004 + F005)"
+msgstr "Total de la operación (SIFEN F008 = F003 + F004 + F005)"
+
+msgid "Total operation in guaranies (SIFEN F023)"
+msgstr "Total de la operación en guaranies (SIFEN F023)"
+
+msgid "Total in Gs. (F023)"
+msgstr "Total en Gs. (F023)"
+
+msgid "Total in Guaranies (F023)"
+msgstr "Total en Guaranies (F023)"
+
+msgid "Total in Words"
+msgstr "Total en Letras"
+
+msgid "Total VAT liquidation (SIFEN F014)"
+msgstr "Total liquidación IVA (SIFEN F014)"
+
+msgid "Expired"
+msgstr "Vencido"
+
+msgid "Expired"
+msgstr "Vencidos"
+
+msgid "Authorization Expiry"
+msgstr "Vencimiento del Timbrado"
+
+msgid "Check Validity"
+msgstr "Verificar Validez"
+
+msgid "Valid"
+msgstr "Vigente"
+
+msgid "Valid"
+msgstr "Vigentes"
+
+msgid "e.g., 12345678"
+msgstr "ej: 12345678"
+
+msgid "Last authorized invoice number"
+msgstr "Último número de factura autorizado"

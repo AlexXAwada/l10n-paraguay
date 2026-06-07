@@ -1,7 +1,7 @@
 # l10n_py_edi_base/models/edi_logging_mixin.py
 
 """
-Mixin para Logging Automático de Operações EDI
+Automatic EDI Operations Logging Mixin
 Facilita o logging consistente em todos os conectores
 """
 
@@ -15,15 +15,15 @@ _logger = logging.getLogger(__name__)
 
 
 class EDILoggingMixin(models.AbstractModel):
-    """Mixin para logging automático de operações EDI"""
+    """Automatic EDI operations logging mixin"""
 
     _name = "l10n_py.edi.logging.mixin"
-    _description = "Mixin para Logging Automático EDI"
+    _description = "Automatic EDI Logging Mixin"
 
     @contextmanager
     def log_edi_operation(self, operation_type, provider, document=None, **kwargs):
         """
-        Context manager para logging automático de operações EDI
+        Context manager for automatic EDI operations logging
 
         Usage:
             with self.log_edi_operation('send', 'factpy', document) as log_data:
@@ -33,11 +33,11 @@ class EDILoggingMixin(models.AbstractModel):
         Args:
             operation_type (str): Tipo de operação
             provider (str): Provedor EDI
-            document (account.move): Documento relacionado
+            document (account.move): Document relacionado
             **kwargs: Dados adicionais para o log
 
         Yields:
-            dict: Dicionário para adicionar dados durante a operação
+            dict: Dictionary to add data during the operation
         """
         start_time = time.time()
         log_data = {
@@ -81,7 +81,7 @@ class EDILoggingMixin(models.AbstractModel):
         Args:
             operation_type (str): Tipo de operação
             provider (str): Provedor EDI
-            document (account.move): Documento relacionado
+            document (account.move): Document relacionado
             execution_time (float): Tempo de execução em ms
             **kwargs: Dados adicionais
         """
@@ -110,7 +110,7 @@ class EDILoggingMixin(models.AbstractModel):
             operation_type (str): Tipo de operação
             provider (str): Provedor EDI
             error_message (str): Mensagem de erro
-            document (account.move): Documento relacionado
+            document (account.move): Document relacionado
             execution_time (float): Tempo de execução em ms
             **kwargs: Dados adicionais
         """

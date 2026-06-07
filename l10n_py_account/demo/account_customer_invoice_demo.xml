@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo noupdate="1">
     <!-- ============================================================ -->
-    <!-- Facturas de Venta (FE) con distintas alícuotas IVA           -->
+    <!-- Facturas de Venta (FE) con distintas alícuotas VAT           -->
     <!-- ============================================================ -->
 
-    <!-- FE 1: Factura con IVA 10% — Electrónica + Servicio -->
+    <!-- FE 1: Factura con VAT 10% — Electrónica + Servicio -->
     <record id="demo_invoice_fe_iva10" model="account.move">
         <field name="partner_id" ref="partner_contribuyente_general" />
         <field name="move_type">out_invoice</field>
@@ -29,7 +29,7 @@
         />
     </record>
 
-    <!-- FE 2: Factura con IVA 5% — Alimentos + Farmacia -->
+    <!-- FE 2: Factura con VAT 5% — Alimentos + Farmacia -->
     <record id="demo_invoice_fe_iva5" model="account.move">
         <field name="partner_id" ref="partner_contribuyente_servicios" />
         <field name="move_type">out_invoice</field>
@@ -54,7 +54,7 @@
         />
     </record>
 
-    <!-- FE 3: Factura mixta — IVA 10% + IVA 5% + Exento -->
+    <!-- FE 3: Factura mixta — VAT 10% + VAT 5% + Exempt -->
     <record id="demo_invoice_fe_mixta" model="account.move">
         <field name="partner_id" ref="partner_contribuyente_general" />
         <field name="move_type">out_invoice</field>

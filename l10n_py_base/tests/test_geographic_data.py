@@ -4,7 +4,7 @@ from odoo.tests.common import TransactionCase
 
 @tagged("post_install", "-at_install", "l10n_py")
 class TestGeographicData(TransactionCase):
-    """Tests para datos geográficos de Paraguay"""
+    """Tests for Paraguay geographic data"""
 
     @classmethod
     def setUpClass(cls):
@@ -12,16 +12,16 @@ class TestGeographicData(TransactionCase):
         cls.country_py = cls.env.ref("base.py")
 
     def test_departments_loaded(self):
-        """17 departamentos PY deben estar cargados"""
+        """17 PY departments must be loaded"""
         departments = self.env["res.country.state"].search(
             [("country_id", "=", self.country_py.id)]
         )
         self.assertGreaterEqual(
-            len(departments), 17, "Debe haber al menos 17 departamentos"
+            len(departments), 17, "Must have at least 17 departments"
         )
 
     def test_department_set_codes(self):
-        """Departamentos deben tener códigos SET"""
+        """Departments must have SET codes"""
         departments = self.env["res.country.state"].search(
             [
                 ("country_id", "=", self.country_py.id),
@@ -30,15 +30,15 @@ class TestGeographicData(TransactionCase):
             ]
         )
         self.assertGreater(
-            len(departments), 0, "Al menos un departamento debe tener código SET"
+            len(departments), 0, "At least one department must have SET code"
         )
 
     def test_cities_loaded(self):
-        """Ciudades PY deben estar cargadas"""
+        """PY cities must be loaded"""
         cities = self.env["res.city"].search([("country_id", "=", self.country_py.id)])
-        self.assertGreater(len(cities), 0, "Debe haber ciudades cargadas")
+        self.assertGreater(len(cities), 0, "Must have cities loaded")
 
     def test_neighborhoods_loaded(self):
-        """Barrios deben estar cargados"""
+        """Neighborhoods must be loaded"""
         neighborhoods = self.env["l10n_py.neighborhood"].search([])
-        self.assertGreater(len(neighborhoods), 0, "Debe haber barrios cargados")
+        self.assertGreater(len(neighborhoods), 0, "Must have neighborhoods loaded")

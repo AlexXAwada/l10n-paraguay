@@ -10,7 +10,7 @@ _logger = logging.getLogger(__name__)
 
 class EDIConnector(models.Model):
     _name = "l10n_py.edi.connector"
-    _description = "Conector EDI Paraguay"
+    _description = "Connector EDI Paraguay"
 
     _company_provider_unique = models.Constraint(
         "UNIQUE (company_id, provider_type)",
@@ -29,7 +29,7 @@ class EDIConnector(models.Model):
         required=True,
     )
     environment = fields.Selection(
-        [("test", "Pruebas"), ("prod", "Producción")],
+        [("test", "Tests"), ("prod", "Production")],
         default="test",
         required=True,
     )
@@ -43,7 +43,7 @@ class EDIConnector(models.Model):
         self.ensure_one()
         raise UserError(
             self.env._(
-                "El proveedor '%s' no implementa el envío de documentos",
+                "Provider '%s' does not implement document sending",
                 provider=self.provider_type,
             )
         )
@@ -63,7 +63,7 @@ class EDIConnector(models.Model):
         self.ensure_one()
         raise UserError(
             self.env._(
-                "El proveedor '%s' no implementa la cancelación",
+                "Provider '%s' does not implement cancellation",
                 provider=self.provider_type,
             )
         )
@@ -73,7 +73,7 @@ class EDIConnector(models.Model):
         self.ensure_one()
         raise UserError(
             self.env._(
-                "El proveedor '%s' no implementa la previsualización",
+                "Provider '%s' does not implement preview",
                 provider=self.provider_type,
             )
         )
@@ -83,7 +83,7 @@ class EDIConnector(models.Model):
         self.ensure_one()
         raise UserError(
             self.env._(
-                "El proveedor '%s' no implementa la inutilización",
+                "Provider '%s' does not implement inutilization",
                 provider=self.provider_type,
             )
         )
@@ -93,7 +93,7 @@ class EDIConnector(models.Model):
         self.ensure_one()
         raise UserError(
             self.env._(
-                "El proveedor '%s' no implementa la prueba de conexión",
+                "Provider '%s' does not implement connection test",
                 provider=self.provider_type,
             )
         )

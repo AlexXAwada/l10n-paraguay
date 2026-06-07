@@ -5,7 +5,7 @@ from odoo.tests.common import TransactionCase
 
 @tagged("post_install", "-at_install", "l10n_py")
 class TestAccountJournal(TransactionCase):
-    """Tests para account.journal (extensión paraguaya)"""
+    """Tests for account.journal (Paraguayan extension)"""
 
     @classmethod
     def setUpClass(cls):
@@ -14,7 +14,7 @@ class TestAccountJournal(TransactionCase):
         cls.company = cls.env.ref("base.main_company")
 
     def test_establishment_validation(self):
-        """Validación formato 3 dígitos"""
+        """Validation format 3 digits"""
         journal = self.Journal.create(
             {
                 "name": "Test Journal",
@@ -40,7 +40,7 @@ class TestAccountJournal(TransactionCase):
             )
 
     def test_point_validation(self):
-        """Validación formato 3 dígitos"""
+        """Validation format 3 digits"""
         with self.assertRaises(ValidationError):
             self.Journal.create(
                 {

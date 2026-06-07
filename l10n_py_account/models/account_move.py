@@ -11,156 +11,153 @@ class AccountMove(models.Model):
 
     @api.constrains("state", "l10n_latam_document_type_id")
     def _check_l10n_latam_documents(self):
-        """Pular validação de documento LATAM durante instalação de módulos.
+        """Skip LATAM document validation during module installation.
 
-        As invoices demo do account padrão são postadas pelo try_loading sem
-        document number, causando ValidationError. Isso é comportamento
-        esperado em todas as localizações LATAM — pulamos durante instalação.
+        Demo invoices from standard account are posted by try_loading without
+        document numbers, causing ValidationError. This is expected behavior
+        in all LATAM localizations - skip during installation.
         """
         if not self.env.registry.ready:
             return
         return super()._check_l10n_latam_documents()
 
-    # ============== CAMPOS CONTABILIDAD PARAGUAY ==============
+    # ============== PARAGUAY ACCOUNTING FIELDS ==============
 
     l10n_py_authorization_id = fields.Many2one(
         "account.authorization",
-        string="Timbrado",
+        string="Authorization",
         domain=(
             "[('company_id', '=', company_id), "
             "('active', '=', True), "
             "('state', '!=', 'expired')]"
         ),
-        help="Timbrado utilizado para esta factura",
+        help="Authorization used for this invoice",
     )
 
     l10n_py_invoice_number = fields.Integer(
-        string="Número de Factura",
-        help="Número de factura según timbrado autorizado",
+        string="Invoice Number",
+        help="Invoice number according to authorized authorization",
     )
 
     l10n_py_full_invoice_number = fields.Char(
-        string="Número Completo",
+        string="Full Number",
         compute="_compute_l10n_py_full_invoice_number",
         store=True,
-        help="Número completo de factura (formato: 001-001-0000001)",
+        help="Complete invoice number (format: 001-001-0000001)",
     )
 
-    # ============== CAMPOS IVA BREAKDOWN (SIFEN) ==============
+    # ============== VAT BREAKDOWN FIELDS (SIFEN) ==============
 
     l10n_py_amount_subtotal_10 = fields.Monetary(
-        string="Total Gravado 10% (F005)",
+        string="Gross 10% (F005)",
         compute="_compute_l10n_py_iva",
         store=True,
         currency_field="currency_id",
-        help="Subtotal gravado 10% — valor con impuesto incluido (SIFEN F005)",
+        help="Gross subtotal 10% — price including tax (SIFEN F005)",
     )
 
     l10n_py_amount_iva_10 = fields.Monetary(
-        string="Liquidación IVA 10% (F016)",
+        string="VAT 10% (F016)",
         compute="_compute_l10n_py_iva",
         store=True,
         currency_field="currency_id",
-        help="Liquidación IVA 10% (SIFEN F016)",
+        help="VAT 10% liquidation (SIFEN F016)",
     )
 
     l10n_py_amount_subtotal_5 = fields.Monetary(
-        string="Total Gravado 5% (F004)",
+        string="Gross 5% (F004)",
         compute="_compute_l10n_py_iva",
         store=True,
         currency_field="currency_id",
-        help="Subtotal gravado 5% — valor con impuesto incluido (SIFEN F004)",
+        help="Gross subtotal 5% — price including tax (SIFEN F004)",
     )
 
     l10n_py_amount_iva_5 = fields.Monetary(
-        string="Liquidación IVA 5% (F015)",
+        string="VAT 5% (F015)",
         compute="_compute_l10n_py_iva",
         store=True,
         currency_field="currency_id",
-        help="Liquidación IVA 5% (SIFEN F015)",
+        help="VAT 5% liquidation (SIFEN F015)",
     )
 
     l10n_py_amount_exempt = fields.Monetary(
-        string="Total Exento (F003)",
+        string="Exempt Total (F003)",
         compute="_compute_l10n_py_iva",
         store=True,
         currency_field="currency_id",
-        help="Subtotal exento/no gravado (SIFEN F003)",
+        help="Exempt/un taxed subtotal (SIFEN F003)",
     )
 
     l10n_py_amount_iva_total = fields.Monetary(
-        string="Total IVA (F014)",
+        string="Total VAT (F014)",
         compute="_compute_l10n_py_iva",
         store=True,
         currency_field="currency_id",
-        help="Total liquidación IVA (SIFEN F014)",
+        help="Total VAT liquidation (SIFEN F014)",
     )
 
     l10n_py_base_10 = fields.Monetary(
-        string="Base Gravada 10% (F019)",
+        string="Tax Base 10% (F019)",
         compute="_compute_l10n_py_iva",
         store=True,
         currency_field="currency_id",
-        help="Base gravada neta 10% sin IVA (SIFEN F019)",
+        help="Net tax base 10% without VAT (SIFEN F019)",
     )
 
     l10n_py_base_5 = fields.Monetary(
-        string="Base Gravada 5% (F018)",
+        string="Tax Base 5% (F018)",
         compute="_compute_l10n_py_iva",
         store=True,
         currency_field="currency_id",
-        help="Base gravada neta 5% sin IVA (SIFEN F018)",
+        help="Net tax base 5% without VAT (SIFEN F018)",
     )
 
     l10n_py_base_total = fields.Monetary(
-        string="Total Base Gravada (F020)",
+        string="Total Tax Base (F020)",
         compute="_compute_l10n_py_iva",
         store=True,
         currency_field="currency_id",
-        help="Total base gravada (SIFEN F020 = F018 + F019)",
+        help="Total tax base (SIFEN F020 = F018 + F019)",
     )
 
     l10n_py_total_operation = fields.Monetary(
-        string="Total Operación (F008)",
+        string="Operation Total (F008)",
         compute="_compute_l10n_py_iva",
         store=True,
         currency_field="currency_id",
-        help="Total de la operación (SIFEN F008 = F003 + F004 + F005)",
+        help="Total operation amount (SIFEN F008 = F003 + F004 + F005)",
     )
 
-    # ============== CAMPOS TIPO DE CAMBIO PYG ==============
+    # ============== PYG EXCHANGE RATE FIELDS ==============
 
     l10n_py_exchange_rate = fields.Float(
-        string="Tipo de Cambio",
+        string="Exchange Rate",
         digits=(16, 4),
-        help="Tipo de cambio a guaraníes (PYG) para facturación en moneda extranjera",
+        help="Exchange rate to guaranies (PYG) for foreign currency invoicing",
     )
 
     l10n_py_amount_total_pyg = fields.Monetary(
-        string="Total en Guaraníes (F023)",
+        string="Total in Guaranies (F023)",
         compute="_compute_l10n_py_total_pyg",
         store=True,
         currency_field="currency_id",
-        help="Total de la operación en guaraníes (SIFEN F023)",
+        help="Operation total in guaranies (SIFEN F023)",
     )
 
     l10n_py_amount_total_words = fields.Char(
-        string="Total en Letras",
+        string="Total in Words",
         compute="_compute_l10n_py_amount_total_words",
     )
 
-    _sql_constraints = [
-        (
-            "l10n_py_invoice_unique",
-            "unique(l10n_py_authorization_id, l10n_py_invoice_number)",
-            "El número de factura debe ser único por timbrado.",
-        ),
-    ]
+    _l10n_py_invoice_unique = models.Constraint(
+        "unique(l10n_py_authorization_id, l10n_py_invoice_number)",
+        "Invoice number must be unique per authorization.",
+    )
 
     # ============== ACTION METHODS ==============
 
     def action_post(self):
-        """Override para asignar numeración secuencial al confirmar"""
+        """Override to assign sequential numbering on confirmation"""
         for move in self:
             if (
                 move.move_type in ("out_invoice", "out_refund")
@@ -170,13 +167,13 @@ class AccountMove(models.Model):
             ):
                 if not move.l10n_py_authorization_id:
                     if not self.env.registry.ready:
-                        # Pular durante instalação/demo (invoices genéricas
-                        # criadas pelo account.chart.template.try_loading)
+                        # Skip during installation/demo (generic invoices
+                        # created by account.chart.template.try_loading)
                         continue
                     raise UserError(
                         self.env._(
-                            "Debe seleccionar un timbrado para confirmar "
-                            "una factura de venta."
+                            "You must select an authorization to confirm "
+                            "a sales invoice."
                         )
                     )
                 if not move.l10n_py_invoice_number:
@@ -205,8 +202,8 @@ class AccountMove(models.Model):
                     if next_num > auth.invoice_number_to:
                         raise UserError(
                             self.env._(
-                                "La faja de numeración está agotada "
-                                "para el timbrado %(timbrado)s.",
+                                "The number range is exhausted "
+                                "for authorization %(timbrado)s.",
                                 timbrado=auth.name,
                             )
                         )
@@ -221,7 +218,7 @@ class AccountMove(models.Model):
         "l10n_py_invoice_number",
     )
     def _compute_l10n_py_full_invoice_number(self):
-        """Calcular número completo de factura (formato: 001-001-0000001)"""
+        """Compute complete invoice number (format: 001-001-0000001)"""
         for move in self:
             if move.l10n_py_authorization_id and move.l10n_py_invoice_number:
                 auth = move.l10n_py_authorization_id
@@ -238,10 +235,10 @@ class AccountMove(models.Model):
         "invoice_line_ids.tax_ids",
     )
     def _compute_l10n_py_iva(self):
-        """Calcular desglose de IVA según fórmula SIFEN v150.
+        """Compute VAT breakdown per SIFEN v150 formula.
 
-        Fórmula SIFEN: base = price_total / (1 + tasa/100)
-                        iva  = price_total - base
+        SIFEN formula: base = price_total / (1 + rate/100)
+                        vat  = price_total - base
         """
         for move in self:
             subtotal_10 = iva_10 = base_10 = 0.0
@@ -284,7 +281,7 @@ class AccountMove(models.Model):
 
     @api.depends("amount_total", "l10n_py_exchange_rate")
     def _compute_l10n_py_total_pyg(self):
-        """Calcular total en guaraníes (F023) para facturas en moneda extranjera"""
+        """Compute total in guaranies (F023) for foreign currency invoices"""
         for move in self:
             if move.l10n_py_exchange_rate and move.l10n_py_exchange_rate > 0:
                 move.l10n_py_amount_total_pyg = (
@@ -295,11 +292,11 @@ class AccountMove(models.Model):
 
     @api.depends("amount_total", "currency_id")
     def _compute_l10n_py_amount_total_words(self):
-        """Convertir total a letras en español"""
-        # Mapa de nombres en español para monedas comunes en Paraguay
+        """Convert total to words in Spanish"""
+        # Map of Spanish names for common currencies in Paraguay
         _CURRENCY_NAMES_ES = {
-            "PYG": "guaraníes",
-            "USD": "dólares americanos",
+            "PYG": "guaranies",
+            "USD": "dolares americanos",
             "BRL": "reales",
             "EUR": "euros",
             "ARS": "pesos argentinos",
@@ -309,7 +306,7 @@ class AccountMove(models.Model):
                 currency_code = move.currency_id.name or ""
                 currency_name = _CURRENCY_NAMES_ES.get(
                     currency_code,
-                    move.currency_id.currency_unit_label or "guaraníes",
+                    move.currency_id.currency_unit_label or "guaranies",
                 )
                 amount_int = int(move.amount_total)
                 decimal_places = move.currency_id.decimal_places
@@ -339,7 +336,7 @@ class AccountMove(models.Model):
 
     @api.constrains("l10n_py_authorization_id", "l10n_py_invoice_number")
     def _check_authorization_number(self):
-        """Validar que el número de factura esté dentro del rango autorizado"""
+        """Validate that invoice number is within authorized range"""
         for move in self:
             if move.l10n_py_authorization_id and move.l10n_py_invoice_number:
                 move.l10n_py_authorization_id.check_number_available(
@@ -349,7 +346,7 @@ class AccountMove(models.Model):
 
     @api.constrains("l10n_py_authorization_id")
     def _check_authorization_validity(self):
-        """Validar que el timbrado esté vigente"""
+        """Validate that authorization is current"""
         for move in self:
             if move.state == "posted" and move.l10n_py_authorization_id:
                 move.l10n_py_authorization_id.check_validity()
@@ -358,6 +355,6 @@ class AccountMove(models.Model):
 
     @api.onchange("l10n_py_authorization_id")
     def _onchange_authorization_id(self):
-        """Limpiar número al cambiar timbrado — se asigna en action_post"""
+        """Clear number when changing authorization — assigned in action_post"""
         if self.l10n_py_authorization_id:
             self.l10n_py_invoice_number = 0

@@ -25,9 +25,9 @@ class EDILog(models.Model):
 
     operation_type = fields.Selection(
         [
-            ("send", "Envio de Documento"),
+            ("send", "Envio de Document"),
             ("status", "Consulta de Status"),
-            ("cancel", "Cancelación"),
+            ("cancel", "Cancellation"),
             ("event", "Evento"),
             ("download_pdf", "Download PDF"),
             ("download_xml", "Download XML"),
@@ -42,20 +42,20 @@ class EDILog(models.Model):
 
     document_id = fields.Many2one(
         "account.move",
-        string="Documento",
+        string="Document",
         ondelete="cascade",
         index=True,
-        help="Documento fiscal relacionado",
+        help="Document fiscal relacionado",
     )
 
-    cdc = fields.Char(string="CDC", index=True, help="Código de Control del documento")
+    cdc = fields.Char(string="CDC", index=True, help="Code de Control del documento")
 
     # ============== PROVEDOR EDI ==============
 
     provider = fields.Selection(
         [
             ("factpy", "FactPy"),
-            ("facturasend", "FacturaSend"),
+            ("facturasend", "InvoiceSend"),
             ("sifen", "SIFEN Directo"),
             ("local", "Processamento Local"),
         ],
@@ -76,20 +76,18 @@ class EDILog(models.Model):
             ("DELETE", "DELETE"),
             ("PATCH", "PATCH"),
         ],
-        string="Método HTTP",
+        string="HTTP Method",
     )
 
     request_headers = fields.Text(
         string="Headers da Requisição", help="Headers HTTP enviados"
     )
 
-    request_data = fields.Text(string="Dados Enviados", help="Payload da requisição")
+    request_data = fields.Text(string="Dados Sents", help="Payload da requisição")
 
     # ============== DADOS DA RESPOSTA ==============
 
-    status_code = fields.Integer(
-        string="Código de Status", help="Código de status HTTP"
-    )
+    status_code = fields.Integer(string="Code de Status", help="Code de status HTTP")
 
     response_headers = fields.Text(
         string="Headers da Resposta", help="Headers HTTP recebidos"
@@ -97,7 +95,7 @@ class EDILog(models.Model):
 
     response_data = fields.Text(string="Resposta Recebida", help="Payload da resposta")
 
-    # ============== MÉTRICAS ==============
+    # ============== METRICS ==============
 
     execution_time = fields.Float(
         string="Tempo de Execução (ms)",
@@ -118,7 +116,7 @@ class EDILog(models.Model):
         string="Mensagem de Erro", help="Descrição do erro se houver"
     )
 
-    error_code = fields.Char(string="Código de Erro", help="Código de erro do provedor")
+    error_code = fields.Char(string="Code de Erro", help="Code de erro do provedor")
 
     # ============== DADOS ADICIONAIS ==============
 
@@ -127,13 +125,13 @@ class EDILog(models.Model):
     )
 
     retry_count = fields.Integer(
-        string="Tentativas", default=0, help="Número de tentativas realizadas"
+        string="Tentativas", default=0, help="Number de tentativas realizadas"
     )
 
     # ============== CAMPOS COMPUTADOS ==============
 
     error = fields.Boolean(
-        string="É Erro",
+        string="Is Error",
         compute="_compute_error",
         store=True,
         help="Indica se houve erro na operação",
@@ -142,14 +140,14 @@ class EDILog(models.Model):
     duration_human = fields.Char(
         string="Duração",
         compute="_compute_duration_human",
-        help="Duração em formato legível",
+        help="Duration in readable format",
     )
 
-    # ============== MÉTODOS COMPUTE ==============
+    # ============== COMPUTE METHODS ==============
 
     @api.depends("status_code", "success")
     def _compute_error(self):
-        """Computar se é erro baseado no status code e flag success"""
+        """Compute if it is an error based on status code and success flag"""
         for record in self:
             if record.status_code:
                 record.error = record.status_code >= 400
@@ -169,7 +167,7 @@ class EDILog(models.Model):
             else:
                 record.duration_human = "N/A"
 
-    # ============== MÉTODOS PÚBLICOS ==============
+    # ============== PUBLIC METHODS ==============
 
     @api.model
     def log_operation(
@@ -190,7 +188,7 @@ class EDILog(models.Model):
         Args:
             operation_type (str): Tipo de operação
             provider (str): Provedor EDI
-            document (account.move): Documento relacionado
+            document (account.move): Document relacionado
             request_data (dict): Dados da requisição
             response_data (dict): Dados da resposta
             execution_time (float): Tempo de execução em ms
@@ -199,7 +197,7 @@ class EDILog(models.Model):
             **kwargs: Campos adicionais
 
         Returns:
-            l10n_py.edi.log: Registro de log criado
+            l10n_py.edi.log: Record de log criado
         """
         try:
             # Preparar dados do log
@@ -211,7 +209,7 @@ class EDILog(models.Model):
                 "error_message": error_message,
             }
 
-            # Documento relacionado
+            # Document relacionado
             if document:
                 log_vals["document_id"] = document.id
                 log_vals["cdc"] = getattr(document, "l10n_py_cdc", False)
@@ -244,7 +242,7 @@ class EDILog(models.Model):
             # Criar registro de log
             log_record = self.create(log_vals)
 
-            # Log no sistema também
+            # Also log to system
             if not success:
                 _logger.error(
                     f"EDI Error [{provider}] {operation_type}: {error_message}"
@@ -262,7 +260,7 @@ class EDILog(models.Model):
             return False
 
     def action_view_document(self):
-        """Abrir documento relacionado"""
+        """Open documento relacionado"""
         self.ensure_one()
         if not self.document_id:
             return False
@@ -276,7 +274,7 @@ class EDILog(models.Model):
         }
 
     def action_retry_operation(self):
-        """Repetir operação (se aplicável)"""
+        """Retry operation (if applicable)"""
         self.ensure_one()
 
         if self.operation_type == "send" and self.document_id:
@@ -287,12 +285,12 @@ class EDILog(models.Model):
         return False
 
     def action_view_request_data(self):
-        """Exibir dados da requisição em formato legível"""
+        """Display request data in readable format"""
         self.ensure_one()
         return self._show_data_wizard("request", self.request_data)
 
     def action_view_response_data(self):
-        """Exibir dados da resposta em formato legível"""
+        """Display response data in readable format"""
         self.ensure_one()
         return self._show_data_wizard("response", self.response_data)
 
