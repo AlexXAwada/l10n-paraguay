@@ -1333,13 +1333,17 @@ class AccountMove(models.Model):
 
     # ============== CRON METHODS ==============
 
+    # Minimum minutes between status checks for a document
+    _EDI_STATUS_CHECK_COOLDOWN_MIN = 10
+
     @api.model
     def _cron_check_edi_status(self):
         """Verify status of sent documents and process contingency queue.
 
         Prioritizes documents close to the 72h deadline.
+        Uses cooldown to avoid checking the same document too frequently.
         """
-        # 1. Procesar cola de contingencia (to_send pendientes)
+        # 1. Process contingency queue (to_send pending with contingency type)
         contingency_docs = self.search(
             [
                 ("l10n_py_edi_status", "=", "to_send"),
@@ -1351,17 +1355,30 @@ class AccountMove(models.Model):
             try:
                 doc.action_send_edi()
             except Exception:
-                _logger.warning("Error reenviando doc contingencia %s", doc.name)
+                _logger.warning("Error retrying contingency doc %s", doc.name)
 
-        # 2. Verify estado de documentos ya enviados
+        # 2. Verify status of already-sent documents with cooldown
         pending_docs = self.search(
             [
                 ("l10n_py_edi_status", "in", ["sent", "processing"]),
                 ("l10n_py_edi_batch_id", "!=", False),
-            ]
+            ],
+            order="write_date asc",  # Oldest first — prioritize stale documents
         )
 
+        now = fields.Datetime.now()
+        cooldown_delta = self._EDI_STATUS_CHECK_COOLDOWN_MIN * 60
+
         for doc in pending_docs:
+            # Cooldown: skip if document was updated recently
+            # Use write_date as proxy for last check time
+            last_update = doc.write_date
+            if last_update:
+                seconds_since_update = (now - last_update).total_seconds()
+                if seconds_since_update < cooldown_delta:
+                    # Still in cooldown window — skip this document
+                    continue
+
             try:
                 connector = (
                     self.env["l10n_py.edi.connector"]
@@ -1375,7 +1392,7 @@ class AccountMove(models.Model):
                     doc._process_edi_response(response)
             except Exception as e:
                 _logger.error(
-                    "Error verificando estado EDI para %s: %s",
+                    "Error checking EDI status for %s: %s",
                     doc.name,
                     str(e),
                 )

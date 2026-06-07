@@ -6,7 +6,7 @@ from odoo import api, fields, models
 class ResCompany(models.Model):
     _inherit = "res.company"
 
-    # ============== CAMPOS EDI PARAGUAY ==============
+    # ============== EDI PARAGUAY FIELDS ==============
 
     l10n_py_ruc = fields.Char(
         string="RUC",
@@ -43,6 +43,11 @@ class ResCompany(models.Model):
     l10n_py_economic_activity = fields.Char(
         string="Economic Activity Description",
         help="Economic activity description principal",
+    )
+
+    l10n_py_webhook_token = fields.Char(
+        string="Webhook Token",
+        help="Token for authenticating SIFEN webhook requests",
     )
 
     # ============== LOCATION FIELDS (RELATED) ==============

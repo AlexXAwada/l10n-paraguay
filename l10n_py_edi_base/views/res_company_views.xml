@@ -21,6 +21,9 @@
                             <field name="l10n_py_city_code" />
                         </group>
                     </group>
+                    <group string="EDI Configuration">
+                        <field name="l10n_py_webhook_token" password="True" />
+                    </group>
                 </page>
             </xpath>
         </field>
