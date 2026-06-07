@@ -145,8 +145,7 @@ class AssociatedDocument(models.Model):
                 if missing:
                     raise ValidationError(
                         self.env._(
-                            "Document impreso: campos obligatorios "
-                            "faltantes: %(fields)s",
+                            "Printed document: required fields missing: %(fields)s",
                             fields=", ".join(missing),
                         )
                     )
@@ -158,13 +157,13 @@ class AssociatedDocument(models.Model):
                     raise ValidationError(
                         self.env._(
                             "Electronic documents or certificates do not "
-                            "pueden tener campos de documento impreso."
+                            "have printed document fields."
                         )
                     )
 
     @api.constrains("association_type", "constancia_type", "constancia_number")
     def _check_constancia_fields(self):
-        """Constancia requiere tipo y number; otros tipos no permiten."""
+        """Constancia requires type and number; other types are not allowed."""
         for rec in self:
             if rec.association_type == "3":
                 if not rec.constancia_type or not rec.constancia_number:
