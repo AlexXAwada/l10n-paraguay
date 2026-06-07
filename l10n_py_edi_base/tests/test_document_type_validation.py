@@ -139,7 +139,7 @@ class TestDocumentTypeValidation(TransactionCase):
         move = self._create_move("4")
         errors = move._validate_edi_document_type()
         self.assertTrue(errors)
-        self.assertIn("exactamente 1", errors[0])
+        self.assertIn("exactly 1", errors[0])
 
     def test_afe_wrong_association_type(self):
         """F04: AFE with wrong type (electronic instead of certificate) → error"""
@@ -169,7 +169,7 @@ class TestDocumentTypeValidation(TransactionCase):
             )
         errors = move._validate_edi_document_type()
         self.assertTrue(errors)
-        self.assertIn("exactamente 1", errors[0])
+        self.assertIn("exactly 1", errors[0])
 
     # ============== F05: NCE (Credit Note) ==============
 
@@ -285,7 +285,7 @@ class TestDocumentTypeValidation(TransactionCase):
         """F07: NRE traslado venta sem FE e sem data estimada → erro"""
         move = self._create_move("7", l10n_py_nre_motive="1")
         errors = move._validate_edi_document_type()
-        self.assertTrue(any("fecha estimada" in e for e in errors))
+        self.assertTrue(any("estimated invoicing date" in e for e in errors))
 
     def test_nre_without_fe_with_date(self):
         """F07: NRE traslado venta sem FE com data estimada → sem erros"""

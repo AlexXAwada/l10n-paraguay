@@ -160,11 +160,11 @@ class NumberInutilization(models.Model):
         auth = self.authorization_id
         data = {
             "timbrado": auth.name or "",
-            "establishment": auth.establishment or "001",
-            "point": auth.expedition_point or "001",
-            "numeroFrom": str(self.number_from).zfill(7),
-            "numeroTo": str(self.number_to).zfill(7),
-            "tipoDocument": 1,  # FE por defecto
+            "establecimiento": auth.establishment or "001",
+            "punto": auth.expedition_point or "001",
+            "numeroDesde": str(self.number_from).zfill(7),
+            "numeroHasta": str(self.number_to).zfill(7),
+            "tipoDocumento": 1,  # FE por defecto
             "motivo": self.motive or "",
         }
 
@@ -182,4 +182,6 @@ class NumberInutilization(models.Model):
             raise
         except Exception as e:
             self.state = "rejected"
-            raise UserError(self.env._("Errorviando inutilization: %s", str(e))) from e
+            raise UserError(
+                self.env._("Error sending inutilization request: %s", str(e))
+            ) from e

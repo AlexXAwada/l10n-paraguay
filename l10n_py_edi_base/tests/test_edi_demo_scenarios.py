@@ -158,7 +158,7 @@ class TestEdiDemoScenarios(TransactionCase):
         move = self._create_move("5")
         errors = move._validate_edi_document_type()
         self.assertTrue(errors)
-        self.assertIn("exactamente 1", errors[0])
+        self.assertIn("exactly 1", errors[0])
 
     def test_nce_with_electronic_association_valid(self):
         """NCE with associated CDC → validation OK"""
@@ -233,7 +233,7 @@ class TestEdiDemoScenarios(TransactionCase):
         move = self._create_move("4")
         errors = move._validate_edi_document_type()
         self.assertTrue(errors)
-        self.assertIn("exactamente 1", errors[0])
+        self.assertIn("exactly 1", errors[0])
 
     def test_afe_with_constancia_no_contribuyente_valid(self):
         """AFE con constancia de no contribuyente + datos vendedor → OK"""
@@ -321,7 +321,7 @@ class TestEdiDemoScenarios(TransactionCase):
         """NRE traslado por venta sin FE y sin fecha estimada → error"""
         move = self._create_move("7", l10n_py_nre_motive="1")
         errors = move._validate_edi_document_type()
-        self.assertTrue(any("fecha estimada" in e for e in errors))
+        self.assertTrue(any("estimated invoicing date" in e for e in errors))
 
     def test_nre_traslado_venta_without_doc_with_date_valid(self):
         """NRE traslado por venta sin FE pero con fecha estimada → OK"""

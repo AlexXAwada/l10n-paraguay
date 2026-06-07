@@ -9,6 +9,8 @@ from dateutil.relativedelta import relativedelta
 from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
+from odoo.addons.l10n_py_edi_base.services.cdc_generator import CDCGenerator
+
 _logger = logging.getLogger(__name__)
 
 
@@ -64,6 +66,16 @@ class AccountMove(models.Model):
         copy=False,
         help="Control code of the electronic document",
     )
+    l10n_py_cdc_emission_date = fields.Datetime(
+        "CDC Emission Date",
+        readonly=True,
+        copy=False,
+        help=(
+            "Timestamp used to generate the CDC datetime segment. "
+            "Persisted on the first send attempt and reused on every "
+            "retry so the CDC stays stable."
+        ),
+    )
     l10n_py_qr_code = fields.Binary("Code QR", readonly=True, copy=False)
     l10n_py_qr_string = fields.Char("String QR", readonly=True, copy=False)
     l10n_py_edi_xml = fields.Binary("XML Firmado", readonly=True, copy=False)
@@ -73,16 +85,16 @@ class AccountMove(models.Model):
 
     l10n_py_edi_status = fields.Selection(
         [
-            ("draft", "Borrador"),
-            ("to_send", "Para Send"),
+            ("draft", "Draft"),
+            ("to_send", "To Send"),
             ("sent", "Sent"),
-            ("processing", "Procesando"),
-            ("accepted", "Aceptado"),
+            ("processing", "Processing"),
+            ("accepted", "Accepted"),
             ("rejected", "Rejected"),
-            ("cancelled", "Cancelado"),
+            ("cancelled", "Cancelled"),
             ("error", "Error"),
         ],
-        string="State EDI",
+        string="EDI Status",
         default="draft",
         readonly=True,
         copy=False,
@@ -302,7 +314,7 @@ class AccountMove(models.Model):
         for record in self:
             if record.l10n_py_security_code and len(record.l10n_py_security_code) != 9:
                 raise ValidationError(
-                    self.env._("El security code debe tener exactamente 9 caracteres")
+                    self.env._("Security code must have exactly 9 characters")
                 )
 
     # ============== PRVATTE METHODS ==============
@@ -352,6 +364,30 @@ class AccountMove(models.Model):
         if not self.l10n_py_security_code:
             self.l10n_py_security_code = self._generate_security_code()
 
+        # Generate and persist the CDC (and the timestamp used to build it)
+        # on the first send attempt so it stays stable across retries,
+        # whether or not the previous attempt succeeded.
+        if not self.l10n_py_cdc:
+            doc_type_code = "1"
+            if self.l10n_latam_document_type_id:
+                doc_type_code = self.l10n_latam_document_type_id.code or "1"
+            emission_date = self.l10n_py_cdc_emission_date or fields.Datetime.now()
+            cdc = CDCGenerator.generate(
+                company_ruc=self.company_id.l10n_py_ruc,
+                doc_type=int(doc_type_code),
+                establishment=(self.journal_id.l10n_py_establishment or "001"),
+                expedition_point=self.journal_id.l10n_py_point or "001",
+                sequence=int(self._get_edi_sequence_number()),
+                emission_date=emission_date,
+                security_code=self.l10n_py_security_code or None,
+            )
+            self.write(
+                {
+                    "l10n_py_cdc": cdc,
+                    "l10n_py_cdc_emission_date": emission_date,
+                }
+            )
+
         # Obtener code de tipo de documento desde l10n_latam
         doc_type_code = "1"
         if self.l10n_latam_document_type_id:
@@ -373,9 +409,9 @@ class AccountMove(models.Model):
 
         # Build data structure per required format
         document_data = {
-            "tipoDocument": int(doc_type_code),
-            "establishment": (self.journal_id.l10n_py_establishment or "001"),
-            "point": self.journal_id.l10n_py_point or "001",
+            "tipoDocumento": int(doc_type_code),
+            "establecimiento": (self.journal_id.l10n_py_establishment or "001"),
+            "punto": self.journal_id.l10n_py_point or "001",
             "numero": self._get_edi_sequence_number(),
             **timbrado_data,
             "descripcion": self.name or "",
@@ -410,9 +446,7 @@ class AccountMove(models.Model):
 
         # Documents asociados (Grupo H)
         if self.l10n_py_associated_document_ids:
-            document_data["documentosAssociateds"] = (
-                self._prepare_associated_documents()
-            )
+            document_data["documentosAsociados"] = self._prepare_associated_documents()
 
         # Campos NRE (tipo=7)
         doc_type_code = "1"
@@ -437,7 +471,7 @@ class AccountMove(models.Model):
 
         # Totales SIFEN
         document_data["totales"] = {
-            "totalExempt": self.l10n_py_amount_exempt,  # F003
+            "totalExento": self.l10n_py_amount_exempt,  # F003
             "totalGravado5": self.l10n_py_amount_subtotal_5,  # F004
             "totalGravado10": self.l10n_py_amount_subtotal_10,  # F005
             "totalOperacion": self.l10n_py_total_operation,  # F008
@@ -457,6 +491,7 @@ class AccountMove(models.Model):
 
         document_data["cdc"] = self.l10n_py_cdc or ""
         document_data["security_code"] = self.l10n_py_security_code or ""
+        document_data["emission_date"] = self.l10n_py_cdc_emission_date
 
         return document_data
 
@@ -473,8 +508,8 @@ class AccountMove(models.Model):
                 doc_data.update(
                     {
                         "timbrado": ad.timbrado,
-                        "establishment": ad.establishment,
-                        "point": ad.expedition_point,
+                        "establecimiento": ad.establishment,
+                        "punto": ad.expedition_point,
                         "numero": ad.doc_number,
                         "tipoDocumentPrinted": int(ad.doc_type_code),
                         "fecha": (
@@ -575,11 +610,20 @@ class AccountMove(models.Model):
 
             # Prepare installment information
             cuotas = []
-            payment_lines = self.invoice_payment_term_id.compute(
-                self.amount_total,
+            sign = self.direction_sign
+            payment_terms = self.invoice_payment_term_id._compute_terms(
                 date_ref=self.invoice_date or fields.Date.today(),
+                currency=self.currency_id,
+                company=self.company_id,
+                tax_amount=self.amount_tax_signed,
+                tax_amount_currency=self.amount_tax * sign,
+                sign=sign,
+                untaxed_amount=self.amount_untaxed_signed,
+                untaxed_amount_currency=self.amount_untaxed * sign,
             )
-            for date_due, amount in payment_lines:
+            for term_line in payment_terms.get("line_ids", []):
+                date_due = term_line.get("date")
+                amount = term_line.get("foreign_amount")
                 cuotas.append(
                     {
                         "moneda": self.currency_id.name,
@@ -732,8 +776,8 @@ class AccountMove(models.Model):
             "tipoConstancia": int(self.l10n_py_afe_constancia_type or "1"),
             "numeroConstancia": self.l10n_py_afe_constancia_number or "",
             "numeroControl": self.l10n_py_afe_constancia_control or "",
-            "tipoDocumentVendedor": int(self.l10n_py_afe_vendor_doc_type or "1"),
-            "numeroDocumentVendedor": self.l10n_py_afe_vendor_doc_number or "",
+            "tipoDocumentoVendedor": int(self.l10n_py_afe_vendor_doc_type or "1"),
+            "numeroDocumentoVendedor": self.l10n_py_afe_vendor_doc_number or "",
             "nombreVendedor": self.l10n_py_afe_vendor_name or "",
             "direccionVendedor": self.l10n_py_afe_vendor_address or "",
             "numeroCasaVendedor": self.l10n_py_afe_vendor_house or 0,
@@ -760,26 +804,28 @@ class AccountMove(models.Model):
         errors = []
         if len(docs) != 1:
             errors.append(
-                self.env._("Autofactura: debe tener exactamente 1 documento asociado.")
+                self.env._("Self-invoice: must have exactly 1 associated document.")
             )
         elif docs[0].association_type != "3":
             errors.append(
                 self.env._(
-                    "Autofactura: el documento asociado debe "
-                    "be an electronic certificate."
+                    "Self-invoice: the associated document must "
+                    "be an electronic certificate (constancia)."
                 )
             )
         required_fields = [
-            ("l10n_py_afe_constancia_type", "el tipo de constancia"),
-            ("l10n_py_afe_constancia_number", "el number de constancia"),
-            ("l10n_py_afe_constancia_control", "el number de control"),
-            ("l10n_py_afe_vendor_doc_number", "el number de documento del vendedor"),
-            ("l10n_py_afe_vendor_name", "el nombre del vendedor"),
+            ("l10n_py_afe_constancia_type", "the constancia type"),
+            ("l10n_py_afe_constancia_number", "the constancia number"),
+            ("l10n_py_afe_constancia_control", "the control number"),
+            ("l10n_py_afe_vendor_doc_number", "the vendor document number"),
+            ("l10n_py_afe_vendor_name", "the vendor name"),
             ("l10n_py_afe_vendor_address", "the vendor address"),
         ]
         for field_name, desc in required_fields:
             if not getattr(self, field_name):
-                errors.append(self.env._("Autofactura: %s es obligatorio.", desc=desc))
+                errors.append(
+                    self.env._("Self-invoice: %(desc)s is required.", desc=desc)
+                )
         return errors
 
     def _validate_edi_document_type(self):
@@ -795,42 +841,43 @@ class AccountMove(models.Model):
         )
         docs = self.l10n_py_associated_document_ids
 
-        # AFE (code=4): exatamente 1 constância + datos vendedor
+        # AFE (code=4): exactly 1 certificate + seller data
         if code == "4":
             errors.extend(self._validate_afe_data(docs))
 
-        # NCE (code=5): exatamente 1 doc associado
+        # NCE (code=5): exactly 1 associated document
         elif code == "5":
             if len(docs) != 1:
                 errors.append(
                     self.env._(
                         "Electronic Credit Note: must have "
-                        "exactamente 1 documento asociado."
+                        "exactly 1 associated document."
                     )
                 )
 
-        # NDE (code=6): exatamente 1 doc associado
+        # NDE (code=6): exactly 1 associated document
         elif code == "6":
             if len(docs) != 1:
                 errors.append(
                     self.env._(
                         "Electronic Debit Note: must have "
-                        "exactamente 1 documento asociado."
+                        "exactly 1 associated document."
                     )
                 )
 
-        # NRE (code=7): validações NRE
+        # NRE (code=7): validations NRE
         elif code == "7":
             if not self.l10n_py_nre_motive:
-                errors.append(self.env._("Remission Note: reason is mandatory."))
-            # Reason "1" (traslado por venta) sin doc asociado → requer data estimada
+                errors.append(
+                    self.env._("Remission Note: motivo (reason) is required.")
+                )
+            # Reason "1" (sale transfer) without doc → requires estimated date
             if self.l10n_py_nre_motive == "1" and not docs:
                 if not self.l10n_py_nre_estimated_invoice_date:
                     errors.append(
                         self.env._(
-                            "NRE traslado por venta sin documento "
-                            "asociado: debe indicar fecha estimada "
-                            "for invoicing."
+                            "NRE sale transfer without associated "
+                            "document: estimated invoicing date is required."
                         )
                     )
             # Estimated date cannot exceed the month after emission
@@ -845,15 +892,15 @@ class AccountMove(models.Model):
                             "exceed the month after emission."
                         )
                     )
-            # Reason "5" (entre locales) → RUC receptor = RUC emissor
+            # Reason "5" (local-to-local transfer) → recipient RUC = issuer RUC
             if self.l10n_py_nre_motive == "5":
                 partner_ruc = self.partner_id.l10n_py_ruc or ""
                 company_ruc = self.company_id.partner_id.l10n_py_ruc or ""
                 if partner_ruc != company_ruc:
                     errors.append(
                         self.env._(
-                            "Traslado entre locales: el RUC del "
-                            "receptor debe coincidir con el del issuer."
+                            "Transfer between locations: the receiver's "
+                            "RUC must match the issuer's."
                         )
                     )
 
@@ -866,17 +913,16 @@ class AccountMove(models.Model):
         # Validate datos de la empresa
         company = self.company_id
         if not company.l10n_py_ruc:
-            errors.append(self.env._("Configure el Company RUC"))
+            errors.append(self.env._("Configure the company RUC"))
 
         # Validate datos del cliente (F15)
         partner = self.partner_id
         if partner.l10n_py_taxpayer_type == "1" and not partner.l10n_py_ruc:
-            errors.append(self.env._("El cliente contribuyente debe tener RUC"))
+            errors.append(self.env._("Taxpayer customer must have a RUC"))
         if partner.l10n_py_taxpayer_type == "2" and not partner.l10n_py_doc_number:
             errors.append(
                 self.env._(
-                    "El cliente no contribuyente debe tener number "
-                    "de documento de identidad"
+                    "Non-taxpayer customer must have an identity document number"
                 )
             )
 
@@ -886,7 +932,9 @@ class AccountMove(models.Model):
         # Validate datos del diario
         journal = self.journal_id
         if not journal.l10n_py_authorization_id:
-            errors.append(self.env._("Configure el timbrado en el diario"))
+            errors.append(
+                self.env._("Configure the authorization (timbrado) in the journal")
+            )
 
         if (
             journal.l10n_py_authorization_validity
@@ -902,7 +950,7 @@ class AccountMove(models.Model):
                 if not line.product_id.l10n_py_ncm_code:
                     errors.append(
                         self.env._(
-                            "El producto %s no tiene code NCM",
+                            "Product %(name)s does not have an NCM code",
                             name=line.product_id.name,
                         )
                     )
@@ -1032,11 +1080,11 @@ class AccountMove(models.Model):
                 self.l10n_py_edi_message = response.get("error", "Unknown error")
 
         except Exception as e:
-            _logger.error("Errorviando EDI: %s", str(e))
+            _logger.error("Error sending EDI: %s", str(e))
             self.l10n_py_edi_status = "error"
             self.l10n_py_edi_message = str(e)
             raise UserError(
-                self.env._("Errorviando documento: %s", value=str(e))
+                self.env._("Error sending document: %(value)s", value=str(e))
             ) from e
 
     def _process_edi_response(self, response):
@@ -1053,7 +1101,7 @@ class AccountMove(models.Model):
                 "l10n_py_qr_string": de_data.get("qr"),
                 "l10n_py_edi_status": "accepted",
                 "l10n_py_edi_batch_id": result.get("loteId"),
-                "l10n_py_edi_message": ("Document aceptado exitosamente"),
+                "l10n_py_edi_message": self.env._("Document accepted successfully"),
             }
             if not self.l10n_py_edi_accepted_date:
                 vals["l10n_py_edi_accepted_date"] = fields.Datetime.now()
@@ -1102,7 +1150,7 @@ class AccountMove(models.Model):
         if now > deadline:
             raise UserError(
                 self.env._(
-                    "El cancellation deadline has expired. "
+                    "The cancellation deadline has expired. "
                     "Limit: %(deadline)s (%(hours)s hours from emission).",
                     deadline=deadline,
                     hours=max_hours,
@@ -1122,7 +1170,16 @@ class AccountMove(models.Model):
         response = connector.cancel_document(self.l10n_py_cdc, reason=motive or "")
         if response.get("success"):
             self.l10n_py_edi_status = "cancelled"
-            self.l10n_py_edi_message = f"Cancelado el {fields.Datetime.now()}"
+            self.l10n_py_edi_message = self.env._(
+                "Cancelled on %(date)s", date=fields.Datetime.now()
+            )
+            # The CDC uniquely identifies one electronic-document instance in
+            # SIFEN. Clear it (and its derived fields) so that any future
+            # resend on this record regenerates a fresh CDC instead of
+            # reusing a cancelled one, which SIFEN would reject as duplicate.
+            self.l10n_py_cdc = False
+            self.l10n_py_cdc_emission_date = False
+            self.l10n_py_qr_string = False
         else:
             raise UserError(
                 self.env._("Error cancelando documento: %s", response.get("error"))

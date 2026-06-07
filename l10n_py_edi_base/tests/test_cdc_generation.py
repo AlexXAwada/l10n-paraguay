@@ -105,7 +105,7 @@ class TestCDCGeneration(TransactionCase):
         invalid_cdc = cdc[:-1] + ("0" if cdc[-1] != "0" else "1")
         is_valid, error = CDCGenerator.validate_cdc(invalid_cdc)
         self.assertFalse(is_valid)
-        self.assertIn("invalid check digit", error)
+        self.assertIn("Invalid check digit", error)
 
     def test_validate_non_numeric(self):
         """Reject CDC with non-numeric characters"""

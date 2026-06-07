@@ -300,8 +300,10 @@ class EDILog(models.Model):
             "type": "ir.actions.client",
             "tag": "display_notification",
             "params": {
-                "title": self.env._("Dados da %s", data_type=data_type.capitalize()),
-                "message": data or self.env._("Sem dados"),
+                "title": self.env._(
+                    "Data for %(data_type)s", data_type=data_type.capitalize()
+                ),
+                "message": data or self.env._("No data"),
                 "type": "info",
                 "sticky": True,
             },

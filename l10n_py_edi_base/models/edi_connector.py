@@ -43,7 +43,7 @@ class EDIConnector(models.Model):
         self.ensure_one()
         raise UserError(
             self.env._(
-                "Provider '%s' does not implement document sending",
+                "Provider '%(provider)s' does not implement document sending",
                 provider=self.provider_type,
             )
         )
@@ -53,7 +53,7 @@ class EDIConnector(models.Model):
         self.ensure_one()
         raise UserError(
             self.env._(
-                "El proveedor '%s' no implementa la consulta de estado",
+                "Provider '%(provider)s' does not implement status checking",
                 provider=self.provider_type,
             )
         )
@@ -63,7 +63,7 @@ class EDIConnector(models.Model):
         self.ensure_one()
         raise UserError(
             self.env._(
-                "Provider '%s' does not implement cancellation",
+                "Provider '%(provider)s' does not implement cancellation",
                 provider=self.provider_type,
             )
         )
@@ -73,7 +73,7 @@ class EDIConnector(models.Model):
         self.ensure_one()
         raise UserError(
             self.env._(
-                "Provider '%s' does not implement preview",
+                "Provider '%(provider)s' does not implement preview",
                 provider=self.provider_type,
             )
         )
@@ -83,7 +83,7 @@ class EDIConnector(models.Model):
         self.ensure_one()
         raise UserError(
             self.env._(
-                "Provider '%s' does not implement inutilization",
+                "Provider '%(provider)s' does not implement inutilization",
                 provider=self.provider_type,
             )
         )
@@ -93,7 +93,7 @@ class EDIConnector(models.Model):
         self.ensure_one()
         raise UserError(
             self.env._(
-                "Provider '%s' does not implement connection test",
+                "Provider '%(provider)s' does not implement connection test",
                 provider=self.provider_type,
             )
         )

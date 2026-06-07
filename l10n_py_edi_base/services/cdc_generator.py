@@ -235,11 +235,11 @@ class CDCGenerator:
 
         # Verify length
         if len(cdc) != 44:
-            return False, f"CDC debe tener 44 digits, recibido: {len(cdc)}"
+            return False, f"CDC must have 44 digits, received: {len(cdc)}"
 
-        # Verify si contiene solo digits
+        # Verify it contains only digits
         if not cdc.isdigit():
-            return False, "CDC debe contener solo numbers"
+            return False, "CDC must contain only digits"
 
         # Separar base y digit check digit
         cdc_base = cdc[:43]
@@ -255,8 +255,8 @@ class CDCGenerator:
             return (
                 False,
                 f"Invalid check digit. "
-                f"Esperado: {calculated_digit}, "
-                f"Recibido: {check_digit}",
+                f"Expected: {calculated_digit}, "
+                f"Received: {check_digit}",
             )
 
         return True, ""

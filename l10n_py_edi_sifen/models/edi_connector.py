@@ -261,6 +261,7 @@ class EDIConnector(models.Model):
                 establishment=establishment,
                 expedition_point=punto,
                 sequence=int(numero),
+                emission_date=invoice_data.get("emission_date"),
                 security_code=security_code,
             )
 
