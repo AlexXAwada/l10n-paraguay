@@ -14,7 +14,7 @@ class NumberInutilization(models.Model):
     """Inutilization of electronic document numbers.
 
     Allows inutilizing ranges of numbers that will not be used,
-    comunicando al SIFEN para mantener la sequence consistente.
+    notifying SIFEN to keep the sequence consistent.
     """
 
     _name = "l10n_py.number.inutilization"
@@ -45,9 +45,9 @@ class NumberInutilization(models.Model):
 
     state = fields.Selection(
         [
-            ("draft", "Borrador"),
+            ("draft", "Draft"),
             ("sent", "Sent"),
-            ("accepted", "Aceptado"),
+            ("accepted", "Accepted"),
             ("rejected", "Rejected"),
         ],
         string="State",
@@ -87,7 +87,7 @@ class NumberInutilization(models.Model):
             if quantity > MAX_INUTILIZATION_RANGE:
                 raise ValidationError(
                     self.env._(
-                        "The maximum inutilization range es "
+                        "The maximum inutilization range is "
                         "%(max)s numbers (requested: %(qty)s).",
                         max=MAX_INUTILIZATION_RANGE,
                         qty=quantity,
@@ -131,8 +131,8 @@ class NumberInutilization(models.Model):
             if used:
                 raise ValidationError(
                     self.env._(
-                        "Hay %(count)s number(s) en el rango que "
-                        "ya fueron usados en facturas confirmadas.",
+                        "There are %(count)s number(s) in the range that "
+                        "have already been used in confirmed invoices.",
                         count=used,
                     )
                 )
@@ -144,7 +144,7 @@ class NumberInutilization(models.Model):
         self.ensure_one()
         if self.state != "draft":
             raise UserError(
-                self.env._("Solo se pueden enviar inutilizaciones en estado borrador.")
+                self.env._("Only inutilizations in draft state can be sent.")
             )
 
         connector = (
@@ -153,9 +153,7 @@ class NumberInutilization(models.Model):
             .search([("company_id", "=", self.company_id.id)], limit=1)
         )
         if not connector:
-            raise UserError(
-                self.env._("No hay un conector EDI configurado para esta empresa.")
-            )
+            raise UserError(self.env._("No EDI connector configured for this company."))
 
         auth = self.authorization_id
         data = {
@@ -164,7 +162,7 @@ class NumberInutilization(models.Model):
             "punto": auth.expedition_point or "001",
             "numeroDesde": str(self.number_from).zfill(7),
             "numeroHasta": str(self.number_to).zfill(7),
-            "tipoDocumento": 1,  # FE por defecto
+            "tipoDocumento": 1,  # default to FE (electronic invoice)
             "motivo": self.motive or "",
         }
 
@@ -174,14 +172,18 @@ class NumberInutilization(models.Model):
                 self.state = "accepted"
             else:
                 self.state = "rejected"
-                _logger.warning("Inutilization rechazada: %s", response.get("error"))
+                _logger.warning("Inutilization rejected: %s", response.get("error"))
                 raise UserError(
-                    self.env._("Error inutilization: %s", response.get("error"))
+                    self.env._(
+                        "Inutilization error: %(error)s", error=response.get("error")
+                    )
                 )
         except UserError:
             raise
         except Exception as e:
             self.state = "rejected"
             raise UserError(
-                self.env._("Error sending inutilization request: %s", str(e))
+                self.env._(
+                    "Error sending inutilization request: %(error)s", error=str(e)
+                )
             ) from e

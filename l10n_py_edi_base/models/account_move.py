@@ -964,8 +964,8 @@ class AccountMove(models.Model):
             if partner.l10n_py_taxpayer_type == "2" and not partner.l10n_py_doc_number:
                 errors.append(
                     self.env._(
-                        "Invoices superiores a Gs. 7.000.000 no pueden "
-                        "ser innominadas. Debe identificar al receptor."
+                        "Invoices over Gs. 7,000,000 cannot be issued "
+                        "without identifying the recipient."
                     )
                 )
 
@@ -977,16 +977,14 @@ class AccountMove(models.Model):
     # ============== PUBLIC METHODS ==============
 
     def _get_edi_connector(self):
-        """Search conector EDI de la empresa."""
+        """Search the company's EDI connector."""
         connector = (
             self.env["l10n_py.edi.connector"]
             .sudo()
             .search([("company_id", "=", self.company_id.id)], limit=1)
         )
         if not connector:
-            raise UserError(
-                self.env._("No hay un conector EDI configurado para esta empresa")
-            )
+            raise UserError(self.env._("No EDI connector configured for this company"))
         return connector
 
     def _target_new_tab(self, attachment_id):
@@ -1162,7 +1160,7 @@ class AccountMove(models.Model):
         self.ensure_one()
 
         if not self.l10n_py_cdc:
-            raise UserError(self.env._("No se puede cancelar un documento sin CDC"))
+            raise UserError(self.env._("Cannot cancel a document without a CDC"))
 
         self._validate_cancel_deadline()
 
@@ -1180,9 +1178,13 @@ class AccountMove(models.Model):
             self.l10n_py_cdc = False
             self.l10n_py_cdc_emission_date = False
             self.l10n_py_qr_string = False
+            self.l10n_py_edi_accepted_date = False
         else:
             raise UserError(
-                self.env._("Error cancelando documento: %s", response.get("error"))
+                self.env._(
+                    "Error cancelling document: %(error)s",
+                    error=response.get("error"),
+                )
             )
 
     def action_retry_edi(self):
@@ -1191,19 +1193,17 @@ class AccountMove(models.Model):
 
         if self.l10n_py_edi_status not in ["error", "rejected"]:
             raise UserError(
-                self.env._(
-                    "Solo se pueden reintentar documentos con error o rechazados"
-                )
+                self.env._("Only documents in error or rejected state can be retried")
             )
 
         return self.action_send_edi()
 
     def action_download_xml(self):
-        """Downloadr XML del documento"""
+        """Download the document's XML."""
         self.ensure_one()
 
         if not self.l10n_py_edi_xml:
-            raise UserError(self.env._("No hay XML disponible para este documento"))
+            raise UserError(self.env._("No XML available for this document"))
 
         return {
             "type": "ir.actions.act_url",
@@ -1215,15 +1215,15 @@ class AccountMove(models.Model):
         }
 
     def action_download_kude(self):
-        """Downloadr KUDE (PDF)"""
+        """Download the KUDE (PDF)"""
         self.ensure_one()
 
         if not self.l10n_py_kude_pdf:
-            # Intentar generate KUDE
+            # Try to generate the KUDE
             self._generate_kude()
 
         if not self.l10n_py_kude_pdf:
-            raise UserError(self.env._("No hay KUDE disponible para este documento"))
+            raise UserError(self.env._("No KUDE available for this document"))
 
         return {
             "type": "ir.actions.act_url",
@@ -1241,6 +1241,13 @@ class AccountMove(models.Model):
         self.ensure_one()
         if not self.l10n_py_edi_xml:
             return
+        if not self.l10n_py_cdc:
+            raise UserError(
+                self.env._(
+                    "Cannot generate KUDE without a CDC. "
+                    "Please resend the document first."
+                )
+            )
         from pykude import auto_kude
         from pykude.kude_fe.config import KudeFeConfig
 
