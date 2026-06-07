@@ -110,33 +110,29 @@ class EDILog(models.Model):
         help="Indicates whether the operation was successful",
     )
 
-    error_message = fields.Text(
-        string="Mensagem de Erro", help="Descrição do erro se houver"
-    )
+    error_message = fields.Text(string="Error Message", help="Error description if any")
 
-    error_code = fields.Char(string="Code de Erro", help="Code de erro do provedor")
+    error_code = fields.Char(string="Error Code", help="Provider error code")
 
-    # ============== DADOS ADICIONAIS ==============
+    # ============== ADDITIONAL DATA ==============
 
-    batch_id = fields.Char(
-        string="ID do Lote", help="Identificador de lote do provedor"
-    )
+    batch_id = fields.Char(string="Batch ID", help="Provider batch identifier")
 
     retry_count = fields.Integer(
-        string="Tentativas", default=0, help="Number de tentativas realizadas"
+        string="Retries", default=0, help="Number of retries performed"
     )
 
-    # ============== CAMPOS COMPUTADOS ==============
+    # ============== COMPUTED FIELDS ==============
 
     error = fields.Boolean(
         string="Is Error",
         compute="_compute_error",
         store=True,
-        help="Indica se houve erro na operação",
+        help="Indicates whether there was an error in the operation",
     )
 
     duration_human = fields.Char(
-        string="Duração",
+        string="Duration",
         compute="_compute_duration_human",
         help="Duration in readable format",
     )
@@ -154,7 +150,7 @@ class EDILog(models.Model):
 
     @api.depends("execution_time")
     def _compute_duration_human(self):
-        """Formatar duração para exibição"""
+        """Format duration for display"""
         for record in self:
             if record.execution_time:
                 if record.execution_time < 1000:
@@ -181,21 +177,21 @@ class EDILog(models.Model):
         **kwargs,
     ):
         """
-        Registrar operação EDI
+        Register EDI operation
 
         Args:
-            operation_type (str): Tipo de operação
-            provider (str): Provedor EDI
-            document (account.move): Document relacionado
-            request_data (dict): Dados da requisição
-            response_data (dict): Dados da resposta
-            execution_time (float): Tempo de execução em ms
-            success (bool): Se a operação foi bem-sucedida
-            error_message (str): Mensagem de erro (se houver)
-            **kwargs: Campos adicionais
+            operation_type (str): Operation type
+            provider (str): EDI provider
+            document (account.move): Related document
+            request_data (dict): Request data
+            response_data (dict): Response data
+            execution_time (float): Execution time in ms
+            success (bool): Whether the operation was successful
+            error_message (str): Error message (if any)
+            **kwargs: Additional fields
 
         Returns:
-            l10n_py.edi.log: Record de log criado
+            l10n_py.edi.log: Created log record
         """
         try:
             # Preparar dados do log
@@ -254,11 +250,11 @@ class EDILog(models.Model):
             return log_record
 
         except Exception as e:
-            _logger.exception(f"Erro ao criar log EDI: {str(e)}")
+            _logger.exception(f"Error creating EDI log: {str(e)}")
             return False
 
     def action_view_document(self):
-        """Open documento relacionado"""
+        """Open related document"""
         self.ensure_one()
         if not self.document_id:
             return False
@@ -276,7 +272,7 @@ class EDILog(models.Model):
         self.ensure_one()
 
         if self.operation_type == "send" and self.document_id:
-            # Incrementar contador de tentativas
+            # Increment retry counter
             self.write({"retry_count": self.retry_count + 1})
             return self.document_id.action_send_edi()
 
@@ -293,7 +289,7 @@ class EDILog(models.Model):
         return self._show_data_wizard("response", self.response_data)
 
     def _show_data_wizard(self, data_type, data):
-        """Mostrar wizard com dados formatados"""
+        """Show wizard with formatted data"""
         return {
             "type": "ir.actions.client",
             "tag": "display_notification",

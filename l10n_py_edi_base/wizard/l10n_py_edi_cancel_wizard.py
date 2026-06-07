@@ -15,7 +15,7 @@ CANCEL_LIMITS = {
 
 class EDICancelWizard(models.TransientModel):
     _name = "l10n_py.edi.cancel.wizard"
-    _description = "Wizard para cancelar documento EDI"
+    _description = "Wizard to cancel EDI document"
 
     invoice_id = fields.Many2one("account.move", string="Invoice", required=True)
     motive = fields.Text(string="Cancellation Reason", required=True)
@@ -34,7 +34,7 @@ class EDICancelWizard(models.TransientModel):
             raise UserError(self.env._("No invoice selected"))
 
         if not self.invoice_id.l10n_py_cdc:
-            raise UserError(self.env._("La factura no tiene CDC, no se puede cancelar"))
+            raise UserError(self.env._("Invoice has no CDC, cannot cancel"))
 
         # Verify cancellation deadline
         self._check_cancel_deadline()
@@ -46,7 +46,7 @@ class EDICancelWizard(models.TransientModel):
             "tag": "display_notification",
             "params": {
                 "title": self.env._("Cancellation Successful"),
-                "message": self.env._("El documento ha sido cancelado"),
+                "message": self.env._("The document has been cancelled"),
                 "type": "success",
                 "sticky": False,
             },
@@ -70,7 +70,7 @@ class EDICancelWizard(models.TransientModel):
                 raise UserError(
                     self.env._(
                         "Cannot cancel: EDI acceptance date is not "
-                        "registrada. Contacte al administrador."
+                        "registered. Contact the administrator."
                     )
                 )
             now = fields.Datetime.now()
@@ -80,10 +80,10 @@ class EDICancelWizard(models.TransientModel):
             if hours_since > limit_hours:
                 raise UserError(
                     self.env._(
-                        "El cancellation deadline has expired. "
+                        "The cancellation deadline has expired. "
                         "Type %(doc_type)s allows cancellation until "
                         "%(limit)s hours after acceptance "
-                        "(han transcurrido %(elapsed).0f horas).",
+                        "(%(elapsed).0f hours have elapsed).",
                         doc_type=invoice.l10n_latam_document_type_id.name
                         or doc_type_code,
                         limit=limit_hours,

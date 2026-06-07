@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 
 class AccountMoveSendEDIWizard(models.TransientModel):
     _name = "account.move.send.edi.wizard"
-    _description = "Wizard para enviar factura a EDI"
+    _description = "Wizard to send invoice to EDI"
 
     invoice_id = fields.Many2one("account.move", string="Invoice", required=True)
 
@@ -29,8 +29,8 @@ class AccountMoveSendEDIWizard(models.TransientModel):
             "type": "ir.actions.client",
             "tag": "display_notification",
             "params": {
-                "title": self.env._("Sending Exitoso"),
-                "message": self.env._("La factura ha sido enviada al sistema EDI"),
+                "title": self.env._("Sending Successful"),
+                "message": self.env._("The invoice has been sent to the EDI system"),
                 "type": "success",
                 "sticky": False,
             },
