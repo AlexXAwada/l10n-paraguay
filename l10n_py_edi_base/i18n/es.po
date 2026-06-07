@@ -2493,3 +2493,279 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_py_edi_base.field_l10n_py_edi_log__error
 msgid "É Erro"
 msgstr ""
+
+#. module: l10n_py_edi_base
+msgid "Contingency Reason"
+msgstr "Motivo de Contingencia"
+
+#. module: l10n_py_edi_base
+msgid "Contingency"
+msgstr "Contingencia"
+
+#. module: l10n_py_edi_base
+msgid "Cash"
+msgstr "Efectivo"
+
+#. module: l10n_py_edi_base
+msgid "Check"
+msgstr "Cheque"
+
+#. module: l10n_py_edi_base
+msgid "Bank giro"
+msgstr "Giro"
+
+#. module: l10n_py_edi_base
+msgid "Business card"
+msgstr "Tarjeta empresarial"
+
+#. module: l10n_py_edi_base
+msgid "Voucher"
+msgstr "Vale"
+
+#. module: l10n_py_edi_base
+msgid "Advance"
+msgstr "Anticipo"
+
+#. module: l10n_py_edi_base
+msgid "Tax value"
+msgstr "Valor fiscal"
+
+#. module: l10n_py_edi_base
+msgid "Commercial value"
+msgstr "Valor comercial"
+
+#. module: l10n_py_edi_base
+msgid "Verify status of sent documents and process contingency queue."
+msgstr "Verificar estado de documentos enviados y procesar cola de contingencia."
+
+#. module: l10n_py_edi_base
+msgid "Prioritizes documents close to the 72h deadline."
+msgstr "Prioriza documentos cercanos al plazo de 72h."
+
+#. module: l10n_py_edi_base
+msgid "Contingency fields"
+msgstr "Campos para contingencia"
+
+#. module: l10n_py_edi_base
+msgid "EDI Operations Log"
+msgstr "Log de Operaciones EDI Paraguay"
+
+#. module: l10n_py_edi_base
+msgid "Robust model to register EDI operation logs"
+msgstr "Modelo robusto para registrar logs de operaciones EDI"
+
+#. module: l10n_py_edi_base
+msgid "Operation Type"
+msgstr "Tipo de Operación"
+
+#. module: l10n_py_edi_base
+msgid "Request Headers"
+msgstr "Headers de la Solicitud"
+
+#. module: l10n_py_edi_base
+msgid "Request Data"
+msgstr "Datos de la Solicitud"
+
+#. module: l10n_py_edi_base
+msgid "Response Headers"
+msgstr "Headers de la Respuesta"
+
+#. module: l10n_py_edi_base
+msgid "Response Data"
+msgstr "Datos de la Respuesta"
+
+#. module: l10n_py_edi_base
+msgid "Status Code"
+msgstr "Código de Estado"
+
+#. module: l10n_py_edi_base
+msgid "Error Message"
+msgstr "Mensaje de Error"
+
+#. module: l10n_py_edi_base
+msgid "Error Code"
+msgstr "Código de Error"
+
+#. module: l10n_py_edi_base
+msgid "Batch ID"
+msgstr "ID de Lote"
+
+#. module: l10n_py_edi_base
+msgid "Retries"
+msgstr "Reintentos"
+
+#. module: l10n_py_edi_base
+msgid "Computed Fields"
+msgstr "Campos Calculados"
+
+#. module: l10n_py_edi_base
+msgid "Register EDI operation"
+msgstr "Registrar operación EDI"
+
+#. module: l10n_py_edi_base
+msgid "Operation type"
+msgstr "Tipo de operación"
+
+#. module: l10n_py_edi_base
+msgid "EDI provider"
+msgstr "Proveedor EDI"
+
+#. module: l10n_py_edi_base
+msgid "Related document"
+msgstr "Documento relacionado"
+
+#. module: l10n_py_edi_base
+msgid "Related fiscal document"
+msgstr "Documento fiscal relacionado"
+
+#. module: l10n_py_edi_base
+msgid "Document control code"
+msgstr "Código de Control del documento"
+
+#. module: l10n_py_edi_base
+msgid "Provider"
+msgstr "Proveedor"
+
+#. module: l10n_py_edi_base
+msgid "API URL or endpoint"
+msgstr "URL o endpoint de la API"
+
+#. module: l10n_py_edi_base
+msgid "HTTP headers sent"
+msgstr "Headers HTTP enviados"
+
+#. module: l10n_py_edi_base
+msgid "Request payload"
+msgstr "Payload de la solicitud"
+
+#. module: l10n_py_edi_base
+msgid "HTTP headers received"
+msgstr "Headers HTTP recibidos"
+
+#. module: l10n_py_edi_base
+msgid "Response payload"
+msgstr "Payload de la respuesta"
+
+#. module: l10n_py_edi_base
+msgid "HTTP status code"
+msgstr "Código de estado HTTP"
+
+#. module: l10n_py_edi_base
+msgid "Whether the operation was successful"
+msgstr "Indica si la operación fue exitosa"
+
+#. module: l10n_py_edi_base
+msgid "Error description if any"
+msgstr "Descripción del error si hay alguno"
+
+#. module: l10n_py_edi_base
+msgid "Provider error code"
+msgstr "Código de error del proveedor"
+
+#. module: l10n_py_edi_base
+msgid "Provider batch identifier"
+msgstr "Identificador de lote del proveedor"
+
+#. module: l10n_py_edi_base
+msgid "Number of retries performed"
+msgstr "Número de reintentos realizados"
+
+#. module: l10n_py_edi_base
+msgid "Indicates whether there was an error in the operation"
+msgstr "Indica si hubo error en la operación"
+
+#. module: l10n_py_edi_base
+msgid "Duration in readable format"
+msgstr "Duración en formato legible"
+
+#. module: l10n_py_edi_base
+msgid "Format duration for display"
+msgstr "Formatear duración para visualización"
+
+#. module: l10n_py_edi_base
+msgid "Open related document"
+msgstr "Abrir documento relacionado"
+
+#. module: l10n_py_edi_base
+msgid "Display request data in readable format"
+msgstr "Mostrar datos de solicitud en formato legible"
+
+#. module: l10n_py_edi_base
+msgid "Display response data in readable format"
+msgstr "Mostrar datos de respuesta en formato legible"
+
+#. module: l10n_py_edi_base
+msgid "Show wizard with formatted data"
+msgstr "Mostrar asistente con datos formateados"
+
+#. module: l10n_py_edi_base
+msgid "Data for %(data_type)s"
+msgstr "Datos para %(data_type)s"
+
+#. module: l10n_py_edi_base
+msgid "No data"
+msgstr "Sin datos"
+
+#. module: l10n_py_edi_base
+msgid "Wizard to cancel EDI document"
+msgstr "Asistente para cancelar documento EDI"
+
+#. module: l10n_py_edi_base
+msgid "Invoice has no CDC, cannot cancel"
+msgstr "La factura no tiene CDC, no se puede cancelar"
+
+#. module: l10n_py_edi_base
+msgid "The document has been cancelled"
+msgstr "El documento ha sido cancelado"
+
+#. module: l10n_py_edi_base
+msgid "The cancellation deadline has expired."
+msgstr "El plazo de cancelación ha expirado."
+
+#. module: l10n_py_edi_base
+msgid "registered. Contact the administrator."
+msgstr "registrada. Contacte al administrador."
+
+#. module: l10n_py_edi_base
+msgid "(% hours have elapsed)."
+msgstr "(han transcurrido % horas)."
+
+#. module: l10n_py_edi_base
+msgid "Sending Successful"
+msgstr "Envío Exitoso"
+
+#. module: l10n_py_edi_base
+msgid "Wizard to send invoice to EDI"
+msgstr "Asistente para enviar factura a EDI"
+
+#. module: l10n_py_edi_base
+msgid "The invoice has been sent to the EDI system"
+msgstr "La factura ha sido enviada al sistema EDI"
+
+#. module: l10n_py_edi_base
+msgid "CDC must have 44 digits, generated:"
+msgstr "CDC debe tener 44 dígitos, generado:"
+
+#. module: l10n_py_edi_base
+msgid "CDC must have 44 digits, received:"
+msgstr "CDC debe tener 44 dígitos, recibido:"
+
+#. module: l10n_py_edi_base
+msgid "CDC base must have 43 digits, generated:"
+msgstr "CDC base debe tener 43 dígitos, generado:"
+
+#. module: l10n_py_edi_base
+msgid "CDC base must have 43 digits, received:"
+msgstr "CDC base debe tener 43 dígitos, recibido:"
+
+#. module: l10n_py_edi_base
+msgid "Document printed: required fields missing:"
+msgstr "Documento impreso: campos obligatorios faltantes:"
+
+#. module: l10n_py_edi_base
+msgid "Electronic documents or certificates cannot have printed document fields."
+msgstr "Documentos electrónicos o certificados no pueden tener campos de documento impreso."
+
+#. module: l10n_py_edi_base
+msgid "Constancia requires type and number; other types do not allow constancia."
+msgstr "Constancia requiere tipo y número; otros tipos no permiten constancia."
