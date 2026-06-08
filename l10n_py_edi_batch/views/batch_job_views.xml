@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Batch Job Tree View -->
+    <record id="view_l10n_py_batch_job_tree" model="ir.ui.view">
+        <field name="name">l10n_py.batch.job.tree</field>
+        <field name="model">l10n_py.batch.job</field>
+        <field name="arch" type="xml">
+            <list
+                decoration-success="state == 'done'"
+                decoration-warning="state == 'partial'"
+                decoration-danger="state == 'failed'"
+                decoration-info="state in ('queued', 'running')"
+            >
+                <field name="name" />
+                <field name="company_id" groups="base.group_multi_company" />
+                <field name="batch_type" />
+                <field name="state" />
+                <field name="total_count" />
+                <field name="done_count" />
+                <field name="failed_count" />
+                <field name="progress" widget="progressbar" />
+                <field name="create_date" />
+                <button
+                    name="action_run"
+                    string="Run"
+                    type="object"
+                    icon="fa-play"
+                    invisible="state not in ('queued', 'draft')"
+                />
+                <button
+                    name="action_retry_failed"
+                    string="Retry Failed"
+                    type="object"
+                    icon="fa-repeat"
+                    invisible="state not in ('partial', 'failed', 'done')"
+                />
+            </list>
+        </field>
+    </record>
+
+    <!-- Batch Job Form View -->
+    <record id="view_l10n_py_batch_job_form" model="ir.ui.view">
+        <field name="name">l10n_py.batch.job.form</field>
+        <field name="model">l10n_py.batch.job</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button
+                        name="action_queue"
+                        string="Queue"
+                        type="object"
+                        class="btn-primary"
+                        invisible="state != 'draft'"
+                    />
+                    <button
+                        name="action_run"
+                        string="Run"
+                        type="object"
+                        class="btn-primary"
+                        invisible="state not in ('queued', 'draft')"
+                    />
+                    <button
+                        name="action_retry_failed"
+                        string="Retry Failed"
+                        type="object"
+                        invisible="state not in ('partial', 'failed', 'done')"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,queued,running,done"
+                    />
+                </header>
+                <sheet>
+                    <group>
+                        <group string="General">
+                            <field name="name" />
+                            <field
+                                name="company_id"
+                                groups="base.group_multi_company"
+                            />
+                            <field name="batch_type" />
+                            <field name="batch_size" />
+                        </group>
+                        <group string="Progress">
+                            <field name="total_count" readonly="1" />
+                            <field name="done_count" readonly="1" />
+                            <field name="failed_count" readonly="1" />
+                            <field name="progress" readonly="1" widget="progressbar" />
+                            <field name="started_at" readonly="1" />
+                            <field name="finished_at" readonly="1" />
+                        </group>
+                    </group>
+                    <group string="Error" invisible="not error_message">
+                        <field name="error_message" readonly="1" />
+                    </group>
+                    <notebook>
+                        <page string="Lines" name="lines">
+                            <field name="line_ids">
+                                <list
+                                    decoration-success="state == 'success'"
+                                    decoration-danger="state == 'failed'"
+                                    decoration-info="state == 'pending'"
+                                >
+                                    <field name="sequence" invisible="1" />
+                                    <field name="move_id" />
+                                    <field name="state" />
+                                    <field name="error_message" />
+                                    <field name="attempts" />
+                                    <field name="last_attempt" />
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Invoices" name="invoices">
+                            <field name="move_ids" readonly="1">
+                                <list>
+                                    <field name="name" />
+                                    <field name="partner_id" />
+                                    <field name="l10n_py_cdc" />
+                                    <field name="l10n_py_edi_status" />
+                                    <field name="invoice_date" />
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Batch Job Action -->
+    <record id="action_l10n_py_batch_job" model="ir.actions.act_window">
+        <field name="name">Batch Jobs</field>
+        <field name="res_model">l10n_py.batch.job</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Batch Job Menu -->
+    <menuitem
+        id="menu_l10n_py_batch_job"
+        name="Batch Jobs"
+        action="action_l10n_py_batch_job"
+        parent="l10n_py_edi_base.menu_l10n_py_edi_root"
+        sequence="30"
+    />
+</odoo>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Batch Send Wizard Form -->
+    <record id="view_l10n_py_batch_send_wizard_form" model="ir.ui.view">
+        <field name="name">l10n_py.batch.send.wizard.form</field>
+        <field name="model">l10n_py.batch.send.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Create Batch Job">
+                <group>
+                    <group string="Batch Configuration">
+                        <field name="batch_type" />
+                        <field name="batch_size" />
+                        <field name="company_id" groups="base.group_multi_company" />
+                    </group>
+                    <group string="Name">
+                        <field name="job_name" />
+                    </group>
+                </group>
+                <group string="Selected Invoices">
+                    <field name="move_ids" nolabel="1">
+                        <list>
+                            <field name="name" />
+                            <field name="partner_id" />
+                            <field name="l10n_py_cdc" />
+                            <field name="l10n_py_edi_status" />
+                            <field name="invoice_date" />
+                            <field name="amount_total" />
+                        </list>
+                    </field>
+                </group>
+                <footer>
+                    <button
+                        name="action_create_batch"
+                        string="Create and Run"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Batch Send Wizard Action -->
+    <record id="action_l10n_py_batch_send_wizard" model="ir.actions.act_window">
+        <field name="name">Create Batch Job</field>
+        <field name="res_model">l10n_py.batch.send.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

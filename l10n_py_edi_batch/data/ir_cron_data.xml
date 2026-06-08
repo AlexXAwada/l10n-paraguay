@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <!-- Process queued batch jobs every 5 minutes -->
+    <record id="ir_cron_batch_job_process" model="ir.cron">
+        <field name="name">EDI: Process Queued Batch Jobs</field>
+        <field name="model_id" ref="model_l10n_py_batch_job" />
+        <field name="state">code</field>
+        <field name="code">model._cron_process_queued_jobs()</field>
+        <field name="interval_number">5</field>
+        <field name="interval_type">minutes</field>
+        <field name="active">True</field>
+        <field name="user_id" ref="base.user_admin" />
+    </record>
+</odoo>
