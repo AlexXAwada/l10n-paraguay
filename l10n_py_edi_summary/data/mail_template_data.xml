@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="mail_template_daily_summary" model="mail.template">
+        <field name="name">EDI: Daily Summary</field>
+        <field name="subject">EDI Daily Summary - {{ object.date }}</field>
+        <field
+            name="email_from"
+        >{{ object.company_id.email or 'noreply@company.com' }}</field>
+        <field name="model_id" ref="model_l10n_py_edi_summary" />
+        <field
+            name="body_html"
+        ><![CDATA[
+<h2>EDI Daily Summary - {{ object.date }}</h2>
+
+<table style="border-collapse: collapse; margin: 20px 0;">
+    <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;"><strong>Total Documents:</strong></td>
+        <td style="padding: 8px; border: 1px solid #ddd;">{{ object.total_documents }}</td>
+    </tr>
+    <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;"><strong>Accepted:</strong></td>
+        <td style="padding: 8px; border: 1px solid #ddd; color: green;">{{ object.accepted_today }}</td>
+    </tr>
+    <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;"><strong>Rejected:</strong></td>
+        <td style="padding: 8px; border: 1px solid #ddd; color: red;">{{ object.rejected_today }}</td>
+    </tr>
+    <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;"><strong>Pending Response:</strong></td>
+        <td style="padding: 8px; border: 1px solid #ddd; color: orange;">{{ object.pending_response }}</td>
+    </tr>
+    <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;"><strong>Success Rate:</strong></td>
+        <td style="padding: 8px; border: 1px solid #ddd;">{{ object.success_rate }}%</td>
+    </tr>
+</table>
+
+<h3>By Document Type</h3>
+<ul>
+    <li>FE (Factura): {{ object.fe_count }}</li>
+    <li>AFE (Autofactura): {{ object.afe_count }}</li>
+    <li>NCE (Nota de Credito): {{ object.nce_count }}</li>
+    <li>NDE (Nota de Debito): {{ object.nde_count }}</li>
+    <li>NRE (Nota de Remision): {{ object.nre_count }}</li>
+</ul>
+
+{% if object.top_error_1 %}
+<h3>Top Errors</h3>
+<ul>
+    {% if object.top_error_1 %}<li>{{ object.top_error_1 }}: {{ object.top_error_1_count }}</li>{% endif %}
+    {% if object.top_error_2 %}<li>{{ object.top_error_2 }}: {{ object.top_error_2_count }}</li>{% endif %}
+    {% if object.top_error_3 %}<li>{{ object.top_error_3 }}: {{ object.top_error_3_count }}</li>{% endif %}
+</ul>
+{% endif %}
+        ]]></field>
+    </record>
+</odoo>

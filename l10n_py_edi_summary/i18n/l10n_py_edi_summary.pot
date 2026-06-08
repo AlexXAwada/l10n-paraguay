@@ -1,0 +1,161 @@
+# Translation of Odoo Server.
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-08 10:00:00+0000\n"
+"PO-Revision-Date: 2026-06-08 10:00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. module: l10n_py_edi_summary
+msgid "EDI Daily Summary"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "Date"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "Company"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "Total Documents"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "Sent Today"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "Accepted Today"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "Rejected Today"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "Pending Response"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "FE Count"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "AFE Count"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "NCE Count"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "NDE Count"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "NRE Count"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "Avg Response Time (min)"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "Success Rate (%)"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "Top Error 1"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "Top Error 1 Count"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "Top Error 2"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "Top Error 2 Count"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "Top Error 3"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "Top Error 3 Count"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "Email Sent"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "Email Sent Date"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "Manual EDI Sync"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "Action"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "Check Status"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "Retry Sending"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "Batch Retry"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "Documents"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "Recalculate CDC"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "If True, invalidates CDC before retry"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "Sync Complete"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "%(success)s of %(total)s documents processed successfully"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "Documents for %(date)s"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "EDI: Daily Summary"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "EDI: Generate daily summary"
+msgstr ""
+
+#. module: l10n_py_edi_summary
+msgid "EDI: Send daily summary email"
+msgstr ""

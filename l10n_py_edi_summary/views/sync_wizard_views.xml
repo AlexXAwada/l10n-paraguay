@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Form view for Sync Wizard -->
+    <record id="view_l10n_py_edi_sync_wizard_form" model="ir.ui.view">
+        <field name="name">l10n_py.edi.sync.wizard.form</field>
+        <field name="model">l10n_py.edi.sync.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Manual EDI Sync">
+                <group>
+                    <group string="Sync Action">
+                        <field name="action_type" />
+                    </group>
+                    <group string="Options">
+                        <field name="force_recalculate_cdc" />
+                    </group>
+                </group>
+                <group string="Select Documents">
+                    <field name="move_ids" nolabel="1" />
+                </group>
+                <footer>
+                    <button
+                        name="action_execute"
+                        string="Execute"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action for Sync Wizard -->
+    <record id="action_l10n_py_edi_sync_wizard" model="ir.actions.act_window">
+        <field name="name">Manual EDI Sync</field>
+        <field name="res_model">l10n_py.edi.sync.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Menu for Manual Sync -->
+    <menuitem
+        id="menu_l10n_py_edi_sync"
+        name="Manual Sync"
+        parent="l10n_py_edi_base.menu_l10n_py_edi_root"
+        action="action_l10n_py_edi_sync_wizard"
+        sequence="25"
+    />
+</odoo>

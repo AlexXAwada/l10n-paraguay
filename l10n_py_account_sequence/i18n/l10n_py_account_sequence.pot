@@ -1,0 +1,88 @@
+# Translation of Odoo Server.
+# This file contains the translation of the model names.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-08 12:00:00+0000\n"
+"PO-Revision-Date: 2026-06-08 12:00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: l10n_py_account_sequence
+msgid "Account Authorization Sequences"
+msgstr ""
+
+#. module: l10n_py_account_sequence
+msgid "Multiple authorization series and sequence management"
+msgstr ""
+
+#. module: l10n_py_account_sequence
+msgid "Series Code"
+msgstr ""
+
+#. module: l10n_py_account_sequence
+msgid "Default Series"
+msgstr ""
+
+#. module: l10n_py_account_sequence
+msgid "Active Sequence"
+msgstr ""
+
+#. module: l10n_py_account_sequence
+msgid "Last Used Number"
+msgstr ""
+
+#. module: l10n_py_account_sequence
+msgid "Authorization Series"
+msgstr ""
+
+#. module: l10n_py_account_sequence
+msgid "3-digit series code (e.g., 001, 002)"
+msgstr ""
+
+#. module: l10n_py_account_sequence
+msgid "If True, this series is used by default for new invoices"
+msgstr ""
+
+#. module: l10n_py_account_sequence
+msgid "Sequence used for this authorization series"
+msgstr ""
+
+#. module: l10n_py_account_sequence
+msgid "Last number used in this series"
+msgstr ""
+
+#. module: l10n_py_account_sequence
+msgid "3-digit series code from the authorization"
+msgstr ""
+
+#. module: l10n_py_account_sequence
+msgid "True if this authorization is the default series"
+msgstr ""
+
+#. module: l10n_py_account_sequence
+msgid "Series %(series)s is already in use for company %(company)s"
+msgstr ""
+
+#. module: l10n_py_account_sequence
+msgid "Only one authorization can be default per company. Company: %(company)s"
+msgstr ""
+
+#. module: l10n_py_account_sequence
+msgid "Cannot generate number for inactive authorization %(name)s"
+msgstr ""
+
+#. module: l10n_py_account_sequence
+msgid "Authorization %(name)s is exhausted. Last number: %(to)s"
+msgstr ""
+
+#. module: l10n_py_account_sequence
+msgid "With Series"
+msgstr ""
