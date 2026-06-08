@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from odoo.addons.account.models.account_move import AccountMove
+
 from odoo import fields
 from odoo.exceptions import UserError
 from odoo.tests import TransactionCase
@@ -45,7 +50,7 @@ class TestNRStockPicking(TransactionCase):
             }
         )
 
-        doc_type_nre = cls.env["l10n_latam.document.type"].search(
+        cls.env["l10n_latam.document.type"].search(
             [
                 ("code", "=", "7"),
                 ("country_id", "=", cls.env.ref("base.py").id),
@@ -59,7 +64,7 @@ class TestNRStockPicking(TransactionCase):
             }
         )
 
-    def _create_nre(self) -> account.move:
+    def _create_nre(self) -> AccountMove:
         """Helper to create an NRE invoice."""
         nre_type = self.env["l10n_latam.document.type"].search(
             [

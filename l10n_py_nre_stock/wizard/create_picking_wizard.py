@@ -61,15 +61,15 @@ class CreatePickingWizard(models.TransientModel):
 
             picking = self.env["stock.picking"].create(vals)
 
-            for line in nre.invoice_line_ids.filtered(
-                lambda l: l.product_id and l.product_id.type != "service"
+            for inv_line in nre.invoice_line_ids.filtered(
+                lambda il: il.product_id and il.product_id.type != "service"
             ):
                 self.env["stock.move"].create(
                     {
                         "picking_id": picking.id,
-                        "product_id": line.product_id.id,
-                        "product_uom_qty": line.quantity,
-                        "product_uom": line.product_id.uom_id.id,
+                        "product_id": inv_line.product_id.id,
+                        "product_uom_qty": inv_line.quantity,
+                        "product_uom": inv_line.product_id.uom_id.id,
                         "location_id": picking.location_id.id,
                         "location_dest_id": picking.location_dest_id.id,
                     }

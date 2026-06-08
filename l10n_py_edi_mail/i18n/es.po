@@ -1,0 +1,100 @@
+# Translation of Odoo Server.
+# This file contains the translation of the model names.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-08 10:00:00+0000\n"
+"PO-Revision-Date: 2026-06-08 10:00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: l10n_py_edi_mail
+msgid "Email Notification Sent"
+msgstr "Notificacion de Email Enviada"
+
+#. module: l10n_py_edi_mail
+msgid "Email Notification Date"
+msgstr "Fecha de Notificacion de Email"
+
+#. module: l10n_py_edi_mail
+msgid "Email Recipients"
+msgstr "Destinatarios de Email"
+
+#. module: l10n_py_edi_mail
+msgid "Auto Send Email"
+msgstr "Enviar Email Automaticamente"
+
+#. module: l10n_py_edi_mail
+msgid "EDI: Document Accepted by SIFEN"
+msgstr "EDI: Documento Aceptado por SIFEN"
+
+#. module: l10n_py_edi_mail
+msgid "EDI: Document Rejected by SIFEN"
+msgstr "EDI: Documento Rechazado por SIFEN"
+
+#. module: l10n_py_edi_mail
+msgid "EDI: Document Cancelled"
+msgstr "EDI: Documento Cancelado"
+
+#. module: l10n_py_edi_mail
+msgid "EDI: Send pending notification emails"
+msgstr "EDI: Enviar notificaciones de email pendientes"
+
+#. module: l10n_py_edi_mail
+msgid "No email recipients configured. Cannot send EDI notification."
+msgstr "No hay destinatarios de email configurados. No se puede enviar la notificacion EDI."
+
+#. module: l10n_py_edi_mail
+msgid "EDI notification email sent to %(recipients)s."
+msgstr "Email de notificacion EDI enviado a %(recipients)s."
+
+#. module: l10n_py_edi_mail
+msgid "Failed to send EDI notification email: %(error)s"
+msgstr "Fallo al enviar email de notificacion EDI: %(error)s"
+
+#. module: l10n_py_edi_mail
+msgid "Documento %(name)s - Aceptado por SIFEN"
+msgstr "Documento %(name)s - Aceptado por SIFEN"
+
+#. module: l10n_py_edi_mail
+msgid "Documento %(name)s - RECHAZADO por SIFEN"
+msgstr "Documento %(name)s - RECHAZADO por SIFEN"
+
+#. module: l10n_py_edi_mail
+msgid "Documento %(name)s - CANCELADO"
+msgstr "Documento %(name)s - CANCELADO"
+
+#. module: l10n_py_edi_mail
+msgid "CDC:"
+msgstr "CDC:"
+
+#. module: l10n_py_edi_mail
+msgid "Fecha:"
+msgstr "Fecha:"
+
+#. module: l10n_py_edi_mail
+msgid "Importe:"
+msgstr "Importe:"
+
+#. module: l10n_py_edi_mail
+msgid "Codigo de Error:"
+msgstr "Codigo de Error:"
+
+#. module: l10n_py_edi_mail
+msgid "Mensaje:"
+msgstr "Mensaje:"
+
+#. module: l10n_py_edi_mail
+msgid "Accion Sugerida:"
+msgstr "Accion Sugerida:"
+
+#. module: l10n_py_edi_mail
+msgid "Fecha de Cancelacion:"
+msgstr "Fecha de Cancelacion:"

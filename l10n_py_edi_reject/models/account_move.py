@@ -3,7 +3,11 @@
 
 from __future__ import annotations
 
+import logging
+
 from odoo import api, fields, models
+
+_logger = logging.getLogger(__name__)
 
 
 class AccountMove(models.Model):
@@ -138,7 +142,7 @@ class AccountMove(models.Model):
                     "l10n_py_edi_status": "rejected",
                 }
             )
-            raise UserError(self.env._("Retry failed: %(error)s", error=str(e)))
+            raise UserError(self.env._("Retry failed: %(error)s", error=str(e))) from e
 
     @api.model
     def _cron_retry_pending_fixes(self) -> None:
@@ -164,4 +168,8 @@ class AccountMove(models.Model):
             try:
                 move.action_retry_after_fix()
             except Exception as e:
-                _logger.warning("Failed to retry document %s: %s", move.name, str(e))
+                _logger.warning(
+                    "Failed to retry document %s: %s",
+                    move.name,
+                    str(e),
+                )
