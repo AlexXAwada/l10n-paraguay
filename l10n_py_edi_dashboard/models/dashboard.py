@@ -98,10 +98,6 @@ class EDIDashboard(models.Model):
 
             # Base domain
             domain = [("company_id", "=", company.id)]
-            today_domain = domain + [
-                ("l10n_py_edi_accepted_date", ">=", today),
-                ("l10n_py_edi_status", "=", "accepted"),
-            ]
 
             # Counts
             all_docs = self.env["account.move"].search(domain)
