@@ -1,0 +1,84 @@
+# Translation of Odoo Server.
+# This file contains the translation of the model names.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-08 12:00:00+0000\n"
+"PO-Revision-Date: 2026-06-08 12:00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: l10n_py_cert_expiry
+msgid "Certificate Expiry Notifications"
+msgstr "Notificaciones de Vencimiento de Certificados"
+
+#. module: l10n_py_cert_expiry
+msgid "Notify users when SIFEN certificates are about to expire"
+msgstr "Notificar a los usuarios cuando los certificados SIFEN esten por vencer"
+
+#. module: l10n_py_cert_expiry
+msgid "Warning Days"
+msgstr "Dias de Aviso"
+
+#. module: l10n_py_cert_expiry
+msgid "Days before expiry to send warning notifications"
+msgstr "Dias antes del vencimiento para enviar notificaciones de aviso"
+
+#. module: l10n_py_cert_expiry
+msgid "Certificate Notification Contact"
+msgstr "Contacto para Notificaciones de Certificado"
+
+#. module: l10n_py_cert_expiry
+msgid "Partner who receives certificate expiry notifications"
+msgstr "Contacto que recibe las notificaciones de vencimiento de certificados"
+
+#. module: l10n_py_cert_expiry
+msgid "SIFEN certificate has EXPIRED on %(date)s. Please renew immediately to continue sending EDI documents."
+msgstr "El certificado SIFEN ha VENCIDO el %(date)s. Por favor renueve inmediatamente para continuar enviando documentos EDI."
+
+#. module: l10n_py_cert_expiry
+msgid "SIFEN certificate has EXPIRED on %(date)s. EDI documents cannot be sent until certificate is renewed."
+msgstr "El certificado SIFEN ha VENCIDO el %(date)s. No se pueden enviar documentos EDI hasta que el certificado sea renovado."
+
+#. module: l10n_py_cert_expiry
+msgid "Certificate Expiry Warning"
+msgstr "Aviso de Vencimiento de Certificado"
+
+#. module: l10n_py_cert_expiry
+msgid "SIFEN Certificate Expiring Soon - %(name)s"
+msgstr "Certificado SIFEN por Vencer - %(name)s"
+
+#. module: l10n_py_cert_expiry
+msgid "Check certificate expiry daily"
+msgstr "Verificar vencimiento de certificados diariamente"
+
+#. module: l10n_py_cert_expiry
+msgid "SIFEN Certificate Expiry Warning"
+msgstr "Aviso de Vencimiento de Certificado SIFEN"
+
+#. module: l10n_py_cert_expiry
+msgid "Company:"
+msgstr "Empresa:"
+
+#. module: l10n_py_cert_expiry
+msgid "Certificate Expiry:"
+msgstr "Vencimiento del Certificado:"
+
+#. module: l10n_py_cert_expiry
+msgid "Action Required:"
+msgstr "Accion Requerida:"
+
+#. module: l10n_py_cert_expiry
+msgid "Dear Administrator,"
+msgstr "Estimado Administrador,"
+
+#. module: l10n_py_cert_expiry
+msgid "This is an automated notification that the SIFEN digital certificate for %(company)s is about to expire."
+msgstr "Esta es una notificacion automatica de que el certificado digital SIFEN de %(company)s esta por vencer."
