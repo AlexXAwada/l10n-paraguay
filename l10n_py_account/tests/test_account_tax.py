@@ -207,6 +207,7 @@ class TestAccountTaxPY(TransactionCase):
                 "amount_type": "percent",
                 "type_tax_use": tax_type,
                 "tax_group_id": tax_group.id,
+                "country_id": tax_group.country_id.id,
                 "invoice_repartition_line_ids": [
                     (0, 0, {"repartition_type": "base"}),
                     (0, 0, {"repartition_type": "tax"}),

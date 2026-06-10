@@ -73,8 +73,8 @@ class TestRDeBuilder(TransactionCase):
             "email": "test@empresa.com",
         }
 
-    @patch(".services.rde_builder.RDe")
-    @patch(".services.rde_builder.TDe")
+    @patch("l10n_py_edi_sifen.services.rde_builder.RDe")
+    @patch("l10n_py_edi_sifen.services.rde_builder.TDe")
     def test_build_creates_rde(self, mock_tde, mock_rde):
         """Test that build() creates an RDe object."""
         from .services.rde_builder import RDeBuilder
