@@ -1,5 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import hmac
 import logging
 
 from odoo import http
@@ -111,12 +112,7 @@ class SIFENWebhookController(http.Controller):
             return False
 
         webhook_token = company.sudo().l10n_py_webhook_token or ""
-        if webhook_token and webhook_token == token:
-            return True
-
-        # Fallback: also accept token embedded in payload (some providers do this)
-        payload_token = json_data.get("webhook_token") or json_data.get("token", "")
-        if payload_token and payload_token == webhook_token:
+        if webhook_token and hmac.compare_digest(webhook_token, token):
             return True
 
         return False

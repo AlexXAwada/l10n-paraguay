@@ -192,9 +192,9 @@ class AccountMove(models.Model):
                     )
                     # Query next number directly to avoid ORM cache issues
                     self.env.cr.execute(
-                        """
+                        f"""
                         SELECT COALESCE(MAX(l10n_py_invoice_number), 0)
-                        FROM account_move
+                        FROM "{auth_table}"
                         WHERE l10n_py_authorization_id = %s
                           AND l10n_py_invoice_number > 0
                           AND move_type IN ('out_invoice', 'out_refund')

@@ -221,7 +221,9 @@ class BatchJob(models.Model):
             rdes = []
             for line in batch_lines:
                 try:
-                    rde = connector._sifen_build_rde(line.move_id)
+                    rde = connector._sifen_build_rde(
+                        line.move_id._prepare_edi_document_data()
+                    )
                     rdes.append(rde)
                 except Exception as e:
                     line.write(
