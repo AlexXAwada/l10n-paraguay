@@ -182,9 +182,7 @@ class AccountMove(models.Model):
                     # Flush pending writes so the SQL query sees all data
                     self.env["account.move"].flush_model(["l10n_py_invoice_number"])
                     # Resolve actual table name (supports custom table prefixes)
-                    auth_table = (
-                        self.env["ir.model"]._get("account.authorization").table
-                    )
+                    auth_table = self.env["account.authorization"]._table
                     # Lock the authorization row to prevent concurrent number assignment
                     self.env.cr.execute(
                         f'SELECT id FROM "{auth_table}" WHERE id = %s FOR UPDATE',
