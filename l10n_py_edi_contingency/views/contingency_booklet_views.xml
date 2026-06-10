@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Tree view for contingency booklets -->
+    <record id="view_l10n_py_contingency_booklet_tree" model="ir.ui.view">
+        <field name="name">l10n_py.contingency.booklet.tree</field>
+        <field name="model">l10n_py.contingency.booklet</field>
+        <field name="arch" type="xml">
+            <list
+                decoration-success="state == 'active'"
+                decoration-danger="state == 'exhausted'"
+                decoration-muted="state == 'cancelled'"
+            >
+                <field name="name" />
+                <field name="company_id" />
+                <field name="start_number" />
+                <field name="end_number" />
+                <field name="used_count" />
+                <field name="remaining" />
+                <field
+                    name="state"
+                    widget="badge"
+                    decoration-info="state == 'active'"
+                    decoration-danger="state in ('exhausted', 'cancelled')"
+                />
+                <field name="activation_date" />
+            </list>
+        </field>
+    </record>
+
+    <!-- Form view for contingency booklets -->
+    <record id="view_l10n_py_contingency_booklet_form" model="ir.ui.view">
+        <field name="name">l10n_py.contingency.booklet.form</field>
+        <field name="model">l10n_py.contingency.booklet</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button
+                        name="action_activate"
+                        string="Activate"
+                        type="object"
+                        class="btn-success"
+                        invisible="state != 'draft'"
+                    />
+                    <button
+                        name="action_deactivate"
+                        string="Cancel"
+                        type="object"
+                        class="btn-danger"
+                        invisible="state != 'active'"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="active,exhausted,cancelled"
+                    />
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Identification">
+                            <field name="name" />
+                            <field name="company_id" />
+                        </group>
+                        <group string="Number Range">
+                            <field name="start_number" />
+                            <field name="end_number" />
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Usage Statistics">
+                            <field name="used_count" />
+                            <field name="remaining" />
+                        </group>
+                        <group string="Dates">
+                            <field name="activation_date" />
+                        </group>
+                    </group>
+                    <group string="Notes">
+                        <field name="notes" nolabel="1" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search view for contingency booklets -->
+    <record id="view_l10n_py_contingency_booklet_search" model="ir.ui.view">
+        <field name="name">l10n_py.contingency.booklet.search</field>
+        <field name="model">l10n_py.contingency.booklet</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="company_id" />
+                <filter
+                    string="Active"
+                    name="active"
+                    domain="[('state', '=', 'active')]"
+                />
+                <filter
+                    string="Exhausted"
+                    name="exhausted"
+                    domain="[('state', '=', 'exhausted')]"
+                />
+                <filter
+                    string="Cancelled"
+                    name="cancelled"
+                    domain="[('state', '=', 'cancelled')]"
+                />
+                <separator />
+                <filter
+                    string="Low Stock"
+                    name="low_stock"
+                    domain="[('remaining', '&lt;', 20)]"
+                />
+                <group>
+                    <filter
+                        string="Company"
+                        name="group_company"
+                        context="{'group_by': 'company_id'}"
+                    />
+                    <filter
+                        string="State"
+                        name="group_state"
+                        context="{'group_by': 'state'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action window for contingency booklets -->
+    <record id="action_l10n_py_contingency_booklet" model="ir.actions.act_window">
+        <field name="name">Contingency Booklets</field>
+        <field name="res_model">l10n_py.contingency.booklet</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+    </record>
+
+    <!-- Menu item for contingency booklets -->
+    <menuitem
+        id="menu_l10n_py_contingency_booklet"
+        name="Contingency Booklets"
+        action="action_l10n_py_contingency_booklet"
+        parent="l10n_py_edi_base.menu_l10n_py_edi_root"
+        sequence="50"
+    />
+</odoo>

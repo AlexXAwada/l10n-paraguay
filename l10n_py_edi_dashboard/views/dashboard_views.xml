@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Dashboard action -->
+    <record id="action_l10n_py_edi_dashboard" model="ir.actions.act_window">
+        <field name="name">EDI Dashboard</field>
+        <field name="res_model">l10n_py.edi.dashboard</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+    </record>
+
+    <!-- Menu item -->
+    <menuitem
+        id="menu_l10n_py_edi_dashboard"
+        name="EDI Dashboard"
+        action="action_l10n_py_edi_dashboard"
+        parent="l10n_py_edi_base.menu_l10n_py_edi_root"
+        sequence="10"
+    />
+
+    <!-- Dashboard form view -->
+    <record id="view_l10n_py_edi_dashboard_form" model="ir.ui.view">
+        <field name="name">l10n_py.edi.dashboard.form</field>
+        <field name="model">l10n_py.edi.dashboard</field>
+        <field name="arch" type="xml">
+            <form string="EDI Dashboard">
+                <div class="o_dashboard_card">
+                    <!-- KPI Cards Row 1 -->
+                    <div class="row">
+                        <div class="col-12 col-md-3">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <h3 class="text-primary">
+                                        <field name="total_documents" />
+                                    </h3>
+                                    <p>Total Documents</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <h3 class="text-warning">
+                                        <field name="pending_send" />
+                                    </h3>
+                                    <p>Pending Send</p>
+                                    <button
+                                        name="action_open_pending_documents"
+                                        type="object"
+                                        string="View All"
+                                        class="btn btn-sm btn-link"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <h3 class="text-success">
+                                        <field name="accepted_today" />
+                                    </h3>
+                                    <p>Accepted Today</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <h3 class="text-danger">
+                                        <field name="rejected_today" />
+                                    </h3>
+                                    <p>Rejected Today</p>
+                                    <button
+                                        name="action_open_rejected_documents"
+                                        type="object"
+                                        string="View All"
+                                        class="btn btn-sm btn-link"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- KPI Cards Row 2 -->
+                    <div class="row mt-3">
+                        <div class="col-12 col-md-3">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <h4>
+                                        <field name="accepted_this_week" />
+                                    </h4>
+                                    <p>This Week</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <h4>
+                                        <field name="accepted_this_month" />
+                                    </h4>
+                                    <p>This Month</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <h4>
+                                        <field name="success_rate" />
+                                        <span>%</span>
+                                    </h4>
+                                    <p>Success Rate</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <h4 class="text-info">
+                                        <field name="contingency_pending" />
+                                    </h4>
+                                    <p>Contingency Pending</p>
+                                    <button
+                                        name="action_open_contingency_documents"
+                                        type="object"
+                                        string="View All"
+                                        class="btn btn-sm btn-link"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Document Type Breakdown -->
+                    <group string="Documents by Type" class="mt-4">
+                        <group>
+                            <field name="fe_count" readonly="1" />
+                            <field name="afe_count" readonly="1" />
+                            <field name="nce_count" readonly="1" />
+                        </group>
+                        <group>
+                            <field name="nde_count" readonly="1" />
+                            <field name="nre_count" readonly="1" />
+                        </group>
+                    </group>
+
+                    <!-- Batch Stats -->
+                    <group string="Batch Operations" class="mt-4">
+                        <group>
+                            <field name="active_batches" readonly="1" />
+                            <field name="batch_success_rate" readonly="1" />
+                        </group>
+                    </group>
+                </div>
+            </form>
+        </field>
+    </record>
+</odoo>

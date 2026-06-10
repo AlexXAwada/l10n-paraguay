@@ -1,0 +1,76 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_py_edi_sifen
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#. module: l10n_py_edi_sifen
+msgid "Digital Certificate (SIFEN)"
+msgstr ""
+
+#. module: l10n_py_edi_sifen
+msgid "PKCS12 Certificate (.pfx)"
+msgstr ""
+
+#. module: l10n_py_edi_sifen
+msgid "Companies"
+msgstr ""
+
+#. module: l10n_py_edi_sifen
+msgid "Conector EDI Paraguay"
+msgstr ""
+
+#. module: l10n_py_edi_sifen
+msgid "Connection Successful"
+msgstr ""
+
+#. module: l10n_py_edi_sifen
+msgid "Configure the PKCS12 certificate in company %s"
+msgstr ""
+
+#. module: l10n_py_edi_sifen
+msgid "Certificate Password"
+msgstr ""
+
+#. module: l10n_py_edi_sifen
+msgid "The PKCS12 digital certificate is configured in the company form."
+msgstr ""
+
+#. module: l10n_py_edi_sifen
+msgid "SIFEN connection error: %s"
+msgstr ""
+
+#. module: l10n_py_edi_sifen
+msgid "Expiry"
+msgstr ""
+
+#. module: l10n_py_edi_sifen
+msgid "L10N Py Certificate Filename"
+msgstr ""
+
+#. module: l10n_py_edi_sifen
+msgid "The SIFEN connection was verified successfully."
+msgstr ""
+
+#. module: l10n_py_edi_sifen
+msgid "Provider"
+msgstr ""
+
+#. module: l10n_py_edi_sifen
+msgid "SIFEN"
+msgstr ""
+
+#. module: l10n_py_edi_sifen
+msgid "SIFEN Directo"
+msgstr ""

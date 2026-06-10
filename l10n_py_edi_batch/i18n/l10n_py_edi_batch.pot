@@ -1,0 +1,169 @@
+# Translation of Odoo Server.
+# This file contains the extraction of translatable strings from
+# the module l10n_py_edi_batch.
+# . module: l10n_py_edi_batch
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+
+#. module: l10n_py_edi_batch
+msgid "EDI Batch Job"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Name"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Company"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "State"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Draft"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Queued"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Running"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Done"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Partial Success"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Failed"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Batch Type"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Send Documents"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Check Status"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Cancel Documents"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Invoices"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Batch Size"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Maximum documents sent per batch call (pysifen limit: 50)"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Total"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+
+#. module: l10n_py_edi_batch
+
+#. module: l10n_py_edi_batch
+msgid "Progress (%)"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Started At"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Finished At"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Error Message"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Batch Job Line"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Invoice"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Pending"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Sent"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Success"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Attempts"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Last Attempt"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Please select at least one invoice"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Batch size must be between 1 and 50"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Batch Send Wizard"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Job Name"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Create Batch Job"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Lines"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "No EDI connector configured"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Document has no CDC"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "EDI: Process Queued Batch Jobs"
+msgstr ""
+
+#. module: l10n_py_edi_batch
+msgid "Batch Jobs"
+msgstr ""

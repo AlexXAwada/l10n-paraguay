@@ -1,0 +1,88 @@
+# Translation of Odoo Server.
+# This file contains the translation of the model names.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-08 12:00:00+0000\n"
+"PO-Revision-Date: 2026-06-08 12:00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: l10n_py_account_sequence
+msgid "Account Authorization Sequences"
+msgstr "Secuencias de Autorización de Cuenta"
+
+#. module: l10n_py_account_sequence
+msgid "Multiple authorization series and sequence management"
+msgstr "Gestión de múltiples series de autorización y secuencias"
+
+#. module: l10n_py_account_sequence
+msgid "Series Code"
+msgstr "Código de Serie"
+
+#. module: l10n_py_account_sequence
+msgid "Default Series"
+msgstr "Serie Predeterminada"
+
+#. module: l10n_py_account_sequence
+msgid "Active Sequence"
+msgstr "Secuencia Activa"
+
+#. module: l10n_py_account_sequence
+msgid "Last Used Number"
+msgstr "Último Número Utilizado"
+
+#. module: l10n_py_account_sequence
+msgid "Authorization Series"
+msgstr "Serie de Autorización"
+
+#. module: l10n_py_account_sequence
+msgid "3-digit series code (e.g., 001, 002)"
+msgstr "Código de serie de 3 dígitos (ej., 001, 002)"
+
+#. module: l10n_py_account_sequence
+msgid "If True, this series is used by default for new invoices"
+msgstr "Si es True, esta serie se usa por defecto para nuevas facturas"
+
+#. module: l10n_py_account_sequence
+msgid "Sequence used for this authorization series"
+msgstr "Secuencia utilizada para esta serie de autorización"
+
+#. module: l10n_py_account_sequence
+msgid "Last number used in this series"
+msgstr "Último número usado en esta serie"
+
+#. module: l10n_py_account_sequence
+msgid "3-digit series code from the authorization"
+msgstr "Código de serie de 3 dígitos de la autorización"
+
+#. module: l10n_py_account_sequence
+msgid "True if this authorization is the default series"
+msgstr "True si esta autorización es la serie predeterminada"
+
+#. module: l10n_py_account_sequence
+msgid "Series %(series)s is already in use for company %(company)s"
+msgstr "La serie %(series)s ya está en uso para la empresa %(company)s"
+
+#. module: l10n_py_account_sequence
+msgid "Only one authorization can be default per company. Company: %(company)s"
+msgstr "Solo una autorización puede ser predeterminada por empresa. Empresa: %(company)s"
+
+#. module: l10n_py_account_sequence
+msgid "Cannot generate number for inactive authorization %(name)s"
+msgstr "No se puede generar número para autorización inactiva %(name)s"
+
+#. module: l10n_py_account_sequence
+msgid "Authorization %(name)s is exhausted. Last number: %(to)s"
+msgstr "La autorización %(name)s está agotada. Último número: %(to)s"
+
+#. module: l10n_py_account_sequence
+msgid "With Series"
+msgstr "Con Serie"

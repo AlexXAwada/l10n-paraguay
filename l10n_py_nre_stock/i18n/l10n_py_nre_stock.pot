@@ -1,0 +1,153 @@
+# Translation of this file into Spanish.
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"X-Generator: Odoo\n"
+
+#. module: l10n_py_nre_stock
+msgid "NRE Stock Picking Integration"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "Link NRE electronic documents to stock pickings"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "Extension of stock.picking to link with NRE documents."
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "NRE Document"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "NRE that originated this stock picking"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "NRE CDC"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "Transport Medium"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "Driver Name"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "Driver Document"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "Extension of account.move for NRE picking integration."
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "Stock Pickings"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "Picking Count"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "Source Warehouse"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "Warehouse where the NRE originates (stock source)"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "Destination Warehouse"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "Warehouse receiving the goods"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "Stock Transfer"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "Create Stock Picking"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "View Pickings"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "Stock picking can only be created for NRE documents (type 7)."
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "A stock picking already exists for this NRE. View it using the 'Stock Pickings' button."
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "No source warehouse configured. Set l10n_py_default_warehouse_id on the company."
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "Wizard to create stock picking from NRE."
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "Create Stock Picking from NRE"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "NRE Documents"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "Warehouse where the goods are dispatched from"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "Optional: specific destination warehouse"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "Created Stock Pickings"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "NRE: Check stock picking status"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "Own vehicle"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "Hired vehicle"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "Client vehicle"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "Other"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "Default Source Warehouse"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "Default warehouse for NRE stock transfers (source location)"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "Default Destination Warehouse"
+msgstr ""
+
+#. module: l10n_py_nre_stock
+msgid "Default destination warehouse for NRE stock transfers"
+msgstr ""

@@ -1,0 +1,166 @@
+# Translation of Odoo Server.
+# This file contains the translation of the module l10n_py_edi_batch
+# to Spanish (Paraguay).
+# . module: l10n_py_edi_batch
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_PY\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: l10n_py_edi_batch
+msgid "EDI Batch Job"
+msgstr "Trabajo por Lotes EDI"
+
+#. module: l10n_py_edi_batch
+msgid "Name"
+msgstr "Nombre"
+
+#. module: l10n_py_edi_batch
+msgid "Company"
+msgstr "Empresa"
+
+#. module: l10n_py_edi_batch
+msgid "State"
+msgstr "Estado"
+
+#. module: l10n_py_edi_batch
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: l10n_py_edi_batch
+msgid "Queued"
+msgstr "En cola"
+
+#. module: l10n_py_edi_batch
+msgid "Running"
+msgstr "Ejecutando"
+
+#. module: l10n_py_edi_batch
+msgid "Done"
+msgstr "Completado"
+
+#. module: l10n_py_edi_batch
+msgid "Partial Success"
+msgstr "Éxito parcial"
+
+#. module: l10n_py_edi_batch
+msgid "Failed"
+msgstr "Fallido"
+
+#. module: l10n_py_edi_batch
+msgid "Batch Type"
+msgstr "Tipo de lote"
+
+#. module: l10n_py_edi_batch
+msgid "Send Documents"
+msgstr "Enviar documentos"
+
+#. module: l10n_py_edi_batch
+msgid "Check Status"
+msgstr "Consultar estado"
+
+#. module: l10n_py_edi_batch
+msgid "Cancel Documents"
+msgstr "Cancelar documentos"
+
+#. module: l10n_py_edi_batch
+msgid "Invoices"
+msgstr "Facturas"
+
+#. module: l10n_py_edi_batch
+msgid "Batch Size"
+msgstr "Tamaño del lote"
+
+#. module: l10n_py_edi_batch
+msgid "Maximum documents sent per batch call (pysifen limit: 50)"
+msgstr "Máximo de documentos por envío en lote (límite pysifen: 50)"
+
+#. module: l10n_py_edi_batch
+msgid "Total"
+msgstr "Total"
+
+#. module: l10n_py_edi_batch
+msgid "Progress (%)"
+msgstr "Progreso (%)"
+
+#. module: l10n_py_edi_batch
+msgid "Started At"
+msgstr "Iniciado el"
+
+#. module: l10n_py_edi_batch
+msgid "Finished At"
+msgstr "Finalizado el"
+
+#. module: l10n_py_edi_batch
+msgid "Error Message"
+msgstr "Mensaje de error"
+
+#. module: l10n_py_edi_batch
+msgid "Batch Job Line"
+msgstr "Línea de trabajo por lotes"
+
+#. module: l10n_py_edi_batch
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: l10n_py_edi_batch
+msgid "Pending"
+msgstr "Pendiente"
+
+#. module: l10n_py_edi_batch
+msgid "Sent"
+msgstr "Enviado"
+
+#. module: l10n_py_edi_batch
+msgid "Success"
+msgstr "Éxito"
+
+#. module: l10n_py_edi_batch
+msgid "Attempts"
+msgstr "Intentos"
+
+#. module: l10n_py_edi_batch
+msgid "Last Attempt"
+msgstr "Último intento"
+
+#. module: l10n_py_edi_batch
+msgid "Please select at least one invoice"
+msgstr "Por favor seleccione al menos una factura"
+
+#. module: l10n_py_edi_batch
+msgid "Batch size must be between 1 and 50"
+msgstr "El tamaño del lote debe estar entre 1 y 50"
+
+#. module: l10n_py_edi_batch
+msgid "Batch Send Wizard"
+msgstr "Asistente de envío por lotes"
+
+#. module: l10n_py_edi_batch
+msgid "Job Name"
+msgstr "Nombre del trabajo"
+
+#. module: l10n_py_edi_batch
+msgid "Create Batch Job"
+msgstr "Crear trabajo por lotes"
+
+#. module: l10n_py_edi_batch
+msgid "Lines"
+msgstr "Líneas"
+
+#. module: l10n_py_edi_batch
+msgid "No EDI connector configured"
+msgstr "No hay conector EDI configurado"
+
+#. module: l10n_py_edi_batch
+msgid "Document has no CDC"
+msgstr "El documento no tiene CDC"
+
+#. module: l10n_py_edi_batch
+msgid "EDI: Process Queued Batch Jobs"
+msgstr "EDI: Procesar trabajos por lotes en cola"
+
+#. module: l10n_py_edi_batch
+msgid "Batch Jobs"
+msgstr "Trabajos por lotes"

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Wizard form for batch retry -->
+    <record id="view_batch_retry_wizard_form" model="ir.ui.view">
+        <field name="name">l10n_py.edi.batch.retry.wizard.form</field>
+        <field name="model">l10n_py.edi.batch.retry.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Batch Retry Rejected Documents">
+                <group string="Selection">
+                    <field name="rejected_ids" colspan="2" />
+                </group>
+
+                <group string="Batch Fix Options">
+                    <group>
+                        <field name="fix_type" required="1" />
+                    </group>
+                    <group>
+                        <field
+                            name="new_ruc"
+                            invisible="fix_type != 'ruc'"
+                            placeholder="Replacement RUC"
+                        />
+                        <field
+                            name="new_taxpayer_type"
+                            invisible="fix_type != 'type'"
+                        />
+                    </group>
+                </group>
+
+                <group>
+                    <field name="dry_run" />
+                </group>
+
+                <footer>
+                    <button
+                        name="action_preview"
+                        type="object"
+                        string="Preview Changes"
+                        invisible="dry_run == False"
+                    />
+                    <button
+                        name="action_apply_batch"
+                        type="object"
+                        string="Apply and Retry All"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action for batch retry from list view -->
+    <record id="action_batch_retry_wizard" model="ir.actions.act_window">
+        <field name="name">Batch Retry Rejected</field>
+        <field name="res_model">l10n_py.edi.batch.retry.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Menu item -->
+    <menuitem
+        id="menu_l10n_py_edi_batch_retry"
+        name="Batch Retry Rejected"
+        action="action_batch_retry_wizard"
+        parent="l10n_py_edi_base.menu_l10n_py_edi_root"
+        sequence="50"
+    />
+</odoo>

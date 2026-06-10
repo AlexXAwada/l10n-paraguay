@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Inherit form view to add series fields -->
+    <record id="view_account_authorization_form_series" model="ir.ui.view">
+        <field name="name">account.authorization.form.series</field>
+        <field name="model">account.authorization</field>
+        <field
+            name="inherit_id"
+            ref="l10n_py_account.view_account_authorization_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='establishment']" position="after">
+                <field name="series_code" />
+                <field name="is_default" />
+            </xpath>
+            <xpath expr="//field[@name='invoice_number_to']" position="after">
+                <field name="last_used_number" readonly="1" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Inherit tree view to add series fields -->
+    <record id="view_account_authorization_tree_series" model="ir.ui.view">
+        <field name="name">account.authorization.tree.series</field>
+        <field name="model">account.authorization</field>
+        <field
+            name="inherit_id"
+            ref="l10n_py_account.view_account_authorization_tree"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='establishment']" position="after">
+                <field name="series_code" optional="show" />
+                <field name="is_default" optional="show" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Search view with series filter -->
+    <record id="view_account_authorization_search_series" model="ir.ui.view">
+        <field name="name">account.authorization.search.series</field>
+        <field name="model">account.authorization</field>
+        <field
+            name="inherit_id"
+            ref="l10n_py_account.view_account_authorization_search"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='active']" position="after">
+                <filter
+                    string="Default Series"
+                    name="default_series"
+                    domain="[('is_default', '=', True)]"
+                />
+                <filter
+                    string="With Series"
+                    name="with_series"
+                    domain="[('series_code', '!=', False)]"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>

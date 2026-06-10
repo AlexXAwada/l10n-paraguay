@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_account_move_form_nre_stock" model="ir.ui.view">
+        <field name="name">account.move.form.nre.stock</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="l10n_py_edi_base.view_move_form_edi" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='nre_section']" position="inside">
+                <group name="nre_stock_warehouse" string="Stock Transfer">
+                    <field name="l10n_py_warehouse_id" />
+                    <field name="l10n_py_dest_warehouse_id" />
+                    <field name="l10n_py_stock_picking_count" readonly="1" />
+                </group>
+                <group name="nre_stock_actions">
+                    <button
+                        name="action_create_stock_picking"
+                        type="object"
+                        string="Create Stock Picking"
+                        invisible="l10n_py_stock_picking_count > 0 or l10n_py_doc_type_code != '7'"
+                        class="btn-primary"
+                    />
+                    <button
+                        name="action_view_stock_pickings"
+                        type="object"
+                        string="View Pickings"
+                        invisible="l10n_py_stock_picking_count == 0"
+                    />
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

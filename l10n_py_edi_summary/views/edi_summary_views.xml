@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- List view for EDI Summary -->
+    <record id="view_l10n_py_edi_summary_tree" model="ir.ui.view">
+        <field name="name">l10n_py.edi.summary.tree</field>
+        <field name="model">l10n_py.edi.summary</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="date" />
+                <field name="company_id" />
+                <field name="total_documents" />
+                <field name="accepted_today" />
+                <field name="rejected_today" />
+                <field name="pending_response" />
+                <field name="success_rate" />
+                <field name="email_sent" />
+            </list>
+        </field>
+    </record>
+
+    <!-- Form view for EDI Summary -->
+    <record id="view_l10n_py_edi_summary_form" model="ir.ui.view">
+        <field name="name">l10n_py.edi.summary.form</field>
+        <field name="model">l10n_py.edi.summary</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group string="Summary">
+                            <field name="date" />
+                            <field name="company_id" />
+                            <field name="total_documents" />
+                            <field name="sent_today" />
+                            <field name="accepted_today" />
+                            <field name="rejected_today" />
+                            <field name="pending_response" />
+                        </group>
+                        <group string="Performance">
+                            <field name="success_rate" />
+                            <field name="avg_response_time" />
+                        </group>
+                    </group>
+                    <group string="Document Type Breakdown">
+                        <field name="fe_count" />
+                        <field name="afe_count" />
+                        <field name="nce_count" />
+                        <field name="nde_count" />
+                        <field name="nre_count" />
+                    </group>
+                    <group string="Top Errors">
+                        <field name="top_error_1" />
+                        <field name="top_error_1_count" />
+                        <field name="top_error_2" />
+                        <field name="top_error_2_count" />
+                        <field name="top_error_3" />
+                        <field name="top_error_3_count" />
+                    </group>
+                    <group string="Email Status">
+                        <field name="email_sent" />
+                        <field name="email_sent_date" />
+                    </group>
+                    <footer>
+                        <button
+                            name="action_view_documents"
+                            string="View Documents"
+                            type="object"
+                            class="btn-primary"
+                        />
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action for EDI Summary -->
+    <record id="action_l10n_py_edi_summary" model="ir.actions.act_window">
+        <field name="name">EDI Summary</field>
+        <field name="res_model">l10n_py.edi.summary</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu for EDI Summary -->
+    <menuitem
+        id="menu_l10n_py_edi_summary"
+        name="EDI Summary"
+        parent="l10n_py_edi_base.menu_l10n_py_edi_root"
+        action="action_l10n_py_edi_summary"
+        sequence="20"
+    />
+</odoo>

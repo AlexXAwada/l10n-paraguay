@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Wizard form for single document resolution -->
+    <record id="view_resolve_reject_wizard_form" model="ir.ui.view">
+        <field name="name">l10n_py.edi.reject.wizard.form</field>
+        <field name="model">l10n_py.edi.reject.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Resolve EDI Rejection">
+                <group string="Rejection Details">
+                    <group>
+                        <field name="move_id" readonly="1" />
+                        <field name="reject_code" readonly="1" class="text-danger" />
+                    </group>
+                    <group>
+                        <field name="reject_message" readonly="1" colspan="2" />
+                        <field name="suggested_action" readonly="1" class="text-info" />
+                    </group>
+                </group>
+
+                <group string="Corrective Action">
+                    <group>
+                        <field name="fix_field" required="1" />
+                    </group>
+                    <group>
+                        <field
+                            name="new_partner_ruc"
+                            invisible="fix_field not in ('partner_ruc',)"
+                            placeholder="Enter corrected RUC"
+                        />
+                        <field
+                            name="new_partner_doc_number"
+                            invisible="fix_field != 'partner_doc_number'"
+                            placeholder="Enter corrected document number"
+                        />
+                        <field
+                            name="new_partner_taxpayer_type"
+                            invisible="fix_field != 'partner_taxpayer_type'"
+                        />
+                        <field
+                            name="new_company_ruc"
+                            invisible="fix_field != 'company_ruc'"
+                            placeholder="Enter corrected company RUC"
+                        />
+                    </group>
+                </group>
+
+                <group string="Additional Info">
+                    <field name="notes" colspan="2" />
+                </group>
+
+                <footer>
+                    <button
+                        name="action_apply_fix"
+                        type="object"
+                        string="Apply Fix and Retry"
+                        class="btn-primary"
+                    />
+                    <button
+                        name="action_view_document"
+                        type="object"
+                        string="View Document"
+                    />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

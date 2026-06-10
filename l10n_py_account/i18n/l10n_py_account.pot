@@ -1,0 +1,786 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_py_account
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-07 16:58+0000\n"
+"PO-Revision-Date: 2026-06-07 16:58+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_py_account
+#: model:l10n_latam.document.type,report_name:l10n_py_account.dc_py_af
+msgid "AUTOFACTURA ELECTRÓNICA"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_authorization__active
+msgid "Active"
+msgstr ""
+
+#. module: l10n_py_account
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_account_authorization_search
+msgid "Actives"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_bank_statement_line__l10n_py_authorization_id
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_journal__l10n_py_authorization_id
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_move__l10n_py_authorization_id
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_account_authorization_search
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_account_journal_form_edi
+msgid "Authorization"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_journal__l10n_py_authorization_validity
+msgid "Authorization Expiry"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_authorization__name
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_account_authorization_form
+msgid "Authorization Number"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_journal__l10n_py_authorization_validity
+msgid "Authorization expiry date"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_journal__l10n_py_authorization_id
+msgid "Authorization issued by SET for this journal"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_authorization__name
+msgid "Authorization number issued by SET"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_authorization__series
+msgid ""
+"Authorization series (2 uppercase letters, AA-ZZ). Allows restarting "
+"numbering when the range is exhausted."
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_bank_statement_line__l10n_py_authorization_id
+#: model:ir.model.fields,help:l10n_py_account.field_account_move__l10n_py_authorization_id
+msgid "Authorization used for this invoice"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.actions.act_window,name:l10n_py_account.action_account_authorization
+#: model:ir.ui.menu,name:l10n_py_account.menu_account_authorization
+msgid "Authorizations"
+msgstr ""
+
+#. module: l10n_py_account
+#: model_terms:ir.actions.act_window,help:l10n_py_account.action_account_authorization
+msgid ""
+"Authorizations are documents issued by SET - Paraguay Tax Authority\n"
+"                for issuing invoices. Each authorization has a numbering range and specific validity dates."
+msgstr ""
+
+#. module: l10n_py_account
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_account_authorization_form
+msgid "Authorized Numbering"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:l10n_latam.document.type,name:l10n_py_account.dc_py_af
+msgid "Autofactura"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_authorization__remaining_numbers
+msgid "Available Numbers"
+msgstr ""
+
+#. module: l10n_py_account
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_move_form_py
+msgid "Base Gravada 10% (F019)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_move_form_py
+msgid "Base Gravada 5% (F018)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_account_authorization_search
+msgid "Buscar Authorizations"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model,name:l10n_py_account.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_authorization__company_id
+msgid "Company"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_bank_statement_line__l10n_py_full_invoice_number
+#: model:ir.model.fields,help:l10n_py_account.field_account_move__l10n_py_full_invoice_number
+msgid "Complete invoice number (format: 001-001-0000001)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_account_journal_form_edi
+msgid "Configuration EDI Paraguay"
+msgstr ""
+
+#. module: l10n_py_account
+#: model_terms:ir.actions.act_window,help:l10n_py_account.action_account_authorization
+msgid "Create a new authorization"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_authorization__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_authorization__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_authorization__date_from
+msgid "Date from which the authorization is valid"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_authorization__date_to
+msgid "Date until which the authorization is valid"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_authorization__display_name
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_journal__display_name
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_move__display_name
+#: model:ir.model.fields,field_description:l10n_py_account.field_res_company__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model,name:l10n_py_account.model_account_authorization
+msgid "Document Authorization (Timbrado)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_authorization__l10n_latam_document_type_id
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_account_authorization_search
+msgid "Document Type"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_authorization__date_to
+msgid "End Date"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_authorization__establishment
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_journal__l10n_py_establishment
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_account_authorization_search
+msgid "Establishment"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_authorization__establishment
+#: model:ir.model.fields,help:l10n_py_account.field_account_journal__l10n_py_establishment
+msgid "Establishment code (3 digits)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_bank_statement_line__l10n_py_exchange_rate
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_move__l10n_py_exchange_rate
+msgid "Exchange Rate"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_bank_statement_line__l10n_py_exchange_rate
+#: model:ir.model.fields,help:l10n_py_account.field_account_move__l10n_py_exchange_rate
+msgid "Exchange rate to guaranies (PYG) for foreign currency invoicing"
+msgstr ""
+
+#. module: l10n_py_account
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_move_form_py
+msgid "Exempt (F003)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_bank_statement_line__l10n_py_amount_exempt
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_move__l10n_py_amount_exempt
+msgid "Exempt Total (F003)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_bank_statement_line__l10n_py_amount_exempt
+#: model:ir.model.fields,help:l10n_py_account.field_account_move__l10n_py_amount_exempt
+msgid "Exempt/un taxed subtotal (SIFEN F003)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_authorization__expedition_point
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_journal__l10n_py_point
+msgid "Expedition Point"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_authorization__expedition_point
+#: model:ir.model.fields,help:l10n_py_account.field_account_journal__l10n_py_point
+msgid "Expedition point code (3 digits)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields.selection,name:l10n_py_account.selection__account_authorization__state__expired
+msgid "Expired"
+msgstr ""
+
+#. module: l10n_py_account
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_account_authorization_search
+msgid "Expireds"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields.selection,name:l10n_py_account.selection__account_authorization__state__to_expire
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_account_authorization_search
+msgid "Expiring Soon"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:l10n_latam.document.type,report_name:l10n_py_account.dc_py_f
+msgid "FACTURA ELECTRÓNICA"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:l10n_latam.document.type,name:l10n_py_account.dc_py_f
+msgid "Factura"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_authorization__invoice_number_from
+msgid "First authorized invoice number"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_authorization__invoice_number_from
+msgid "From Number"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_bank_statement_line__l10n_py_full_invoice_number
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_move__l10n_py_full_invoice_number
+msgid "Full Number"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_bank_statement_line__l10n_py_amount_subtotal_10
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_move__l10n_py_amount_subtotal_10
+msgid "Gross 10% (F005)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_bank_statement_line__l10n_py_amount_subtotal_5
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_move__l10n_py_amount_subtotal_5
+msgid "Gross 5% (F004)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_bank_statement_line__l10n_py_amount_subtotal_10
+#: model:ir.model.fields,help:l10n_py_account.field_account_move__l10n_py_amount_subtotal_10
+msgid "Gross subtotal 10% — price including tax (SIFEN F005)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_bank_statement_line__l10n_py_amount_subtotal_5
+#: model:ir.model.fields,help:l10n_py_account.field_account_move__l10n_py_amount_subtotal_5
+msgid "Gross subtotal 5% — price including tax (SIFEN F004)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_authorization__id
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_journal__id
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_move__id
+#: model:ir.model.fields,field_description:l10n_py_account.field_res_company__id
+msgid "ID"
+msgstr ""
+
+#. module: l10n_py_account
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_account_journal_form_edi
+msgid "Identification"
+msgstr ""
+
+#. module: l10n_py_account
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_account_authorization_search
+msgid "Inactivos"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_bank_statement_line__l10n_py_invoice_number
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_move__l10n_py_invoice_number
+msgid "Invoice Number"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_bank_statement_line__l10n_py_invoice_number
+#: model:ir.model.fields,help:l10n_py_account.field_account_move__l10n_py_invoice_number
+msgid "Invoice number according to authorized authorization"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.constraint,message:l10n_py_account.constraint_account_move_l10n_py_invoice_unique
+msgid "Invoice number must be unique per authorization."
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model,name:l10n_py_account.model_account_journal
+msgid "Journal"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model,name:l10n_py_account.model_account_move
+msgid "Journal Entry"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_authorization__l10n_latam_document_type_id
+msgid "LATAM document type (Invoice, CN, DN, etc.)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_authorization__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_authorization__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_authorization__invoice_number_to
+msgid "Last authorized invoice number"
+msgstr ""
+
+#. module: l10n_py_account
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_move_form_py
+msgid "Liq. VAT 10% (F016)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_move_form_py
+msgid "Liq. VAT 5% (F015)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_authorization__active
+msgid "Mark as inactive to disable the authorization"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:l10n_latam.document.type,report_name:l10n_py_account.dc_py_nc
+msgid "NOTA DE CRÉDITO ELECTRÓNICA"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:l10n_latam.document.type,report_name:l10n_py_account.dc_py_nd
+msgid "NOTA DE DÉBITO ELECTRÓNICA"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:l10n_latam.document.type,report_name:l10n_py_account.dc_py_nr
+msgid "NOTA DE REMISIÓN ELECTRÓNICA"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_bank_statement_line__l10n_py_base_10
+#: model:ir.model.fields,help:l10n_py_account.field_account_move__l10n_py_base_10
+msgid "Net tax base 10% without VAT (SIFEN F019)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_bank_statement_line__l10n_py_base_5
+#: model:ir.model.fields,help:l10n_py_account.field_account_move__l10n_py_base_5
+msgid "Net tax base 5% without VAT (SIFEN F018)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_authorization__next_number
+msgid "Next Number"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_authorization__next_number
+msgid "Next invoice number to use"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:l10n_latam.document.type,name:l10n_py_account.dc_py_nc
+msgid "Nota de Input"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:l10n_latam.document.type,name:l10n_py_account.dc_py_nd
+msgid "Nota de Output"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:l10n_latam.document.type,name:l10n_py_account.dc_py_nr
+msgid "Nota de Remisión"
+msgstr ""
+
+#. module: l10n_py_account
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_invoice_tree_py
+msgid "Nro. Factura"
+msgstr ""
+
+#. module: l10n_py_account
+#. odoo-python
+#: code:addons/l10n_py_account/models/account_authorization.py:0
+msgid "Number %(number)s has already been used in invoice %(invoice_name)s."
+msgstr ""
+
+#. module: l10n_py_account
+#. odoo-python
+#: code:addons/l10n_py_account/models/account_authorization.py:0
+msgid "Number %(number)s is outside the authorized range (%(from_)s - %(to)s."
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_authorization__used_numbers
+msgid "Number of numbers already used"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_authorization__remaining_numbers
+msgid "Number of remaining available numbers"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_bank_statement_line__l10n_py_total_operation
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_move__l10n_py_total_operation
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_move_form_py
+msgid "Operation Total (F008)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_bank_statement_line__l10n_py_amount_total_pyg
+#: model:ir.model.fields,help:l10n_py_account.field_account_move__l10n_py_amount_total_pyg
+msgid "Operation total in guaranies (SIFEN F023)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.ui.menu,name:l10n_py_account.menu_l10n_py_config
+msgid "Paraguay"
+msgstr ""
+
+#. module: l10n_py_account
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_move_form_py
+msgid "Paraguayan Tax Information"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_authorization__usage_percentage
+msgid "Percentage of numbers used out of total authorized"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_authorization__series
+msgid "Series"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_authorization__date_from
+msgid "Start Date"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_authorization__state
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_account_authorization_search
+msgid "State"
+msgstr ""
+
+#. module: l10n_py_account
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_account_authorization_form
+msgid "Statistics"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_bank_statement_line__l10n_py_base_10
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_move__l10n_py_base_10
+msgid "Tax Base 10% (F019)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_bank_statement_line__l10n_py_base_5
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_move__l10n_py_base_5
+msgid "Tax Base 5% (F018)"
+msgstr ""
+
+#. module: l10n_py_account
+#. odoo-python
+#: code:addons/l10n_py_account/models/account_authorization.py:0
+msgid "The authorization has expired."
+msgstr ""
+
+#. module: l10n_py_account
+#. odoo-python
+#: code:addons/l10n_py_account/models/account_authorization.py:0
+msgid "The authorization is inactive."
+msgstr ""
+
+#. module: l10n_py_account
+#. odoo-python
+#: code:addons/l10n_py_account/models/account_authorization.py:0
+msgid "The authorization is not yet effective."
+msgstr ""
+
+#. module: l10n_py_account
+#. odoo-python
+#: code:addons/l10n_py_account/models/account_authorization.py:0
+msgid "The authorization number must contain exactly 8 numeric digits."
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.constraint,message:l10n_py_account.constraint_account_authorization_unique_timbrado
+msgid ""
+"The combination of authorization/establishment/expedition "
+"point/series/document type must be unique."
+msgstr ""
+
+#. module: l10n_py_account
+#. odoo-python
+#: code:addons/l10n_py_account/models/account_authorization.py:0
+msgid "The end date must be after the start date."
+msgstr ""
+
+#. module: l10n_py_account
+#. odoo-python
+#: code:addons/l10n_py_account/models/account_authorization.py:0
+msgid "The ending number cannot exceed %(max)s."
+msgstr ""
+
+#. module: l10n_py_account
+#. odoo-python
+#: code:addons/l10n_py_account/models/account_authorization.py:0
+msgid "The ending number must be greater than the starting number."
+msgstr ""
+
+#. module: l10n_py_account
+#. odoo-python
+#: code:addons/l10n_py_account/models/account_authorization.py:0
+msgid "The establishment code must contain exactly 3 digits."
+msgstr ""
+
+#. module: l10n_py_account
+#. odoo-python
+#: code:addons/l10n_py_account/models/account_journal.py:0
+msgid "The establishment must be numeric"
+msgstr ""
+
+#. module: l10n_py_account
+#. odoo-python
+#: code:addons/l10n_py_account/models/account_journal.py:0
+msgid "The establishment must have 3 digits"
+msgstr ""
+
+#. module: l10n_py_account
+#. odoo-python
+#: code:addons/l10n_py_account/models/account_authorization.py:0
+msgid "The expedition point code must contain exactly 3 digits."
+msgstr ""
+
+#. module: l10n_py_account
+#. odoo-python
+#: code:addons/l10n_py_account/models/account_journal.py:0
+msgid "The expedition point must be numeric"
+msgstr ""
+
+#. module: l10n_py_account
+#. odoo-python
+#: code:addons/l10n_py_account/models/account_journal.py:0
+msgid "The expedition point must have 3 digits"
+msgstr ""
+
+#. module: l10n_py_account
+#. odoo-python
+#: code:addons/l10n_py_account/models/account_move.py:0
+msgid "The number range is exhausted for authorization %(timbrado)s."
+msgstr ""
+
+#. module: l10n_py_account
+#. odoo-python
+#: code:addons/l10n_py_account/models/account_journal.py:0
+msgid ""
+"The selected authorization does not match the establishment and expedition "
+"point configured on the journal."
+msgstr ""
+
+#. module: l10n_py_account
+#. odoo-python
+#: code:addons/l10n_py_account/models/account_authorization.py:0
+msgid "The series must be exactly 2 uppercase letters (e.g.: AA, AB, ZZ)."
+msgstr ""
+
+#. module: l10n_py_account
+#. odoo-python
+#: code:addons/l10n_py_account/models/account_authorization.py:0
+msgid "The starting number must be greater than zero."
+msgstr ""
+
+#. module: l10n_py_account
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_move_form_py
+msgid "Tipo de Cambio"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_authorization__invoice_number_to
+msgid "To Number"
+msgstr ""
+
+#. module: l10n_py_account
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_move_form_py
+msgid "Total Base Gravada (F020)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_move_form_py
+msgid "Total Gravado 10% (F005)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_move_form_py
+msgid "Total Gravado 5% (F004)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_bank_statement_line__l10n_py_base_total
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_move__l10n_py_base_total
+msgid "Total Tax Base (F020)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_bank_statement_line__l10n_py_amount_iva_total
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_move__l10n_py_amount_iva_total
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_move_form_py
+msgid "Total VAT (F014)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_bank_statement_line__l10n_py_amount_iva_total
+#: model:ir.model.fields,help:l10n_py_account.field_account_move__l10n_py_amount_iva_total
+msgid "Total VAT liquidation (SIFEN F014)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_move_form_py
+msgid "Total en Gs. (F023)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_move_form_py
+msgid "Total en Letras"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_bank_statement_line__l10n_py_amount_total_pyg
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_move__l10n_py_amount_total_pyg
+msgid "Total in Guaranies (F023)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_bank_statement_line__l10n_py_amount_total_words
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_move__l10n_py_amount_total_words
+msgid "Total in Words"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_bank_statement_line__l10n_py_total_operation
+#: model:ir.model.fields,help:l10n_py_account.field_account_move__l10n_py_total_operation
+msgid "Total operation amount (SIFEN F008 = F003 + F004 + F005)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_bank_statement_line__l10n_py_base_total
+#: model:ir.model.fields,help:l10n_py_account.field_account_move__l10n_py_base_total
+msgid "Total tax base (SIFEN F020 = F018 + F019)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_authorization__usage_percentage
+msgid "Usage Percentage"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_authorization__used_numbers
+msgid "Used Numbers"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_bank_statement_line__l10n_py_amount_iva_10
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_move__l10n_py_amount_iva_10
+msgid "VAT 10% (F016)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_bank_statement_line__l10n_py_amount_iva_10
+#: model:ir.model.fields,help:l10n_py_account.field_account_move__l10n_py_amount_iva_10
+msgid "VAT 10% liquidation (SIFEN F016)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_bank_statement_line__l10n_py_amount_iva_5
+#: model:ir.model.fields,field_description:l10n_py_account.field_account_move__l10n_py_amount_iva_5
+msgid "VAT 5% (F015)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields,help:l10n_py_account.field_account_bank_statement_line__l10n_py_amount_iva_5
+#: model:ir.model.fields,help:l10n_py_account.field_account_move__l10n_py_amount_iva_5
+msgid "VAT 5% liquidation (SIFEN F015)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_move_form_py
+msgid "VAT Breakdown (SIFEN)"
+msgstr ""
+
+#. module: l10n_py_account
+#: model:ir.model.fields.selection,name:l10n_py_account.selection__account_authorization__state__valid
+msgid "Valid"
+msgstr ""
+
+#. module: l10n_py_account
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_account_authorization_search
+msgid "Valids"
+msgstr ""
+
+#. module: l10n_py_account
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_account_authorization_form
+msgid "Verify Validity"
+msgstr ""
+
+#. module: l10n_py_account
+#. odoo-python
+#: code:addons/l10n_py_account/models/account_move.py:0
+msgid "You must select an authorization to confirm a sales invoice."
+msgstr ""
+
+#. module: l10n_py_account
+#: model_terms:ir.ui.view,arch_db:l10n_py_account.view_account_authorization_form
+msgid "ej: 12345678"
+msgstr ""

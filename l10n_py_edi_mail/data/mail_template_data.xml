@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Template: EDI Document Accepted -->
+    <record id="mail_template_edi_accepted" model="mail.template">
+        <field name="name">EDI: Document Accepted by SIFEN</field>
+        <field name="subject">Documento {{ object.name }} - Accepted by SIFEN</field>
+        <field
+            name="email_from"
+        >{{ object.company_id.email or 'noreply@company.com' }}</field>
+        <field name="model_id" ref="model_account_move" />
+        <field
+            name="body_html"
+        ><![CDATA[
+<p>Estimado/a {{ object.partner_id.name or 'Cliente' }},</p>
+
+<p>Le informamos que el documento electronico <strong>{{ object.name }}</strong> ha sido aceptado por SIFEN.</p>
+
+<table style="border-collapse: collapse; margin: 20px 0;">
+    <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;"><strong>CDC:</strong></td>
+        <td style="padding: 8px; border: 1px solid #ddd;">{{ object.l10n_py_cdc or 'N/A' }}</td>
+    </tr>
+    <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;"><strong>Fecha:</strong></td>
+        <td style="padding: 8px; border: 1px solid #ddd;">{{ object.invoice_date }}</td>
+    </tr>
+    <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;"><strong>Importe:</strong></td>
+        <td style="padding: 8px; border: 1px solid #ddd;">{{ object.currency_id.symbol }} {{ object.amount_total }}</td>
+    </tr>
+</table>
+
+<p>Adjunto encontrara el XML del documento y el reporte KuDE en formato PDF.</p>
+
+<p>Para verificar la autenticidad del documento, puede consultar en:
+<a href="https://ekuatia.set.gov.py/consultas/qr?cdc={{ object.l10n_py_cdc }}">ekuatia.set.gov.py</a></p>
+
+<p>Saludos cordiales,<br/>
+{{ object.company_id.name }}</p>
+        ]]></field>
+    </record>
+
+    <!-- Template: EDI Document Rejected -->
+    <record id="mail_template_edi_rejected" model="mail.template">
+        <field name="name">EDI: Document Rejected by SIFEN</field>
+        <field name="subject">Documento {{ object.name }} - REJECTED by SIFEN</field>
+        <field
+            name="email_from"
+        >{{ object.company_id.email or 'noreply@company.com' }}</field>
+        <field name="model_id" ref="model_account_move" />
+        <field
+            name="body_html"
+        ><![CDATA[
+<p>Estimado/a {{ object.partner_id.name or 'Cliente' }},</p>
+
+<p>Le informamos que el documento electronico <strong>{{ object.name }}</strong> ha sido RECHAZADO por SIFEN.</p>
+
+<table style="border-collapse: collapse; margin: 20px 0;">
+    <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;"><strong>Codigo de Error:</strong></td>
+        <td style="padding: 8px; border: 1px solid #ddd; color: red;">{{ object.l10n_py_reject_code or 'N/A' }}</td>
+    </tr>
+    <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;"><strong>Mensaje:</strong></td>
+        <td style="padding: 8px; border: 1px solid #ddd;">{{ object.l10n_py_reject_message or 'N/A' }}</td>
+    </tr>
+    <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;"><strong>Accion Sugerida:</strong></td>
+        <td style="padding: 8px; border: 1px solid #ddd;">{{ object.l10n_py_reject_action or 'Contactar al emisor' }}</td>
+    </tr>
+</table>
+
+<p>El documento debera ser corregido y reenviado. Por favor, contacte con el emisor para resolver la situacion.</p>
+
+<p>Saludos cordiales,<br/>
+{{ object.company_id.name }}</p>
+        ]]></field>
+    </record>
+
+    <!-- Template: EDI Document Cancelled -->
+    <record id="mail_template_edi_cancelled" model="mail.template">
+        <field name="name">EDI: Document Cancelled</field>
+        <field name="subject">Documento {{ object.name }} - CANCELLED</field>
+        <field
+            name="email_from"
+        >{{ object.company_id.email or 'noreply@company.com' }}</field>
+        <field name="model_id" ref="model_account_move" />
+        <field
+            name="body_html"
+        ><![CDATA[
+<p>Estimado/a {{ object.partner_id.name or 'Cliente' }},</p>
+
+<p>Le informamos que el documento electronico <strong>{{ object.name }}</strong> ha sido CANCELADO.</p>
+
+<table style="border-collapse: collapse; margin: 20px 0;">
+    <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;"><strong>CDC:</strong></td>
+        <td style="padding: 8px; border: 1px solid #ddd;">{{ object.l10n_py_cdc or 'N/A' }}</td>
+    </tr>
+    <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;"><strong>Fecha de Cancelacion:</strong></td>
+        <td style="padding: 8px; border: 1px solid #ddd;">{{ object.l10n_py_edi_cancel_date or 'N/A' }}</td>
+    </tr>
+</table>
+
+<p>Este documento ya no tiene validez fiscal. Si tiene alguna consulta, por favor contacte con el emisor.</p>
+
+<p>Saludos cordiales,<br/>
+{{ object.company_id.name }}</p>
+        ]]></field>
+    </record>
+</odoo>

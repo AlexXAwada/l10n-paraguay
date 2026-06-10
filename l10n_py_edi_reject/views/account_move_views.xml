@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Button to resolve rejection on rejected documents -->
+    <record id="view_account_move_form_reject_action" model="ir.ui.view">
+        <field name="name">account.move.form.reject.action</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="l10n_py_edi_base.view_move_form_edi" />
+        <field name="arch" type="xml">
+            <!-- Add reject info fields in EDI tab -->
+            <xpath expr="//page[@name='l10n_py_edi']" position="inside">
+                <group
+                    name="reject_info"
+                    string="Rejection Info"
+                    invisible="l10n_py_edi_status != 'rejected'"
+                >
+                    <field name="l10n_py_reject_code" readonly="1" />
+                    <field name="l10n_py_reject_message" readonly="1" />
+                    <field
+                        name="l10n_py_reject_action"
+                        readonly="1"
+                        class="text-info"
+                    />
+                    <field name="l10n_py_reject_date" readonly="1" />
+                    <button
+                        name="action_open_reject_wizard"
+                        type="object"
+                        string="Resolve Rejection"
+                        class="btn-primary"
+                        invisible="l10n_py_edi_status != 'rejected'"
+                    />
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
