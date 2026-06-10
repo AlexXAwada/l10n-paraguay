@@ -240,12 +240,26 @@ class BatchJob(models.Model):
 
             # Send batch
             try:
-                transmissao = connector._sifen_get_transmissao()
+                transmissao = connector._sifen_get_transmissao_de()
                 result = transmissao.enviar_lote(rdes, sign=True)
 
                 # Process results
                 for i, line in enumerate(batch_lines):
                     if line.state != "pending":
+                        continue
+                    if i >= len(result.resultados):
+                        line.write(
+                            {
+                                "state": "failed",
+                                "error_message": (
+                                    f"pysifen returned {len(result.resultados)} "
+                                    f"results for {len(batch_lines)} batch lines"
+                                ),
+                                "attempts": line.attempts + 1,
+                                "last_attempt": fields.Datetime.now(),
+                            }
+                        )
+                        sent += 1
                         continue
                     res = result.resultados[i]
                     if res.get("exitoso", False):

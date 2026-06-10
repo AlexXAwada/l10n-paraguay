@@ -117,7 +117,7 @@ class EDIDashboard(models.Model):
             rec.accepted_today = len(accepted_today)
 
             rejected_today_domain = domain + [
-                ("l10n_py_edi_accepted_date", ">=", today),
+                ("write_date", ">=", today),
                 ("l10n_py_edi_status", "=", "rejected"),
             ]
             rejected_today = self.env["account.move"].search(rejected_today_domain)

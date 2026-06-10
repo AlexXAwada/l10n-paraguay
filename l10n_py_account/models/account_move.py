@@ -181,9 +181,13 @@ class AccountMove(models.Model):
                     auth.check_validity()
                     # Flush pending writes so the SQL query sees all data
                     self.env["account.move"].flush_model(["l10n_py_invoice_number"])
+                    # Resolve actual table name (supports custom table prefixes)
+                    auth_table = (
+                        self.env["ir.model"]._get("account.authorization").table
+                    )
                     # Lock the authorization row to prevent concurrent number assignment
                     self.env.cr.execute(
-                        "SELECT id FROM account_authorization WHERE id = %s FOR UPDATE",
+                        f'SELECT id FROM "{auth_table}" WHERE id = %s FOR UPDATE',
                         (auth.id,),
                     )
                     # Query next number directly to avoid ORM cache issues
@@ -254,6 +258,10 @@ class AccountMove(models.Model):
                         tax_rate = 10
                     elif tax.amount == 5:
                         tax_rate = 5
+                # If multiple VAT rates present, use the highest one
+                vat_taxes = [t.amount for t in line.tax_ids if t.amount in (5, 10)]
+                if len(vat_taxes) > 1:
+                    tax_rate = max(vat_taxes)
 
                 if tax_rate == 10:
                     base = line.price_total / 1.1

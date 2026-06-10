@@ -111,6 +111,11 @@ class AccountMove(models.Model):
         readonly=True,
         copy=False,
     )
+    l10n_py_edi_rejected_date = fields.Datetime(
+        string="EDI Rejection Date",
+        readonly=True,
+        copy=False,
+    )
     l10n_py_security_code = fields.Char(
         "Code de Security", size=9, readonly=True, copy=False
     )
@@ -1120,6 +1125,7 @@ class AccountMove(models.Model):
                 self._process_edi_response(response)
             else:
                 self.l10n_py_edi_status = "rejected"
+                self.l10n_py_edi_rejected_date = fields.Datetime.now()
                 self.l10n_py_edi_message = response.get("error", "Unknown error")
 
         except Exception as e:
