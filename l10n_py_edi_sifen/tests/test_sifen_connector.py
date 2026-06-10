@@ -27,16 +27,17 @@ class TestSIFENConnector(TransactionCase):
 
     def test_create_sifen_connector(self):
         """Test creating a SIFEN connector."""
-        connector = self.env["l10n_py.edi.connector"].create(
-            {
-                "name": "SIFEN Test",
-                "company_id": self.company.id,
-                "provider_type": "sifen",
-                "environment": "test",
-            }
-        )
-        self.assertEqual(connector.provider_type, "sifen")
-        self.assertEqual(connector.environment, "test")
+        with self.cr.savepoint():
+            connector = self.env["l10n_py.edi.connector"].create(
+                {
+                    "name": "SIFEN Test",
+                    "company_id": self.company.id,
+                    "provider_type": "sifen",
+                    "environment": "test",
+                }
+            )
+            self.assertEqual(connector.provider_type, "sifen")
+            self.assertEqual(connector.environment, "test")
 
     def test_company_provider_unique_constraint(self):
         """Test that one connector per (company, provider_type) is allowed.
