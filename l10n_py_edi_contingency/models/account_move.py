@@ -109,12 +109,12 @@ class AccountMove(models.Model):
         self.write({"l10n_py_contingency_number": str(next_number)})
 
         # Generate contingency XML (simplified format, no SIFEN signature)
-        xml_content = self._generate_contingency_xml()
-
-        # Save as pending XML (will be replaced after sync)
+        # NOTE: _generate_contingency_xml() is currently a placeholder that does
+        # NOT conform to the SET specification. SIFEN would reject it if saved
+        # as the real EDI document, so we only update the status here and
+        # persist the real XML after SIFEN sync (see _sync_contingency_to_sifen).
         self.write(
             {
-                "l10n_py_edi_xml": xml_content,
                 "l10n_py_edi_status": "contingency_pending",
             }
         )
@@ -222,9 +222,11 @@ class AccountMove(models.Model):
         if not connector:
             return False
 
+        # test_connection() returns an ir.actions.client dict on success and
+        # raises UserError on failure. Treat absence of exception as success.
         try:
-            result = connector.test_connection()
-            return result.get("success", False)
+            connector.test_connection()
+            return True
         except Exception:
             return False
 

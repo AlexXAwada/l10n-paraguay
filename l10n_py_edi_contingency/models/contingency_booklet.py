@@ -122,6 +122,13 @@ class ContingencyBooklet(models.Model):
                 )
             )
 
+        # Lock the booklet row to prevent concurrent _get_next_number() calls
+        # from returning the same number (race condition).
+        self.env.cr.execute(
+            "SELECT id FROM l10n_py_contingency_booklet WHERE id = %s FOR UPDATE",
+            (self.id,),
+        )
+
         # Find the highest used number and return next
         used_numbers = self.env["account.move"].search(
             [

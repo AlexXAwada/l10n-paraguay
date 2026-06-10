@@ -174,7 +174,7 @@ class CDCGenerator:
     @classmethod
     def _generate_security_code(cls):
         """Generate security code random (9 digits)"""
-        return secrets.randbelow(900000000) + 100000000
+        return secrets.randbelow(1_000_000_000)
 
     @classmethod
     def _generate_datetime_code(cls, emission_date):
@@ -211,11 +211,11 @@ class CDCGenerator:
         # Compute remainder of division by 11
         remainder = total % 11
 
-        # Determinar digit check digit
-        if remainder < 2:
-            return remainder
-        else:
-            return 11 - remainder
+        # Determinar digit check digit (Module 11 SET, alineado con RUCValidator)
+        dv = 11 - remainder
+        if dv >= 10:
+            dv = 0
+        return dv
 
     @classmethod
     def validate_cdc(cls, cdc):

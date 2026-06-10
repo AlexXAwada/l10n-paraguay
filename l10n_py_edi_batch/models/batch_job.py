@@ -7,6 +7,7 @@ import logging
 from typing import TYPE_CHECKING, Any
 
 from odoo import api, fields, models
+from odoo.exceptions import AccessError
 
 if TYPE_CHECKING:
     from odoo.addons.account.models import AccountMove
@@ -464,6 +465,19 @@ class BatchJob(models.Model):
             .sudo()
             .search([("company_id", "=", company.id)], limit=1)
         )
+        # Defensive check: .sudo() bypasses record rules, so verify the
+        # returned connector truly belongs to the expected company before
+        # using its certificates/tokens.
+        if connector and connector.company_id != company:
+            raise AccessError(
+                self.env._(
+                    "Connector %(connector)s belongs to company %(found)s, "
+                    "expected %(expected)s.",
+                    connector=connector.display_name,
+                    found=connector.company_id.display_name,
+                    expected=company.display_name,
+                )
+            )
         return connector
 
     @api.model
