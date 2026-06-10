@@ -15,29 +15,24 @@ class TestSIFENConnector(TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.company = cls.env.ref("base.main_company")
-        cls.company.write(
-            {
-                "l10n_py_ruc": "80012345",
-            }
-        )
-        # Remove any existing connector from demo data
-        cls.env["l10n_py.edi.connector"].sudo().search(
-            [("company_id", "=", cls.company.id)]
-        ).unlink()
+        cls.company.write({"l10n_py_ruc": "80012345"})
 
     def test_create_sifen_connector(self):
         """Test creating a SIFEN connector."""
-        with self.cr.savepoint():
-            connector = self.env["l10n_py.edi.connector"].create(
-                {
-                    "name": "SIFEN Test",
-                    "company_id": self.company.id,
-                    "provider_type": "sifen",
-                    "environment": "test",
-                }
-            )
-            self.assertEqual(connector.provider_type, "sifen")
-            self.assertEqual(connector.environment, "test")
+        # Clean up any existing connectors first
+        self.env["l10n_py.edi.connector"].sudo().search(
+            [("company_id", "=", self.company.id)]
+        ).unlink()
+        connector = self.env["l10n_py.edi.connector"].create(
+            {
+                "name": "SIFEN Test",
+                "company_id": self.company.id,
+                "provider_type": "sifen",
+                "environment": "test",
+            }
+        )
+        self.assertEqual(connector.provider_type, "sifen")
+        self.assertEqual(connector.environment, "test")
 
     def test_company_provider_unique_constraint(self):
         """Test that one connector per (company, provider_type) is allowed.
@@ -46,22 +41,21 @@ class TestSIFENConnector(TransactionCase):
         connectors for the same company are allowed if provider_type differs.
         Duplicate (company, provider_type) raises IntegrityError.
         """
-        # Ensure a connector exists for the company
-        existing = (
-            self.env["l10n_py.edi.connector"]
-            .sudo()
-            .search([("company_id", "=", self.company.id)])
+        # Clean up any existing connectors first
+        self.env["l10n_py.edi.connector"].sudo().search(
+            [("company_id", "=", self.company.id)]
+        ).unlink()
+        # Create first connector
+        self.env["l10n_py.edi.connector"].create(
+            {
+                "name": "Connector 1",
+                "company_id": self.company.id,
+                "provider_type": "sifen",
+                "environment": "test",
+            }
         )
-        if not existing:
-            self.env["l10n_py.edi.connector"].create(
-                {
-                    "name": "Connector 1",
-                    "company_id": self.company.id,
-                    "provider_type": "sifen",
-                    "environment": "test",
-                }
-            )
-        with self.assertRaises(IntegrityError), self.cr.savepoint():
+        # Try to create duplicate - should raise IntegrityError
+        try:
             self.env["l10n_py.edi.connector"].create(
                 {
                     "name": "Connector 2",
@@ -70,6 +64,9 @@ class TestSIFENConnector(TransactionCase):
                     "environment": "test",
                 }
             )
+            self.fail("Expected IntegrityError was not raised")
+        except IntegrityError:
+            self.env.cr.rollback()  # Expected behavior
 
     @patch(
         "odoo.addons.l10n_py_edi_sifen.models.edi_connector"
@@ -81,6 +78,10 @@ class TestSIFENConnector(TransactionCase):
         mock_instance.consultar_ruc.return_value = True
         mock_instance.cleanup.return_value = None
 
+        # Clean up any existing connectors first
+        self.env["l10n_py.edi.connector"].sudo().search(
+            [("company_id", "=", self.company.id)]
+        ).unlink()
         connector = self.env["l10n_py.edi.connector"].create(
             {
                 "name": "SIFEN Test",

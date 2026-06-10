@@ -181,18 +181,19 @@ class AccountMove(models.Model):
                     auth.check_validity()
                     # Flush pending writes so the SQL query sees all data
                     self.env["account.move"].flush_model(["l10n_py_invoice_number"])
-                    # Resolve actual table name (supports custom table prefixes)
-                    auth_table = self.env["account.authorization"]._table
                     # Lock the authorization row to prevent concurrent number assignment
+                    auth_table = self.env["account.authorization"]._table
                     self.env.cr.execute(
                         f'SELECT id FROM "{auth_table}" WHERE id = %s FOR UPDATE',
                         (auth.id,),
                     )
-                    # Query next number directly to avoid ORM cache issues
+                    # Query next number directly from account.move table
+                    # (l10n_py_invoice_number is on account.move)
+                    move_table = self.env["account.move"]._table
                     self.env.cr.execute(
                         f"""
                         SELECT COALESCE(MAX(l10n_py_invoice_number), 0)
-                        FROM "{auth_table}"
+                        FROM "{move_table}"
                         WHERE l10n_py_authorization_id = %s
                           AND l10n_py_invoice_number > 0
                           AND move_type IN ('out_invoice', 'out_refund')

@@ -155,6 +155,9 @@ class TestAccountTaxPY(TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.partner = cls.env.ref("base.main_partner")
+        # Set company country to Paraguay for Odoo 19 tax validation
+        cls.company = cls.env.ref("base.main_company")
+        cls.company.country_id = cls.env.ref("base.py")
         # Buscar cuentas existentes en la DB (el chart l10n_py puede no estar instalado)
         cls.sale_account = cls.env["account.account"].browse(
             26
