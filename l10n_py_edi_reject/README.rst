@@ -83,12 +83,12 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Alexandre Awada
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
