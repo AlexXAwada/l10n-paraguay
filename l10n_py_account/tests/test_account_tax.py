@@ -202,6 +202,10 @@ class TestAccountTaxPY(TransactionCase):
         cls.tax_exempt_pur = cls._make_tax(
             "Exempt Compra", 0.0, "purchase", cls.tg_exempt
         )
+        # Set company fiscal country to Paraguay so move.tax_country_id matches
+        # tax.country_id (Paraguay) → `_validate_taxes_country` passes.
+        # OCB CI may have different default account_fiscal_country_id.
+        cls.company.account_fiscal_country_id = cls.env.ref("base.py")
 
     @classmethod
     def _make_tax(cls, name, amount, tax_type, tax_group):
