@@ -19,9 +19,10 @@ class TestSIFENConnector(TransactionCase):
 
     def test_create_sifen_connector(self):
         """Test creating a SIFEN connector."""
-        self.env["l10n_py.edi.connector"].sudo().search(
-            [("company_id", "=", self.company.id)]
-        ).unlink()
+        self.env.cr.execute(
+            "DELETE FROM l10n_py_edi_connector WHERE company_id = %s",
+            (self.company.id,),
+        )
         connector = self.env["l10n_py.edi.connector"].create(
             {
                 "name": "SIFEN Test",
@@ -40,10 +41,11 @@ class TestSIFENConnector(TransactionCase):
         connectors for the same company are allowed if provider_type differs.
         Duplicate (company, provider_type) raises IntegrityError.
         """
-        # Clean up any existing connectors first (demo data + previous tests)
-        self.env["l10n_py.edi.connector"].sudo().search(
-            [("company_id", "=", self.company.id)]
-        ).unlink()
+        # Clean up with SQL to bypass ORM/savepoint issues in OCB
+        self.env.cr.execute(
+            "DELETE FROM l10n_py_edi_connector WHERE company_id = %s",
+            (self.company.id,),
+        )
         # Create first connector
         self.env["l10n_py.edi.connector"].create(
             {
@@ -74,10 +76,11 @@ class TestSIFENConnector(TransactionCase):
         mock_instance.consultar_ruc.return_value = True
         mock_instance.cleanup.return_value = None
 
-        # Clean up any existing connectors first
-        self.env["l10n_py.edi.connector"].sudo().search(
-            [("company_id", "=", self.company.id)]
-        ).unlink()
+        # Clean up with SQL to bypass ORM/savepoint issues in OCB
+        self.env.cr.execute(
+            "DELETE FROM l10n_py_edi_connector WHERE company_id = %s",
+            (self.company.id,),
+        )
         connector = self.env["l10n_py.edi.connector"].create(
             {
                 "name": "SIFEN Test",
