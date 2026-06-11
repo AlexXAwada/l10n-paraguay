@@ -16,6 +16,10 @@ class TestSIFENConnector(TransactionCase):
         super().setUpClass()
         cls.company = cls.env.ref("base.main_company")
         cls.company.write({"l10n_py_ruc": "80012345"})
+        # Clean up any existing connectors before ALL tests run
+        cls.env["l10n_py.edi.connector"].sudo().search(
+            [("company_id", "=", cls.company.id)]
+        ).unlink()
 
     def test_create_sifen_connector(self):
         """Test creating a SIFEN connector."""
