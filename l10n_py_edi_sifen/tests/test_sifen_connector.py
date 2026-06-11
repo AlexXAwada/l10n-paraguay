@@ -30,6 +30,7 @@ class TestSIFENConnector(TransactionCase):
                 "environment": "test",
             }
         )
+        self.addCleanup(connector.unlink)
         self.assertEqual(connector.provider_type, "sifen")
         self.assertEqual(connector.environment, "test")
 
@@ -85,6 +86,7 @@ class TestSIFENConnector(TransactionCase):
                 "environment": "test",
             }
         )
+        self.addCleanup(connector.unlink)
         result = connector.test_connection()
         self.assertEqual(result["type"], "ir.actions.client")
         self.assertEqual(result["tag"], "display_notification")
