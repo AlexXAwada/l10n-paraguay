@@ -50,7 +50,7 @@ class TestSIFENConnector(TransactionCase):
             [("company_id", "=", self.company.id)]
         ).unlink()
         # Create first connector
-        self.env["l10n_py.edi.connector"].create(
+        connector = self.env["l10n_py.edi.connector"].create(
             {
                 "name": "Connector1",
                 "company_id": self.company.id,
@@ -58,6 +58,7 @@ class TestSIFENConnector(TransactionCase):
                 "environment": "test",
             }
         )
+        self.addCleanup(connector.unlink)
         # Duplicate must raise IntegrityError
         with self.assertRaises(IntegrityError):
             self.env["l10n_py.edi.connector"].create(
