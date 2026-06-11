@@ -238,6 +238,7 @@ class TestAccountTaxPY(TransactionCase):
             {
                 "move_type": "out_invoice",
                 "partner_id": self.partner.id,
+                "fiscal_position_id": False,
                 "invoice_line_ids": [
                     (
                         0,
@@ -265,6 +266,7 @@ class TestAccountTaxPY(TransactionCase):
             {
                 "move_type": "out_invoice",
                 "partner_id": self.partner.id,
+                "fiscal_position_id": False,
                 "invoice_line_ids": [
                     (
                         0,
@@ -289,6 +291,7 @@ class TestAccountTaxPY(TransactionCase):
             {
                 "move_type": "out_invoice",
                 "partner_id": self.partner.id,
+                "fiscal_position_id": False,
                 "invoice_line_ids": [
                     (
                         0,
@@ -316,6 +319,7 @@ class TestAccountTaxPY(TransactionCase):
             {
                 "move_type": "out_invoice",
                 "partner_id": self.partner.id,
+                "fiscal_position_id": False,
                 "invoice_line_ids": [
                     (
                         0,
@@ -340,6 +344,7 @@ class TestAccountTaxPY(TransactionCase):
             {
                 "move_type": "out_invoice",
                 "partner_id": self.partner.id,
+                "fiscal_position_id": False,
                 "invoice_line_ids": [
                     (
                         0,
@@ -367,6 +372,7 @@ class TestAccountTaxPY(TransactionCase):
                 "move_type": "in_invoice",
                 "invoice_date": fields.Date.today(),
                 "partner_id": self.partner.id,
+                "fiscal_position_id": False,
                 "invoice_line_ids": [
                     (
                         0,
@@ -402,6 +408,7 @@ class TestAccountTaxPY(TransactionCase):
                 "move_type": "in_invoice",
                 "invoice_date": fields.Date.today(),
                 "partner_id": self.partner.id,
+                "fiscal_position_id": False,
                 "invoice_line_ids": [
                     (
                         0,
@@ -436,6 +443,7 @@ class TestAccountTaxPY(TransactionCase):
                 "move_type": "in_invoice",
                 "invoice_date": fields.Date.today(),
                 "partner_id": self.partner.id,
+                "fiscal_position_id": False,
                 "invoice_line_ids": [
                     (
                         0,

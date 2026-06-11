@@ -77,7 +77,7 @@ class TestRDeBuilder(TransactionCase):
     @patch("odoo.addons.l10n_py_edi_sifen.services.rde_builder.TDe")
     def test_build_creates_rde(self, mock_tde, mock_rde):
         """Test that build() creates an RDe object."""
-        from .services.rde_builder import RDeBuilder
+        from ..services.rde_builder import RDeBuilder
 
         builder = RDeBuilder(
             self._get_sample_invoice_data(),

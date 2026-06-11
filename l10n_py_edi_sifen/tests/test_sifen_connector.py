@@ -19,20 +19,20 @@ class TestSIFENConnector(TransactionCase):
 
     def test_create_sifen_connector(self):
         """Test creating a SIFEN connector."""
-        # Clean up any existing connectors first
         self.env["l10n_py.edi.connector"].sudo().search(
             [("company_id", "=", self.company.id)]
         ).unlink()
-        connector = self.env["l10n_py.edi.connector"].create(
-            {
-                "name": "SIFEN Test",
-                "company_id": self.company.id,
-                "provider_type": "sifen",
-                "environment": "test",
-            }
-        )
-        self.assertEqual(connector.provider_type, "sifen")
-        self.assertEqual(connector.environment, "test")
+        with self.cr.savepoint():
+            connector = self.env["l10n_py.edi.connector"].create(
+                {
+                    "name": "SIFEN Test",
+                    "company_id": self.company.id,
+                    "provider_type": "sifen",
+                    "environment": "test",
+                }
+            )
+            self.assertEqual(connector.provider_type, "sifen")
+            self.assertEqual(connector.environment, "test")
 
     def test_company_provider_unique_constraint(self):
         """Test that one connector per (company, provider_type) is allowed.
@@ -45,7 +45,6 @@ class TestSIFENConnector(TransactionCase):
         self.env["l10n_py.edi.connector"].sudo().search(
             [("company_id", "=", self.company.id)]
         ).unlink()
-        # Create first connector
         self.env["l10n_py.edi.connector"].create(
             {
                 "name": "Connector 1",
@@ -54,8 +53,7 @@ class TestSIFENConnector(TransactionCase):
                 "environment": "test",
             }
         )
-        # Try to create duplicate - should raise IntegrityError
-        try:
+        with self.assertRaises(IntegrityError), self.cr.savepoint():
             self.env["l10n_py.edi.connector"].create(
                 {
                     "name": "Connector 2",
@@ -64,9 +62,6 @@ class TestSIFENConnector(TransactionCase):
                     "environment": "test",
                 }
             )
-            self.fail("Expected IntegrityError was not raised")
-        except IntegrityError:
-            self.env.cr.rollback()  # Expected behavior
 
     @patch(
         "odoo.addons.l10n_py_edi_sifen.models.edi_connector"
