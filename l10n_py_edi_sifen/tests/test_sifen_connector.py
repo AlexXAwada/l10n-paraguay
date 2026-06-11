@@ -53,7 +53,7 @@ class TestSIFENConnector(TransactionCase):
                 "environment": "test",
             }
         )
-        with self.assertRaises(IntegrityError), self.cr.savepoint():
+        with self.cr.savepoint(), self.assertRaises(IntegrityError):
             self.env["l10n_py.edi.connector"].create(
                 {
                     "name": "Connector 2",
