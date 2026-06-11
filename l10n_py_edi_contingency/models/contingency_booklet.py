@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any
 
 from odoo import api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 if TYPE_CHECKING:
     from odoo.addons.base.models.res_company import Company
@@ -71,18 +71,42 @@ class ContingencyBooklet(models.Model):
     )
     notes: str = fields.Text(string="Notes")
 
-    _sql_constraints = [
-        (
-            "unique_name_company",
-            "unique(name, company_id)",
-            "A booklet with this number already exists for this company.",
-        ),
-        (
-            "start_end_check",
-            "CHECK(start_number > 0 AND end_number >= start_number)",
-            "End number must be greater than or equal to start number.",
-        ),
-    ]
+    @api.constrains("name", "company_id")
+    def _check_unique_name_company(self) -> None:
+        """Ensure booklet name is unique per company (ORM-level).
+
+        Migrated from SQL-level ``unique(name, company_id)`` constraint.
+        ORM constraint allows friendlier ``ValidationError`` messages and
+        i18n. SQL-level enforcement is replaced by this Python check.
+        """
+        for rec in self:
+            domain = [
+                ("name", "=", rec.name),
+                ("company_id", "=", rec.company_id.id),
+                ("id", "!=", rec.id),
+            ]
+            if self.search_count(domain) > 0:
+                raise ValidationError(
+                    self.env._(
+                        "A booklet with this number already exists for this company."
+                    )
+                )
+
+    @api.constrains("start_number", "end_number")
+    def _check_start_end(self) -> None:
+        """Ensure start_number > 0 and end_number >= start_number (ORM-level).
+
+        Migrated from SQL-level ``CHECK(start_number > 0 AND end_number >=
+        start_number)`` constraint. The ORM equivalent raises a translated
+        ``ValidationError`` instead of relying on the database engine.
+        """
+        for rec in self:
+            if rec.start_number <= 0 or rec.end_number < rec.start_number:
+                raise ValidationError(
+                    self.env._(
+                        "End number must be greater than or equal to start number."
+                    )
+                )
 
     @api.depends("name", "company_id")
     def _compute_used(self) -> None:

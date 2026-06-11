@@ -3,3 +3,4 @@ access_l10n_py_batch_job_user,l10n_py.batch.job.user,model_l10n_py_batch_job,bas
 access_l10n_py_batch_job_manager,l10n_py.batch.job.manager,model_l10n_py_batch_job,base.group_system,1,1,1,1
 access_l10n_py_batch_job_line_user,l10n_py.batch.job.line.user,model_l10n_py_batch_job_line,base.group_user,1,1,1,1
 access_l10n_py_batch_job_line_manager,l10n_py.batch.job.line.manager,model_l10n_py_batch_job_line,base.group_system,1,1,1,1
+access_l10n_py_batch_send_wizard,access_l10n_py_batch_send_wizard,model_l10n_py_batch_send_wizard,base.group_user,1,0,0,0

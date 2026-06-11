@@ -63,9 +63,6 @@ Paraguay via SIFEN.
    :alt: Try me on Runboat
    :target: https://runboat.odoo-community.org/webui/builds.html?repo=OCA/l10n-paraguay&addons=l10n_py_edi_batch
 
-|maintainer|OCA|
-|maintainer|_
-
 This module is maintained by the OCA.
 
 OCA, or the Odoo Community Association, is a nonprofit organization whose

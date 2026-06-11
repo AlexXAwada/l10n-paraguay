@@ -18,7 +18,7 @@ class SIFENWebhookController(http.Controller):
 
     @http.route(
         "/l10n_py_edi/webhook/<int:company_id>",
-        type="json",
+        type="jsonrpc",
         auth="public",
         methods=["POST"],
         csrf=False,

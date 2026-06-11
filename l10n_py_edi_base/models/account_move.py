@@ -46,7 +46,7 @@ class AccountMove(models.Model):
             ("12", "Output tax sale"),
             ("13", "Input tax purchase"),
         ],
-        string="Transaction Type",
+        string="Paraguay Transaction Type",
         required=True,
         default="1",
     )
