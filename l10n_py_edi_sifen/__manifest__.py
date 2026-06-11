@@ -15,7 +15,6 @@
     ],
     "demo": [
         "demo/res_company_certificate_demo.xml",
-        "demo/edi_connector_demo.xml",
     ],
     "installable": True,
     "application": False,

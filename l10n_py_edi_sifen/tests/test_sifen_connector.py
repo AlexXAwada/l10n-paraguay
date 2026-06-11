@@ -40,7 +40,7 @@ class TestSIFENConnector(TransactionCase):
         connectors for the same company are allowed if provider_type differs.
         Duplicate (company, provider_type) raises IntegrityError.
         """
-        # Clean up any existing connectors first (demo data + previous tests)
+        # Clean up any existing connectors first
         self.env["l10n_py.edi.connector"].sudo().search(
             [("company_id", "=", self.company.id)]
         ).unlink()
