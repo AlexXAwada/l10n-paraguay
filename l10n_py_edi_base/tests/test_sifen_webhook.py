@@ -2,6 +2,9 @@
 
 from odoo.tests import tagged
 from odoo.tests.common import HttpCase
+from odoo.tools import mute_logger
+
+_WEBHOOK_LOGGER = "odoo.addons.l10n_py_edi_base.controllers.sifen_webhook"
 
 
 def _result(response):
@@ -21,6 +24,7 @@ class TestSIFENWebhook(HttpCase):
         self.company.l10n_py_webhook_token = "test_token_123"
         self.webhook_url = f"/l10n_py_edi/webhook/{self.company.id}"
 
+    @mute_logger(_WEBHOOK_LOGGER)
     def test_webhook_rejects_empty_payload(self):
         """Webhook returns error for empty payload."""
         response = self.url_open(
@@ -32,6 +36,7 @@ class TestSIFENWebhook(HttpCase):
         data = _result(response)
         self.assertFalse(data.get("success"))
 
+    @mute_logger(_WEBHOOK_LOGGER)
     def test_webhook_rejects_missing_token(self):
         """Webhook rejects request without Authorization header."""
         response = self.url_open(
@@ -43,6 +48,7 @@ class TestSIFENWebhook(HttpCase):
         data = _result(response)
         self.assertFalse(data.get("success"))
 
+    @mute_logger(_WEBHOOK_LOGGER)
     def test_webhook_rejects_invalid_token(self):
         """Webhook rejects request with wrong token."""
         response = self.url_open(
@@ -55,6 +61,7 @@ class TestSIFENWebhook(HttpCase):
         data = _result(response)
         self.assertFalse(data.get("success"))
 
+    @mute_logger(_WEBHOOK_LOGGER)
     def test_webhook_accepts_valid_token_no_document(self):
         """Webhook accepts valid token but returns document not found."""
         response = self.url_open(
@@ -68,6 +75,7 @@ class TestSIFENWebhook(HttpCase):
         self.assertFalse(data.get("success"))
         self.assertIn("not found", data.get("message", ""))
 
+    @mute_logger(_WEBHOOK_LOGGER)
     def test_webhook_token_in_payload_accepted(self):
         """Webhook accepts token embedded in payload (fallback)."""
         response = self.url_open(
