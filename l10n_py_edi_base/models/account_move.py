@@ -1065,8 +1065,13 @@ class AccountMove(models.Model):
         connector = self._get_edi_connector()
         xml_string = connector.preview_document(document_data)
 
-        from pykude import auto_kude
-        from pykude.kude_fe.config import KudeFeConfig
+        try:
+            from pykude import auto_kude
+            from pykude.kude_fe.config import KudeFeConfig
+        except ImportError as err:
+            raise UserError(
+                self.env._("pykude is not available in this environment")
+            ) from err
 
         xml_content = xml_string
 
@@ -1323,8 +1328,12 @@ class AccountMove(models.Model):
                     "Please resend the document first."
                 )
             )
-        from pykude import auto_kude
-        from pykude.kude_fe.config import KudeFeConfig
+        try:
+            from pykude import auto_kude
+            from pykude.kude_fe.config import KudeFeConfig
+        except ImportError:
+            _logger.warning("pykude not available, skipping KuDE generation")
+            return
 
         xml_content = b64.b64decode(self.l10n_py_edi_xml).decode("utf-8")
 
