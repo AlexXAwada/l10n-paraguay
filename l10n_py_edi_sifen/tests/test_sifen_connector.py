@@ -2,8 +2,7 @@
 
 from unittest.mock import patch
 
-from psycopg2 import IntegrityError
-
+from odoo.exceptions import ValidationError
 from odoo.tests.common import TransactionCase, tagged
 
 
@@ -43,7 +42,7 @@ class TestSIFENConnector(TransactionCase):
 
         The constraint is unique(company_id, provider_type), so multiple
         connectors for the same company are allowed if provider_type differs.
-        Duplicate (company, provider_type) raises IntegrityError.
+        Duplicate (company, provider_type) raises ValidationError.
         """
         # Clean up any existing connectors first
         self.env["l10n_py.edi.connector"].sudo().search(
@@ -59,8 +58,8 @@ class TestSIFENConnector(TransactionCase):
             }
         )
         self.addCleanup(connector.unlink)
-        # Duplicate must raise IntegrityError
-        with self.assertRaises(IntegrityError):
+        # Duplicate must raise ValidationError (ORM-level constraint)
+        with self.assertRaises(ValidationError):
             self.env["l10n_py.edi.connector"].create(
                 {
                     "name": "Connector 2",

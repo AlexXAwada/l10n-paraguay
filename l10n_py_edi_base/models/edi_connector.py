@@ -2,8 +2,8 @@
 
 import logging
 
-from odoo import fields, models
-from odoo.exceptions import UserError
+from odoo import api, fields, models
+from odoo.exceptions import UserError, ValidationError
 
 _logger = logging.getLogger(__name__)
 
@@ -11,11 +11,6 @@ _logger = logging.getLogger(__name__)
 class EDIConnector(models.Model):
     _name = "l10n_py.edi.connector"
     _description = "Connector EDI Paraguay"
-
-    _company_provider_unique = models.Constraint(
-        "UNIQUE (company_id, provider_type)",
-        "Only one connector per (company, provider_type) is allowed.",
-    )
 
     name = fields.Char(required=True)
     company_id = fields.Many2one(
@@ -35,6 +30,24 @@ class EDIConnector(models.Model):
     )
     active = fields.Boolean(default=True)
     timeout = fields.Integer(default=30)
+
+    @api.constrains("company_id", "provider_type")
+    def _check_unique_company_provider(self):
+        """Prevent duplicate (company, provider_type) combinations."""
+        for record in self:
+            existing = self.search(
+                [
+                    ("company_id", "=", record.company_id.id),
+                    ("provider_type", "=", record.provider_type),
+                    ("id", "!=", record.id),
+                ]
+            )
+            if existing:
+                raise ValidationError(
+                    self.env._(
+                        "Only one connector per (company, provider_type) is allowed."
+                    )
+                )
 
     # === Public interface (each provider must implement) ===
 
