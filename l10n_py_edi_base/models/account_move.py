@@ -13,7 +13,7 @@ from dateutil.relativedelta import relativedelta
 from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
-from odoo.addons.l10n_py_edi_base.services.cdc_generator import CDCGenerator
+from ..services.cdc_generator import CDCGenerator
 
 _logger = logging.getLogger(__name__)
 
