@@ -29,6 +29,8 @@ class EDILog(models.Model):
             ("status", "Status Check"),
             ("cancel", "Cancellation"),
             ("event", "Event"),
+            ("webhook", "Webhook"),
+            ("inutilize", "Number Inutilization"),
             ("download_pdf", "Download PDF"),
             ("download_xml", "Download XML"),
             ("validate", "Validation"),
