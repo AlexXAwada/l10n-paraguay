@@ -2,7 +2,7 @@
 
 from odoo import api, fields, models
 
-from odoo.addons.l10n_py_base.validators.ruc_validator import RUCValidator
+from ..l10n_py_base.validators.ruc_validator import RUCValidator
 
 
 class ResCompany(models.Model):
