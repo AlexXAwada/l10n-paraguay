@@ -242,7 +242,7 @@ class RUCValidator:
         is_valid, error = cls.validate(ruc)
 
         if not is_valid:
-            _logger.warning(f"Invalid RUC: {ruc} - {error}")
+            _logger.warning("Invalid RUC: %s - %s", ruc, error)
             return ruc  # Return original if invalid
 
         return cls.format_ruc(ruc, include_dv=True)

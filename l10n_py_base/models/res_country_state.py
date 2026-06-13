@@ -19,11 +19,6 @@ class CountryState(models.Model):
         help=("Department code according to SET - Paraguay Tax Authority"),
     )
 
-    _l10n_py_code_unique = models.Constraint(
-        "unique(l10n_py_code)",
-        "The SET code must be unique per country",
-    )
-
     @api.constrains("l10n_py_code", "country_id")
     def _check_unique_code_per_country(self):
         for rec in self:
