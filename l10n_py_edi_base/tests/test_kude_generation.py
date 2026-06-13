@@ -4,6 +4,7 @@ from unittest.mock import ANY, MagicMock, patch
 
 from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
+from odoo.tools import mute_logger
 
 
 @tagged("post_install", "-at_install", "l10n_py")
@@ -258,6 +259,7 @@ class TestKudeGeneration(TransactionCase):
         self.assertEqual(move.l10n_py_edi_status, "accepted")
         mock_auto_kude.assert_called_once()
 
+    @mute_logger("odoo.addons.l10n_py_edi_base.models.account_move")
     @patch("pykude.auto_kude")
     def test_process_edi_response_kude_error_non_blocking(self, mock_auto_kude):
         """KuDE generation error should not block EDI acceptance."""
