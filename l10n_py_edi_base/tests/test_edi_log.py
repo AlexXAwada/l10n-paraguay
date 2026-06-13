@@ -12,7 +12,7 @@ class TestEDILog(TransactionCase):
         """Create successful operation log"""
         log = self.env["l10n_py.edi.log"].log_operation(
             operation_type="send",
-            provider="factpy",
+            provider="sifen",
             execution_time=150.5,
             success=True,
         )
@@ -24,7 +24,7 @@ class TestEDILog(TransactionCase):
         """Create error operation log"""
         log = self.env["l10n_py.edi.log"].log_operation(
             operation_type="send",
-            provider="factpy",
+            provider="sifen",
             execution_time=500.0,
             success=False,
             error_message="Connection timeout",
