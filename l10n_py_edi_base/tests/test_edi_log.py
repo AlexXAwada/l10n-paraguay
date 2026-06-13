@@ -1,5 +1,8 @@
 # l10n_py_edi_base/tests/test_edi_log.py
 
+import logging
+from unittest.mock import patch
+
 from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
 
@@ -22,13 +25,18 @@ class TestEDILog(TransactionCase):
 
     def test_log_operation_error(self):
         """Create error operation log"""
-        log = self.env["l10n_py.edi.log"].log_operation(
-            operation_type="send",
-            provider="sifen",
-            execution_time=500.0,
-            success=False,
-            error_message="Connection timeout",
-        )
+        # Suppress ERROR log to prevent CI failures
+        with patch.object(
+            logging.getLogger("odoo.addons.l10n_py_edi_base.models.l10n_py_edi_log"),
+            "error",
+        ):
+            log = self.env["l10n_py.edi.log"].log_operation(
+                operation_type="send",
+                provider="sifen",
+                execution_time=500.0,
+                success=False,
+                error_message="Connection timeout",
+            )
         self.assertTrue(log)
         self.assertFalse(log.success)
         self.assertTrue(log.error)
@@ -39,7 +47,7 @@ class TestEDILog(TransactionCase):
         log = self.env["l10n_py.edi.log"].create(
             {
                 "operation_type": "send",
-                "provider": "factpy",
+                "provider": "sifen",
                 "status_code": 500,
                 "success": False,
             }
@@ -49,7 +57,7 @@ class TestEDILog(TransactionCase):
         log2 = self.env["l10n_py.edi.log"].create(
             {
                 "operation_type": "send",
-                "provider": "factpy",
+                "provider": "sifen",
                 "status_code": 200,
                 "success": True,
             }
@@ -61,7 +69,7 @@ class TestEDILog(TransactionCase):
         log = self.env["l10n_py.edi.log"].create(
             {
                 "operation_type": "send",
-                "provider": "factpy",
+                "provider": "sifen",
                 "execution_time": 150.5,
             }
         )
@@ -72,7 +80,7 @@ class TestEDILog(TransactionCase):
         log = self.env["l10n_py.edi.log"].create(
             {
                 "operation_type": "send",
-                "provider": "factpy",
+                "provider": "sifen",
                 "execution_time": 2500.0,
             }
         )
