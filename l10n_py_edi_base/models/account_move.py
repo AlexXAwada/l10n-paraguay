@@ -1341,8 +1341,13 @@ class AccountMove(models.Model):
         if self.company_id.logo:
             config.logo = b64.b64decode(self.company_id.logo)
 
-        kude = auto_kude(xml=xml_content, config=config)
-        pdf_bytes = kude.output()
+        try:
+            kude = auto_kude(xml=xml_content, config=config)
+            pdf_bytes = kude.output()
+        except Exception as e:
+            _logger.warning("Error generating KuDE: %s", str(e))
+            return
+
         self.l10n_py_kude_pdf = b64.b64encode(pdf_bytes)
         self.l10n_py_kude_filename = f"KUDE_{self.l10n_py_cdc}.pdf"
 
