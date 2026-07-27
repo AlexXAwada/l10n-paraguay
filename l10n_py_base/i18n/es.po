@@ -1,0 +1,201 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_py_base
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#. module: l10n_py_base
+msgid "Economic Activity"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Neighborhood"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Neighborhood or district of the contact"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Neighborhood..."
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Neighborhoods"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Residence Permit"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "City"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "City the neighborhood belongs to"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Taxpayer"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Create a new neighborhood"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Identity Card"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Code"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "SET City Code"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "SET Department Code"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Zip Code"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "SET Code"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "City code according to SET"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Neighborhood code"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Department code according to SET"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Neighborhood zip code"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Department"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Department the neighborhood belongs to"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Description of the main economic activity"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "RUC check digit"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "The SET code of the city must be unique per country"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "The SET code of the department must be unique per country"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Unnamed"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Neighborhoods are subdivisions of cities in Paraguay. You can create neighborhoods to better organize addresses."
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Non-Taxpayer"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Name"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Commercial or trade name"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Trade Name"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Trade Name..."
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Neighborhood Name"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Neighborhood name"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Document Number"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Country"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Country the neighborhood belongs to"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "By City"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "By Department"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Tax ID (RUC)"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Single Taxpayer Registry (without check digit)"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Taxpayer Type"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Identity Document Type"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Taxpayer type according to SET"
+msgstr ""
+
+#. module: l10n_py_base
+msgid "Identity document type for non-taxpayers (SIFEN D024)"
+msgstr ""
+

@@ -4,50 +4,48 @@ from odoo import fields, models
 
 
 class Neighborhood(models.Model):
-    """Modelo de Barrio para Paraguay"""
+    """Neighborhood model for Paraguay"""
 
     _name = "l10n_py.neighborhood"
-    _description = "Barrio"
+    _description = "Neighborhood"
     _order = "name"
 
     name = fields.Char(
-        string="Nombre",
         required=True,
-        help="Nombre del barrio",
+        help="Neighborhood name",
     )
 
     code = fields.Char(
-        string="Código",
-        help="Código del barrio",
+        help="Neighborhood code",
     )
 
     city_id = fields.Many2one(
         "res.city",
-        string="Ciudad",
+        string="City",
         required=True,
         ondelete="cascade",
-        help="Ciudad a la que pertenece el barrio",
+        help="City the neighborhood belongs to",
     )
 
     state_id = fields.Many2one(
         "res.country.state",
-        string="Departamento",
+        string="Department",
         related="city_id.state_id",
         store=True,
         readonly=True,
-        help="Departamento al que pertenece el barrio",
+        help="Department the neighborhood belongs to",
     )
 
     country_id = fields.Many2one(
         "res.country",
-        string="País",
+        string="Country",
         related="city_id.country_id",
         store=True,
         readonly=True,
-        help="País al que pertenece el barrio",
+        help="Country the neighborhood belongs to",
     )
 
     zipcode = fields.Char(
-        string="Código Postal",
-        help="Código postal del barrio",
+        string="Zip Code",
+        help="Neighborhood zip code",
     )

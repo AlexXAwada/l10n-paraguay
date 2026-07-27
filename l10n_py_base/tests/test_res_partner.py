@@ -4,7 +4,7 @@ from odoo.tests.common import TransactionCase
 
 @tagged("post_install", "-at_install", "l10n_py")
 class TestResPartner(TransactionCase):
-    """Tests para extensión de res.partner Paraguay"""
+    """Tests for res.partner Paraguay extension"""
 
     @classmethod
     def setUpClass(cls):
@@ -17,7 +17,7 @@ class TestResPartner(TransactionCase):
         cls.it_carnet = cls.env.ref("l10n_py_base.it_carnet_residencia")
 
     def test_partner_fiscal_fields_exist(self):
-        """Campos fiscales l10n_py deben existir en el modelo"""
+        """l10n_py fiscal fields must exist on the model"""
         partner = self.Partner.create(
             {
                 "name": "Test Partner PY",
@@ -35,7 +35,7 @@ class TestResPartner(TransactionCase):
     # ============== RUC via vat + identification type ==============
 
     def test_ruc_computed_from_vat(self):
-        """l10n_py_ruc y l10n_py_ruc_dv se calculan desde vat"""
+        """l10n_py_ruc and l10n_py_ruc_dv are computed from vat"""
         partner = self.Partner.create(
             {
                 "name": "Test RUC",
@@ -48,7 +48,7 @@ class TestResPartner(TransactionCase):
         self.assertEqual(partner.l10n_py_ruc_dv, "6")
 
     def test_ruc_dv_auto_calculated_on_create(self):
-        """DV se calcula automáticamente si vat no incluye DV"""
+        """DV is auto-calculated if vat doesn't include DV"""
         partner = self.Partner.create(
             {
                 "name": "Test RUC auto DV",
@@ -63,7 +63,7 @@ class TestResPartner(TransactionCase):
         self.assertEqual(partner.l10n_py_ruc_dv, "6")
 
     def test_ruc_inverse_backward_compat(self):
-        """Escribir l10n_py_ruc directamente sincroniza vat (backward compat)"""
+        """Writing l10n_py_ruc directly syncs vat (backward compat)"""
         partner = self.Partner.create(
             {
                 "name": "Test Inverse",
@@ -76,7 +76,7 @@ class TestResPartner(TransactionCase):
         self.assertEqual(partner.l10n_py_ruc_dv, "6")
 
     def test_ruc_empty_when_not_ruc_type(self):
-        """l10n_py_ruc vacío cuando identification type no es RUC"""
+        """l10n_py_ruc is empty when identification type is not RUC"""
         partner = self.Partner.create(
             {
                 "name": "Test CI",
@@ -89,7 +89,7 @@ class TestResPartner(TransactionCase):
         self.assertFalse(partner.l10n_py_ruc_dv)
 
     def test_ruc_dv_empty_when_no_vat(self):
-        """DV debe estar vacío si no hay vat"""
+        """DV must be empty if no vat"""
         partner = self.Partner.create(
             {
                 "name": "Test Partner",
@@ -101,7 +101,7 @@ class TestResPartner(TransactionCase):
     # ============== DV exacto para RUCs conocidos ==============
 
     def test_ruc_dv_exact_values(self):
-        """DV exacto para RUCs conocidos verificados contra SET"""
+        """Exact DV for known RUCs verified against SET"""
         test_cases = [
             ("80012345", "6"),
             ("4588955", "1"),
@@ -127,7 +127,7 @@ class TestResPartner(TransactionCase):
     # ============== Taxpayer type ==============
 
     def test_taxpayer_type_selection(self):
-        """Tipo de contribuyente debe aceptar valores válidos"""
+        """Taxpayer type must accept valid values"""
         partner = self.Partner.create(
             {
                 "name": "Contribuyente Test",
@@ -149,7 +149,7 @@ class TestResPartner(TransactionCase):
     # ============== Non-taxpayer doc fields ==============
 
     def test_non_taxpayer_with_ci(self):
-        """No-contribuyente con cédula de identidad"""
+        """Non-taxpayer with identity card"""
         partner = self.Partner.create(
             {
                 "name": "Persona Natural PY",
@@ -166,7 +166,7 @@ class TestResPartner(TransactionCase):
         self.assertEqual(partner.vat, "4567890")
 
     def test_taxpayer_with_ruc(self):
-        """Contribuyente con RUC y DV"""
+        """Taxpayer with RUC and DV"""
         partner = self.Partner.create(
             {
                 "name": "Empresa PY",
@@ -180,7 +180,7 @@ class TestResPartner(TransactionCase):
         self.assertEqual(partner.l10n_py_ruc_dv, "6")
 
     def test_non_taxpayer_doc_types(self):
-        """Todos los tipos de documento de identidad son aceptados"""
+        """All identity document types are accepted"""
         id_types = {
             "1": self.it_ci,
             "2": self.it_pasaporte,
@@ -203,7 +203,7 @@ class TestResPartner(TransactionCase):
     # ============== Onchanges ==============
 
     def test_neighborhood_onchange(self):
-        """Auto-llenar ciudad al seleccionar barrio"""
+        """Auto-fill city when selecting neighborhood"""
         partner = self.Partner.create(
             {
                 "name": "Test Partner",
@@ -213,7 +213,8 @@ class TestResPartner(TransactionCase):
         self.assertTrue(hasattr(partner, "l10n_py_neighborhood_id"))
 
     def test_state_change_clears_city(self):
-        """Al cambiar departamento, ciudad y barrio se limpian si no coinciden"""
+        """When changing department, city and neighborhood
+        are cleared if they don't match"""
         state_asu = self.env["res.country.state"].search(
             [
                 ("country_id", "=", self.country_py.id),
@@ -255,7 +256,7 @@ class TestResPartner(TransactionCase):
     # ============== Location ==============
 
     def test_department_code_related(self):
-        """l10n_py_department_code computado desde state_id"""
+        """l10n_py_department_code is computed from state_id"""
         state = self.env["res.country.state"].search(
             [
                 ("country_id", "=", self.country_py.id),
@@ -274,5 +275,5 @@ class TestResPartner(TransactionCase):
             self.assertEqual(
                 partner.l10n_py_department_code,
                 state.l10n_py_code,
-                "Código departamento debe coincidir con el del estado",
+                "Department code must match the state's code",
             )

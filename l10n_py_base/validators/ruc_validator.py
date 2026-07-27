@@ -1,8 +1,8 @@
 # l10n_py_base/validators/ruc_validator.py
 
 """
-Validador robusto para RUC paraguaio
-Implementa validação completa conforme especificações da SET (Módulo 11)
+Robust validator for Paraguayan RUC
+Implements full validation according to SET specifications (Module 11)
 """
 
 import logging
@@ -12,59 +12,58 @@ _logger = logging.getLogger(__name__)
 
 
 class RUCValidator:
-    """Validador robusto para RUC paraguaio"""
+    """Robust validator for Paraguayan RUC"""
 
-    # Pesos cíclicos para cálculo do dígito verificador (Módulo 11 SET)
+    # Cyclic weights for check digit calculation (Module 11 SET)
     WEIGHTS = [2, 3, 4, 5, 6, 7, 8, 9]
 
     @classmethod
     def validate(cls, ruc):
         """
-        Validação completa de RUC paraguaio
+        Full validation of Paraguayan RUC
 
         Args:
-            ruc (str): RUC a ser validado
+            ruc (str): RUC to be validated
 
         Returns:
             tuple: (is_valid, error_message)
         """
         if not ruc:
-            return False, "RUC é obrigatório"
+            return False, "RUC is required"
 
-        # Limpar caracteres especiais
+        # Clean special characters
         clean_ruc = re.sub(r"[^\d-]", "", ruc)
 
-        # Verificar formato básico (aceita com ou sem hífen)
+        # Check basic format (accepts with or without hyphen)
         if not re.match(r"^\d{6,8}(-\d)?$", clean_ruc):
-            return False, "Formato inválido. Use: XXXXXXX-D ou XXXXXXX"
+            return False, "Invalid format. Use: XXXXXXX-D or XXXXXXX"
 
-        # Separar RUC e dígito verificador se houver hífen
+        # Separate RUC and check digit if hyphen present
         if "-" in clean_ruc:
             ruc_number, check_digit = clean_ruc.split("-")
         else:
-            # Se não houver hífen, assume que o último dígito é o DV
+            # If no hyphen, assume last digit is DV
             if len(clean_ruc) >= 7:
                 ruc_number = clean_ruc[:-1]
                 check_digit = clean_ruc[-1]
             else:
-                ruc_number = clean_ruc
-                check_digit = None
+                return False, "RUC incomplete: must include the check digit."
 
-        # Validar comprimento
+        # Validate length
         if len(ruc_number) < 6 or len(ruc_number) > 8:
-            return False, "RUC deve ter entre 6 e 8 dígitos"
+            return False, "RUC must have between 6 and 8 digits"
 
-        # Calcular dígito verificador esperado
+        # Calculate expected check digit
         calculated_digit = cls._calculate_check_digit(ruc_number)
 
-        # Se um DV foi fornecido, validá-lo
+        # If a DV was provided, validate it
         if check_digit is not None:
             if str(calculated_digit) != check_digit:
                 return (
                     False,
-                    f"Dígito verificador inválido. "
-                    f"Esperado: {calculated_digit}, "
-                    f"Recebido: {check_digit}",
+                    f"Invalid check digit. "
+                    f"Expected: {calculated_digit}, "
+                    f"Received: {check_digit}",
                 )
 
         return True, ""
@@ -72,37 +71,37 @@ class RUCValidator:
     @classmethod
     def _calculate_check_digit(cls, ruc_number):
         """
-        Calcular dígito verificador usando Módulo 11 (SET Paraguay)
+        Calculate check digit using Module 11 (Paraguay SET)
 
-        Algoritmo:
-        1. Preenche o RUC com zeros à esquerda até 9 dígitos
-        2. Aplica pesos [2,3,4,5,6,7,8,9] ciclicamente da esquerda para direita
-        3. Encontra DV (0-9) tal que a soma ponderada total (incluindo DV)
+        Algorithm:
+        1. Pad RUC with leading zeros to 9 digits
+        2. Apply weights [2,3,4,5,6,7,8,9] cyclically from left to right
+        3. Find DV (0-9) such that the total weighted sum (including DV)
            mod 11 == 0
 
-        Verificação: RUC 80012345 → DV 6, RUC 4588955 → DV 1
+        Verification: RUC 80012345 -> DV 6, RUC 4588955 -> DV 1
 
         Args:
-            ruc_number (str): Número do RUC sem dígito verificador
+            ruc_number (str): RUC number without check digit
 
         Returns:
-            int: Dígito verificador calculado
+            int: Calculated check digit
         """
-        # Preencher com zeros à esquerda até 9 dígitos
+        # Pad with leading zeros to 9 digits
         ruc_padded = ruc_number.zfill(9)
 
-        # Calcular soma ponderada parcial (9 dígitos do RUC)
+        # Calculate partial weighted sum (9 digits of RUC)
         partial_sum = 0
         for i, digit in enumerate(ruc_padded):
             partial_sum += int(digit) * cls.WEIGHTS[i % 8]
 
-        # O DV fica na posição 9 (índice 9), com peso = WEIGHTS[9 % 8] = WEIGHTS[1] = 3
-        # Encontrar DV tal que (partial_sum + DV * 3) % 11 == 0
-        # Usando inverso modular: inv(3, 11) = 4 (pois 3*4 = 12 ≡ 1 mod 11)
+        # DV is at position 9 (index 9), with weight = WEIGHTS[9 % 8] = WEIGHTS[1] = 3
+        # Find DV such that (partial_sum + DV * 3) % 11 == 0
+        # Using modular inverse: inv(3, 11) = 4 (since 3*4 = 12 ≡ 1 mod 11)
         remainder = partial_sum % 11
         dv = ((11 - remainder) % 11 * 4) % 11
 
-        # DV deve ser dígito único (0-9)
+        # DV must be a single digit (0-9)
         if dv >= 10:
             dv = 0
 
@@ -111,44 +110,44 @@ class RUCValidator:
     @classmethod
     def format_ruc(cls, ruc, include_dv=True):
         """
-        Formatar RUC para exibição padronizada
+        Format RUC for standardized display
 
         Args:
-            ruc (str): RUC a ser formatado
-            include_dv (bool): Se True, inclui o dígito verificador
+            ruc (str): RUC to be formatted
+            include_dv (bool): If True, includes the check digit
 
         Returns:
-            str: RUC formatado (XXXXXXX-D)
+            str: Formatted RUC (XXXXXXX-D)
         """
-        # Limpar formato
+        # Clean format
         clean_ruc = re.sub(r"[^\d]", "", ruc)
 
         if len(clean_ruc) < 6:
-            return ruc  # Retorna original se muito curto
+            return ruc  # Return original if too short
 
-        # Se o último dígito pode ser DV, separar
+        # If last digit could be DV, separate
         if len(clean_ruc) >= 7:
             ruc_number = clean_ruc[:-1]
             existing_dv = clean_ruc[-1]
 
-            # Validar se o DV está correto
+            # Validate if DV is correct
             calculated_dv = cls._calculate_check_digit(ruc_number)
 
             if str(calculated_dv) == existing_dv:
-                # DV correto, usar o fornecido
+                # DV is correct, use the provided one
                 if include_dv:
                     return f"{ruc_number}-{existing_dv}"
                 else:
                     return ruc_number
             else:
-                # DV incorreto ou não existe, calcular
+                # DV incorrect or doesn't exist, calculate
                 if include_dv:
                     new_dv = cls._calculate_check_digit(clean_ruc)
                     return f"{clean_ruc}-{new_dv}"
                 else:
                     return clean_ruc
         else:
-            # Sem DV, calcular
+            # Without DV, calculate
             if include_dv:
                 dv = cls._calculate_check_digit(clean_ruc)
                 return f"{clean_ruc}-{dv}"
@@ -158,22 +157,22 @@ class RUCValidator:
     @classmethod
     def get_ruc_number(cls, ruc):
         """
-        Extrair apenas o número do RUC (sem DV)
+        Extract only the RUC number (without DV)
 
         Args:
-            ruc (str): RUC completo
+            ruc (str): Complete RUC
 
         Returns:
-            str: Número do RUC sem DV
+            str: RUC number without DV
         """
         clean_ruc = re.sub(r"[^\d]", "", ruc)
 
         if not clean_ruc:
             return ""
 
-        # Se tiver DV (7-9 dígitos), remover último dígito
+        # If has DV (7-9 digits), remove last digit
         if len(clean_ruc) >= 7:
-            # Verificar se o último dígito é um DV válido
+            # Check if last digit is a valid DV
             ruc_number = clean_ruc[:-1]
             check_digit = clean_ruc[-1]
             calculated_digit = cls._calculate_check_digit(ruc_number)
@@ -181,7 +180,7 @@ class RUCValidator:
             if str(calculated_digit) == check_digit:
                 return ruc_number
             else:
-                # Não é um DV válido, retornar completo
+                # Not a valid DV, return full
                 return clean_ruc
         else:
             return clean_ruc
@@ -189,13 +188,13 @@ class RUCValidator:
     @classmethod
     def get_check_digit(cls, ruc):
         """
-        Obter o dígito verificador do RUC
+        Get the check digit from the RUC
 
         Args:
-            ruc (str): RUC (com ou sem DV)
+            ruc (str): RUC (with or without DV)
 
         Returns:
-            str: Dígito verificador
+            str: Check digit
         """
         ruc_number = cls.get_ruc_number(ruc)
         return str(cls._calculate_check_digit(ruc_number))
@@ -203,24 +202,24 @@ class RUCValidator:
     @classmethod
     def is_valid_format(cls, ruc):
         """
-        Verificar se o formato do RUC é válido (sem validar DV)
+        Check if RUC format is valid (without validating DV)
 
         Args:
-            ruc (str): RUC a validar
+            ruc (str): RUC to validate
 
         Returns:
-            bool: True se o formato é válido
+            bool: True if format is valid
         """
         if not ruc:
             return False
 
-        # RUC deve conter apenas dígitos e opcionalmente um hífen
+        # RUC must contain only digits and optionally one hyphen
         if not re.match(r"^[\d-]+$", ruc):
             return False
 
         clean_ruc = re.sub(r"[^\d]", "", ruc)
 
-        # Deve ter entre 6 e 9 dígitos (6-8 para RUC + 1 para DV)
+        # Must have between 6 and 9 digits (6-8 for RUC + 1 for DV)
         if len(clean_ruc) < 6 or len(clean_ruc) > 9:
             return False
 
@@ -229,13 +228,13 @@ class RUCValidator:
     @classmethod
     def normalize(cls, ruc):
         """
-        Normalizar RUC para formato padronizado
+        Normalize RUC to standardized format
 
         Args:
-            ruc (str): RUC em qualquer formato
+            ruc (str): RUC in any format
 
         Returns:
-            str: RUC normalizado (XXXXXXX-D)
+            str: Normalized RUC (XXXXXXX-D)
         """
         if not ruc:
             return ""
@@ -243,7 +242,7 @@ class RUCValidator:
         is_valid, error = cls.validate(ruc)
 
         if not is_valid:
-            _logger.warning(f"RUC inválido: {ruc} - {error}")
-            return ruc  # Retorna original se inválido
+            _logger.warning("Invalid RUC: %s - %s", ruc, error)
+            return ruc  # Return original if invalid
 
         return cls.format_ruc(ruc, include_dv=True)

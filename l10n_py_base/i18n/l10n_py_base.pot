@@ -4,8 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0\n"
+"Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-07 16:58+0000\n"
+"PO-Revision-Date: 2026-06-07 16:58+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -89,12 +91,6 @@ msgid "AZOTE'Y"
 msgstr ""
 
 #. module: l10n_py_base
-#: model:ir.model.fields,field_description:l10n_py_base.field_res_partner__l10n_py_activity_description
-#: model:ir.model.fields,field_description:l10n_py_base.field_res_users__l10n_py_activity_description
-msgid "Actividad Económica"
-msgstr ""
-
-#. module: l10n_py_base
 #: model:res.city,name:l10n_py_base.city_py_17_04
 msgid "BAHÍA NEGRA"
 msgstr ""
@@ -126,29 +122,13 @@ msgid "BUENA VISTA"
 msgstr ""
 
 #. module: l10n_py_base
-#: model:ir.model,name:l10n_py_base.model_l10n_py_neighborhood
-#: model:ir.model.fields,field_description:l10n_py_base.field_res_partner__l10n_py_neighborhood_id
-#: model:ir.model.fields,field_description:l10n_py_base.field_res_users__l10n_py_neighborhood_id
-#: model_terms:ir.ui.view,arch_db:l10n_py_base.view_l10n_py_neighborhood_form
-msgid "Barrio"
-msgstr ""
-
-#. module: l10n_py_base
-#: model:ir.model.fields,help:l10n_py_base.field_res_partner__l10n_py_neighborhood_id
-#: model:ir.model.fields,help:l10n_py_base.field_res_users__l10n_py_neighborhood_id
-msgid "Barrio o distrito del contacto"
-msgstr ""
-
-#. module: l10n_py_base
-#: model_terms:ir.ui.view,arch_db:l10n_py_base.l10n_py_base_res_partner_address
-msgid "Barrio..."
-msgstr ""
-
-#. module: l10n_py_base
-#: model:ir.actions.act_window,name:l10n_py_base.action_l10n_py_neighborhood
-#: model:ir.ui.menu,name:l10n_py_base.menu_l10n_py_neighborhood
 #: model_terms:ir.ui.view,arch_db:l10n_py_base.view_l10n_py_neighborhood_search
-msgid "Barrios"
+msgid "By City"
+msgstr ""
+
+#. module: l10n_py_base
+#: model_terms:ir.ui.view,arch_db:l10n_py_base.view_l10n_py_neighborhood_search
+msgid "By Department"
 msgstr ""
 
 #. module: l10n_py_base
@@ -287,7 +267,6 @@ msgid "CORPUS CHRISTI"
 msgstr ""
 
 #. module: l10n_py_base
-#: model:ir.model.fields.selection,name:l10n_py_base.selection__res_partner__l10n_py_doc_type__3
 #: model:l10n_latam.identification.type,description:l10n_py_base.it_carnet_residencia
 #: model:l10n_latam.identification.type,name:l10n_py_base.it_carnet_residencia
 msgid "Carnet de Residencia"
@@ -295,7 +274,24 @@ msgstr ""
 
 #. module: l10n_py_base
 #: model:ir.model,name:l10n_py_base.model_res_city
+#: model:ir.model.fields,field_description:l10n_py_base.field_l10n_py_neighborhood__city_id
 msgid "City"
+msgstr ""
+
+#. module: l10n_py_base
+#: model:ir.model.fields,help:l10n_py_base.field_res_partner__l10n_py_city_code
+#: model:ir.model.fields,help:l10n_py_base.field_res_users__l10n_py_city_code
+msgid "City code according to SET"
+msgstr ""
+
+#. module: l10n_py_base
+#: model:ir.model.fields,help:l10n_py_base.field_res_city__l10n_py_code
+msgid "City code according to SET - Paraguay Tax Authority"
+msgstr ""
+
+#. module: l10n_py_base
+#: model:ir.model.fields,help:l10n_py_base.field_l10n_py_neighborhood__city_id
+msgid "City the neighborhood belongs to"
 msgstr ""
 
 #. module: l10n_py_base
@@ -304,13 +300,14 @@ msgid "City..."
 msgstr ""
 
 #. module: l10n_py_base
-#: model:ir.model.fields,field_description:l10n_py_base.field_l10n_py_neighborhood__city_id
-msgid "Ciudad"
+#: model:ir.model.fields,field_description:l10n_py_base.field_l10n_py_neighborhood__code
+msgid "Code"
 msgstr ""
 
 #. module: l10n_py_base
-#: model:ir.model.fields,help:l10n_py_base.field_l10n_py_neighborhood__city_id
-msgid "Ciudad a la que pertenece el barrio"
+#: model:ir.model.fields,help:l10n_py_base.field_res_partner__l10n_py_fantasy_name
+#: model:ir.model.fields,help:l10n_py_base.field_res_users__l10n_py_fantasy_name
+msgid "Commercial or trade name"
 msgstr ""
 
 #. module: l10n_py_base
@@ -329,11 +326,7 @@ msgid "Contact"
 msgstr ""
 
 #. module: l10n_py_base
-#: model:ir.model.fields.selection,name:l10n_py_base.selection__res_partner__l10n_py_taxpayer_type__1
-msgid "Contribuyente"
-msgstr ""
-
-#. module: l10n_py_base
+#: model:ir.model.fields,field_description:l10n_py_base.field_l10n_py_neighborhood__country_id
 #: model:ir.model.fields,field_description:l10n_py_base.field_res_company__country_id
 #: model:ir.model.fields,field_description:l10n_py_base.field_res_partner__country_id
 #: model:ir.model.fields,field_description:l10n_py_base.field_res_users__country_id
@@ -346,13 +339,18 @@ msgid "Country state"
 msgstr ""
 
 #. module: l10n_py_base
+#: model:ir.model.fields,help:l10n_py_base.field_l10n_py_neighborhood__country_id
+msgid "Country the neighborhood belongs to"
+msgstr ""
+
+#. module: l10n_py_base
 #: model_terms:ir.ui.view,arch_db:l10n_py_base.l10n_py_base_res_partner_address
 msgid "Country..."
 msgstr ""
 
 #. module: l10n_py_base
 #: model_terms:ir.actions.act_window,help:l10n_py_base.action_l10n_py_neighborhood
-msgid "Crear un nuevo barrio"
+msgid "Create a new neighborhood"
 msgstr ""
 
 #. module: l10n_py_base
@@ -366,70 +364,8 @@ msgid "Created on"
 msgstr ""
 
 #. module: l10n_py_base
-#: model:ir.model.fields.selection,name:l10n_py_base.selection__res_partner__l10n_py_doc_type__1
 #: model:l10n_latam.identification.type,description:l10n_py_base.it_ci
 msgid "Cédula de Identidad"
-msgstr ""
-
-#. module: l10n_py_base
-#: model:ir.model.fields,field_description:l10n_py_base.field_l10n_py_neighborhood__code
-msgid "Código"
-msgstr ""
-
-#. module: l10n_py_base
-#: model:ir.model.fields,field_description:l10n_py_base.field_res_partner__l10n_py_city_code
-#: model:ir.model.fields,field_description:l10n_py_base.field_res_users__l10n_py_city_code
-msgid "Código Ciudad SET"
-msgstr ""
-
-#. module: l10n_py_base
-#: model:ir.model.fields,field_description:l10n_py_base.field_res_partner__l10n_py_department_code
-#: model:ir.model.fields,field_description:l10n_py_base.field_res_users__l10n_py_department_code
-msgid "Código Departamento SET"
-msgstr ""
-
-#. module: l10n_py_base
-#: model:ir.model.fields,field_description:l10n_py_base.field_l10n_py_neighborhood__zipcode
-msgid "Código Postal"
-msgstr ""
-
-#. module: l10n_py_base
-#: model:ir.model.fields,field_description:l10n_py_base.field_res_city__l10n_py_code
-#: model:ir.model.fields,field_description:l10n_py_base.field_res_country_state__l10n_py_code
-msgid "Código SET"
-msgstr ""
-
-#. module: l10n_py_base
-#: model:ir.model.fields,help:l10n_py_base.field_res_partner__l10n_py_city_code
-#: model:ir.model.fields,help:l10n_py_base.field_res_users__l10n_py_city_code
-msgid "Código de la ciudad según SET"
-msgstr ""
-
-#. module: l10n_py_base
-#: model:ir.model.fields,help:l10n_py_base.field_res_city__l10n_py_code
-msgid "Código de la ciudad según SET (Subsecretaría de Estado de Tributación)"
-msgstr ""
-
-#. module: l10n_py_base
-#: model:ir.model.fields,help:l10n_py_base.field_l10n_py_neighborhood__code
-msgid "Código del barrio"
-msgstr ""
-
-#. module: l10n_py_base
-#: model:ir.model.fields,help:l10n_py_base.field_res_partner__l10n_py_department_code
-#: model:ir.model.fields,help:l10n_py_base.field_res_users__l10n_py_department_code
-msgid "Código del departamento según SET"
-msgstr ""
-
-#. module: l10n_py_base
-#: model:ir.model.fields,help:l10n_py_base.field_res_country_state__l10n_py_code
-msgid ""
-"Código del departamento según SET (Subsecretaría de Estado de Tributación)"
-msgstr ""
-
-#. module: l10n_py_base
-#: model:ir.model.fields,help:l10n_py_base.field_l10n_py_neighborhood__zipcode
-msgid "Código postal del barrio"
 msgstr ""
 
 #. module: l10n_py_base
@@ -485,29 +421,44 @@ msgstr ""
 
 #. module: l10n_py_base
 #: model:ir.model.fields,field_description:l10n_py_base.field_l10n_py_neighborhood__state_id
-msgid "Departamento"
+msgid "Department"
+msgstr ""
+
+#. module: l10n_py_base
+#: model:ir.model.fields,help:l10n_py_base.field_res_partner__l10n_py_department_code
+#: model:ir.model.fields,help:l10n_py_base.field_res_users__l10n_py_department_code
+msgid "Department code according to SET"
+msgstr ""
+
+#. module: l10n_py_base
+#: model:ir.model.fields,help:l10n_py_base.field_res_country_state__l10n_py_code
+msgid "Department code according to SET - Paraguay Tax Authority"
 msgstr ""
 
 #. module: l10n_py_base
 #: model:ir.model.fields,help:l10n_py_base.field_l10n_py_neighborhood__state_id
-msgid "Departamento al que pertenece el barrio"
+msgid "Department the neighborhood belongs to"
 msgstr ""
 
 #. module: l10n_py_base
 #: model:ir.model.fields,help:l10n_py_base.field_res_partner__l10n_py_activity_description
 #: model:ir.model.fields,help:l10n_py_base.field_res_users__l10n_py_activity_description
-msgid "Descripción de la actividad económica principal"
+msgid "Description of the main economic activity"
 msgstr ""
 
 #. module: l10n_py_base
 #: model:ir.model.fields,field_description:l10n_py_base.field_l10n_py_neighborhood__display_name
+#: model:ir.model.fields,field_description:l10n_py_base.field_res_city__display_name
+#: model:ir.model.fields,field_description:l10n_py_base.field_res_company__display_name
+#: model:ir.model.fields,field_description:l10n_py_base.field_res_country_state__display_name
+#: model:ir.model.fields,field_description:l10n_py_base.field_res_partner__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: l10n_py_base
-#: model:ir.model.fields,help:l10n_py_base.field_res_partner__l10n_py_ruc_dv
-#: model:ir.model.fields,help:l10n_py_base.field_res_users__l10n_py_ruc_dv
-msgid "Dígito verificador del RUC"
+#: model:ir.model.fields,field_description:l10n_py_base.field_res_partner__l10n_py_doc_number
+#: model:ir.model.fields,field_description:l10n_py_base.field_res_users__l10n_py_doc_number
+msgid "Document Number"
 msgstr ""
 
 #. module: l10n_py_base
@@ -536,13 +487,9 @@ msgid "EUSEBIO AYALA"
 msgstr ""
 
 #. module: l10n_py_base
-#: model:ir.model.constraint,message:l10n_py_base.constraint_res_city_l10n_py_code_unique
-msgid "El código SET de la ciudad debe ser único por país"
-msgstr ""
-
-#. module: l10n_py_base
-#: model:ir.model.constraint,message:l10n_py_base.constraint_res_country_state_l10n_py_code_unique
-msgid "El código SET del departamento debe ser único por país"
+#: model:ir.model.fields,field_description:l10n_py_base.field_res_partner__l10n_py_activity_description
+#: model:ir.model.fields,field_description:l10n_py_base.field_res_users__l10n_py_activity_description
+msgid "Economic Activity"
 msgstr ""
 
 #. module: l10n_py_base
@@ -652,6 +599,10 @@ msgstr ""
 
 #. module: l10n_py_base
 #: model:ir.model.fields,field_description:l10n_py_base.field_l10n_py_neighborhood__id
+#: model:ir.model.fields,field_description:l10n_py_base.field_res_city__id
+#: model:ir.model.fields,field_description:l10n_py_base.field_res_company__id
+#: model:ir.model.fields,field_description:l10n_py_base.field_res_country_state__id
+#: model:ir.model.fields,field_description:l10n_py_base.field_res_partner__id
 msgid "ID"
 msgstr ""
 
@@ -721,8 +672,26 @@ msgid "ITÁ"
 msgstr ""
 
 #. module: l10n_py_base
-#: model:ir.model.fields.selection,name:l10n_py_base.selection__res_partner__l10n_py_doc_type__4
-msgid "Innominado"
+#: model:ir.model.fields.selection,name:l10n_py_base.selection__res_partner__l10n_py_doc_type__1
+msgid "Identity Card"
+msgstr ""
+
+#. module: l10n_py_base
+#: model:ir.model.fields,field_description:l10n_py_base.field_res_partner__l10n_py_doc_type
+#: model:ir.model.fields,field_description:l10n_py_base.field_res_users__l10n_py_doc_type
+msgid "Identity Document Type"
+msgstr ""
+
+#. module: l10n_py_base
+#: model:ir.model.fields,help:l10n_py_base.field_res_partner__l10n_py_doc_number
+#: model:ir.model.fields,help:l10n_py_base.field_res_users__l10n_py_doc_number
+msgid "Identity document number for non-taxpayers (SIFEN D025)"
+msgstr ""
+
+#. module: l10n_py_base
+#: model:ir.model.fields,help:l10n_py_base.field_res_partner__l10n_py_doc_type
+#: model:ir.model.fields,help:l10n_py_base.field_res_users__l10n_py_doc_type
+msgid "Identity document type for non-taxpayers (SIFEN D024)"
 msgstr ""
 
 #. module: l10n_py_base
@@ -871,13 +840,6 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: l10n_py_base
-#: model_terms:ir.actions.act_window,help:l10n_py_base.action_l10n_py_neighborhood
-msgid ""
-"Los barrios son subdivisiones de las ciudades en Paraguay.\n"
-"                Puede crear barrios para organizar mejor las direcciones."
-msgstr ""
-
-#. module: l10n_py_base
 #: model:res.city,name:l10n_py_base.city_py_06_06
 msgid "MACIEL"
 msgstr ""
@@ -1003,55 +965,69 @@ msgid "NUEVA TOLEDO"
 msgstr ""
 
 #. module: l10n_py_base
-#: model:ir.model.fields.selection,name:l10n_py_base.selection__res_partner__l10n_py_taxpayer_type__2
-msgid "No Contribuyente"
-msgstr ""
-
-#. module: l10n_py_base
 #: model:ir.model.fields,field_description:l10n_py_base.field_l10n_py_neighborhood__name
-msgid "Nombre"
+msgid "Name"
 msgstr ""
 
 #. module: l10n_py_base
-#: model:ir.model.fields,help:l10n_py_base.field_res_partner__l10n_py_fantasy_name
-#: model:ir.model.fields,help:l10n_py_base.field_res_users__l10n_py_fantasy_name
-msgid "Nombre comercial o de fantasía"
-msgstr ""
-
-#. module: l10n_py_base
-#: model:ir.model.fields,field_description:l10n_py_base.field_res_partner__l10n_py_fantasy_name
-#: model:ir.model.fields,field_description:l10n_py_base.field_res_users__l10n_py_fantasy_name
-msgid "Nombre de Fantasía"
-msgstr ""
-
-#. module: l10n_py_base
-#: model_terms:ir.ui.view,arch_db:l10n_py_base.l10n_py_base_res_partner_form
-msgid "Nombre de Fantasía..."
+#: model:ir.model,name:l10n_py_base.model_l10n_py_neighborhood
+#: model:ir.model.fields,field_description:l10n_py_base.field_res_partner__l10n_py_neighborhood_id
+#: model:ir.model.fields,field_description:l10n_py_base.field_res_users__l10n_py_neighborhood_id
+#: model_terms:ir.ui.view,arch_db:l10n_py_base.view_l10n_py_neighborhood_form
+msgid "Neighborhood"
 msgstr ""
 
 #. module: l10n_py_base
 #: model:ir.model.fields,field_description:l10n_py_base.field_res_partner__l10n_py_neighborhood_name
 #: model:ir.model.fields,field_description:l10n_py_base.field_res_users__l10n_py_neighborhood_name
-msgid "Nombre del Barrio"
+msgid "Neighborhood Name"
+msgstr ""
+
+#. module: l10n_py_base
+#: model:ir.model.fields,help:l10n_py_base.field_l10n_py_neighborhood__code
+msgid "Neighborhood code"
 msgstr ""
 
 #. module: l10n_py_base
 #: model:ir.model.fields,help:l10n_py_base.field_l10n_py_neighborhood__name
 #: model:ir.model.fields,help:l10n_py_base.field_res_partner__l10n_py_neighborhood_name
 #: model:ir.model.fields,help:l10n_py_base.field_res_users__l10n_py_neighborhood_name
-msgid "Nombre del barrio"
+msgid "Neighborhood name"
 msgstr ""
 
 #. module: l10n_py_base
-#: model:ir.model.fields,field_description:l10n_py_base.field_res_partner__l10n_py_doc_number
-#: model:ir.model.fields,field_description:l10n_py_base.field_res_users__l10n_py_doc_number
-msgid "Número de Documento"
+#: model:ir.model.fields,help:l10n_py_base.field_res_partner__l10n_py_neighborhood_id
+#: model:ir.model.fields,help:l10n_py_base.field_res_users__l10n_py_neighborhood_id
+msgid "Neighborhood or district of the contact"
 msgstr ""
 
 #. module: l10n_py_base
-#: model:ir.model.fields,help:l10n_py_base.field_res_partner__l10n_py_doc_number
-#: model:ir.model.fields,help:l10n_py_base.field_res_users__l10n_py_doc_number
-msgid "Número de documento de identidad para no contribuyentes (SIFEN D025)"
+#: model:ir.model.fields,help:l10n_py_base.field_l10n_py_neighborhood__zipcode
+msgid "Neighborhood zip code"
+msgstr ""
+
+#. module: l10n_py_base
+#: model_terms:ir.ui.view,arch_db:l10n_py_base.l10n_py_base_res_partner_address
+msgid "Neighborhood..."
+msgstr ""
+
+#. module: l10n_py_base
+#: model:ir.actions.act_window,name:l10n_py_base.action_l10n_py_neighborhood
+#: model:ir.ui.menu,name:l10n_py_base.menu_l10n_py_neighborhood
+#: model_terms:ir.ui.view,arch_db:l10n_py_base.view_l10n_py_neighborhood_search
+msgid "Neighborhoods"
+msgstr ""
+
+#. module: l10n_py_base
+#: model_terms:ir.actions.act_window,help:l10n_py_base.action_l10n_py_neighborhood
+msgid ""
+"Neighborhoods are subdivisions of cities in Paraguay.\n"
+"                You can create neighborhoods to better organize addresses."
+msgstr ""
+
+#. module: l10n_py_base
+#: model:ir.model.fields.selection,name:l10n_py_base.selection__res_partner__l10n_py_taxpayer_type__2
+msgid "Non-Taxpayer"
 msgstr ""
 
 #. module: l10n_py_base
@@ -1125,30 +1101,14 @@ msgid "PUERTO PINASCO"
 msgstr ""
 
 #. module: l10n_py_base
-#: model:ir.model.fields.selection,name:l10n_py_base.selection__res_partner__l10n_py_doc_type__2
 #: model:l10n_latam.identification.type,description:l10n_py_base.it_pasaporte
 #: model:l10n_latam.identification.type,name:l10n_py_base.it_pasaporte
 msgid "Pasaporte"
 msgstr ""
 
 #. module: l10n_py_base
-#: model:ir.model.fields,field_description:l10n_py_base.field_l10n_py_neighborhood__country_id
-msgid "País"
-msgstr ""
-
-#. module: l10n_py_base
-#: model:ir.model.fields,help:l10n_py_base.field_l10n_py_neighborhood__country_id
-msgid "País al que pertenece el barrio"
-msgstr ""
-
-#. module: l10n_py_base
-#: model_terms:ir.ui.view,arch_db:l10n_py_base.view_l10n_py_neighborhood_search
-msgid "Por Ciudad"
-msgstr ""
-
-#. module: l10n_py_base
-#: model_terms:ir.ui.view,arch_db:l10n_py_base.view_l10n_py_neighborhood_search
-msgid "Por Departamento"
+#: model:ir.model.fields.selection,name:l10n_py_base.selection__res_partner__l10n_py_doc_type__2
+msgid "Passport"
 msgstr ""
 
 #. module: l10n_py_base
@@ -1182,10 +1142,14 @@ msgid "ROQUE GONZÁLEZ DE SANTA CRUZ"
 msgstr ""
 
 #. module: l10n_py_base
-#: model:ir.model.fields,field_description:l10n_py_base.field_res_partner__l10n_py_ruc
-#: model:ir.model.fields,field_description:l10n_py_base.field_res_users__l10n_py_ruc
 #: model:l10n_latam.identification.type,name:l10n_py_base.it_ruc
 msgid "RUC"
+msgstr ""
+
+#. module: l10n_py_base
+#: model:ir.model.fields,help:l10n_py_base.field_res_partner__l10n_py_ruc_dv
+#: model:ir.model.fields,help:l10n_py_base.field_res_users__l10n_py_ruc_dv
+msgid "RUC check digit"
 msgstr ""
 
 #. module: l10n_py_base
@@ -1194,9 +1158,8 @@ msgid "Registro Único del Contribuyente"
 msgstr ""
 
 #. module: l10n_py_base
-#: model:ir.model.fields,help:l10n_py_base.field_res_partner__l10n_py_ruc
-#: model:ir.model.fields,help:l10n_py_base.field_res_users__l10n_py_ruc
-msgid "Registro Único del Contribuyente (sin dígito verificador)"
+#: model:ir.model.fields.selection,name:l10n_py_base.selection__res_partner__l10n_py_doc_type__3
+msgid "Residence Permit"
 msgstr ""
 
 #. module: l10n_py_base
@@ -1405,8 +1368,32 @@ msgid "SARGENTO JOSÉ FÉLIX LÓPEZ"
 msgstr ""
 
 #. module: l10n_py_base
+#: model:ir.model.fields,field_description:l10n_py_base.field_res_partner__l10n_py_city_code
+#: model:ir.model.fields,field_description:l10n_py_base.field_res_users__l10n_py_city_code
+msgid "SET City Code"
+msgstr ""
+
+#. module: l10n_py_base
+#: model:ir.model.fields,field_description:l10n_py_base.field_res_city__l10n_py_code
+#: model:ir.model.fields,field_description:l10n_py_base.field_res_country_state__l10n_py_code
+msgid "SET Code"
+msgstr ""
+
+#. module: l10n_py_base
+#: model:ir.model.fields,field_description:l10n_py_base.field_res_partner__l10n_py_department_code
+#: model:ir.model.fields,field_description:l10n_py_base.field_res_users__l10n_py_department_code
+msgid "SET Department Code"
+msgstr ""
+
+#. module: l10n_py_base
 #: model:res.city,name:l10n_py_base.city_py_05_19
 msgid "SIMÓN BOLIVAR"
+msgstr ""
+
+#. module: l10n_py_base
+#: model:ir.model.fields,help:l10n_py_base.field_res_partner__l10n_py_ruc
+#: model:ir.model.fields,help:l10n_py_base.field_res_users__l10n_py_ruc
+msgid "Single Taxpayer Registry (without check digit)"
 msgstr ""
 
 #. module: l10n_py_base
@@ -1485,32 +1472,63 @@ msgid "TTE. 1° MANUEL IRALA FERNÁNDEZ"
 msgstr ""
 
 #. module: l10n_py_base
-#: model:ir.model.fields,field_description:l10n_py_base.field_res_partner__l10n_py_taxpayer_type
-#: model:ir.model.fields,field_description:l10n_py_base.field_res_users__l10n_py_taxpayer_type
-msgid "Tipo de Contribuyente"
+#: model:ir.model.fields,field_description:l10n_py_base.field_res_partner__l10n_py_ruc
+#: model:ir.model.fields,field_description:l10n_py_base.field_res_users__l10n_py_ruc
+msgid "Tax ID (RUC)"
 msgstr ""
 
 #. module: l10n_py_base
-#: model:ir.model.fields,field_description:l10n_py_base.field_res_partner__l10n_py_doc_type
-#: model:ir.model.fields,field_description:l10n_py_base.field_res_users__l10n_py_doc_type
-msgid "Tipo de Documento de Identidad"
+#: model:ir.model.fields.selection,name:l10n_py_base.selection__res_partner__l10n_py_taxpayer_type__1
+msgid "Taxpayer"
+msgstr ""
+
+#. module: l10n_py_base
+#: model:ir.model.fields,field_description:l10n_py_base.field_res_partner__l10n_py_taxpayer_type
+#: model:ir.model.fields,field_description:l10n_py_base.field_res_users__l10n_py_taxpayer_type
+msgid "Taxpayer Type"
 msgstr ""
 
 #. module: l10n_py_base
 #: model:ir.model.fields,help:l10n_py_base.field_res_partner__l10n_py_taxpayer_type
 #: model:ir.model.fields,help:l10n_py_base.field_res_users__l10n_py_taxpayer_type
-msgid "Tipo de contribuyente según la SET"
+msgid "Taxpayer type according to SET"
 msgstr ""
 
 #. module: l10n_py_base
-#: model:ir.model.fields,help:l10n_py_base.field_res_partner__l10n_py_doc_type
-#: model:ir.model.fields,help:l10n_py_base.field_res_users__l10n_py_doc_type
-msgid "Tipo de documento de identidad para no contribuyentes (SIFEN D024)"
+#. odoo-python
+#: code:addons/l10n_py_base/models/res_country_state.py:0
+msgid "The SET code is already used in this country"
+msgstr ""
+
+#. module: l10n_py_base
+#: model:ir.model.constraint,message:l10n_py_base.constraint_res_country_state_l10n_py_code_unique
+msgid "The SET code must be unique per country"
+msgstr ""
+
+#. module: l10n_py_base
+#: model:ir.model.constraint,message:l10n_py_base.constraint_res_city_l10n_py_code_unique
+msgid "The SET code of the city must be unique per country"
+msgstr ""
+
+#. module: l10n_py_base
+#: model:ir.model.fields,field_description:l10n_py_base.field_res_partner__l10n_py_fantasy_name
+#: model:ir.model.fields,field_description:l10n_py_base.field_res_users__l10n_py_fantasy_name
+msgid "Trade Name"
+msgstr ""
+
+#. module: l10n_py_base
+#: model_terms:ir.ui.view,arch_db:l10n_py_base.l10n_py_base_res_partner_form
+msgid "Trade Name..."
 msgstr ""
 
 #. module: l10n_py_base
 #: model:res.city,name:l10n_py_base.city_py_02_11
 msgid "UNIÓN"
+msgstr ""
+
+#. module: l10n_py_base
+#: model:ir.model.fields.selection,name:l10n_py_base.selection__res_partner__l10n_py_doc_type__4
+msgid "Unnamed"
 msgstr ""
 
 #. module: l10n_py_base
@@ -1676,6 +1694,11 @@ msgstr ""
 #. module: l10n_py_base
 #: model:res.city,name:l10n_py_base.city_py_13_04
 msgid "ZANJA PYTÃ"
+msgstr ""
+
+#. module: l10n_py_base
+#: model:ir.model.fields,field_description:l10n_py_base.field_l10n_py_neighborhood__zipcode
+msgid "Zip Code"
 msgstr ""
 
 #. module: l10n_py_base
