@@ -169,40 +169,13 @@ class ResPartner(models.Model):
         return super().create(vals_list)
 
     def write(self, values):
-        # If only syncing vat (no id_type or country), and vat already has correct DV,
-        # skip formatting to avoid recursion with parent sync
-        only_vat_sync = (
-            "vat" in values
-            and "l10n_latam_identification_type_id" not in values
-            and "country_id" not in values
-        )
-        if only_vat_sync:
-            # Format VAT even on vat-only writes using the partner's existing id type
-            values_without_vat = {k: v for k, v in values.items() if k != "vat"}
-            for record in self:
-                vat_vals = {
-                    "vat": values.get("vat", record.vat),
-                    "l10n_latam_identification_type_id": (
-                        record.l10n_latam_identification_type_id.id
-                    ),
-                    "country_id": record.country_id.id,
-                }
-                formatted = record._format_vat_py(vat_vals)
-                per_record_vals = dict(values_without_vat)
-                per_record_vals["vat"] = (
-                    formatted if formatted else values.get("vat", record.vat)
-                )
-                super(ResPartner, record).write(per_record_vals)
-            return True
         if any(
             f in values
             for f in ["vat", "l10n_latam_identification_type_id", "country_id"]
         ):
-            vat_overrides = {}
             for record in self:
-                current_vat = values.get("vat", record.vat)
                 vat_values = {
-                    "vat": current_vat,
+                    "vat": values.get("vat", record.vat),
                     "l10n_latam_identification_type_id": values.get(
                         "l10n_latam_identification_type_id",
                         record.l10n_latam_identification_type_id.id,
@@ -210,18 +183,8 @@ class ResPartner(models.Model):
                     "country_id": values.get("country_id", record.country_id.id),
                 }
                 formatted = self._format_vat_py(vat_values)
-                if formatted and formatted != current_vat:
-                    vat_overrides[record.id] = formatted
-            if vat_overrides:
-                values_without_vat = {k: v for k, v in values.items() if k != "vat"}
-                for record in self:
-                    per_record_vals = dict(values_without_vat)
-                    if record.id in vat_overrides:
-                        per_record_vals["vat"] = vat_overrides[record.id]
-                    elif "vat" in values:
-                        per_record_vals["vat"] = values["vat"]
-                    super(ResPartner, record).write(per_record_vals)
-                return True
+                if formatted:
+                    values["vat"] = formatted
         return super().write(values)
 
     @api.model
@@ -239,7 +202,7 @@ class ResPartner(models.Model):
         """
         vat_clean = vat.strip() if vat else vat
         if vat_clean and "-" in vat_clean:
-            return self._format_ruc_vat(vat_clean)
+            return vat_clean
         return vat_clean
 
     @api.model

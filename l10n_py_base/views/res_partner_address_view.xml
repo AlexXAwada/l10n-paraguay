@@ -80,7 +80,7 @@
         <field name="priority">110</field>
         <field name="arch" type="xml">
             <!-- Trade name after name (l10n_br_base pattern) -->
-            <xpath expr="//h1" position="after">
+            <xpath expr="//div[hasclass('oe_title')]" position="after">
                 <field
                     name="l10n_py_fantasy_name"
                     placeholder="Trade Name..."
