@@ -47,15 +47,16 @@ class RUCValidator:
         except InvalidLength:
             return (
                 False,
-                f"A RUC has at most {MAX_RUC_LENGTH} digits, "
-                "including the check digit.",
+                (
+                    f"A RUC has at most {MAX_RUC_LENGTH} digits,"
+                    " including the check digit."
+                ),
             )
         except InvalidChecksum:
             expected = stdnum_ruc.calc_check_digit(number[:-1])
             return (
                 False,
-                f"Invalid check digit. Expected: {expected}, "
-                f"received: {number[-1]}",
+                f"Invalid check digit. Expected: {expected}, received: {number[-1]}",
             )
         except ValidationError:
             return False, "Invalid RUC."

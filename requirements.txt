@@ -1,7 +1,0 @@
-cryptography
-num2words
-pykude
-python-stdnum
-qrcode
-requests
-sifen
