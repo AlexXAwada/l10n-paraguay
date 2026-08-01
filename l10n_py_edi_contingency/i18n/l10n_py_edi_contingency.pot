@@ -1,0 +1,201 @@
+# Translation of Odoo Server.
+# This file contains the translation of the model names, and field
+# descriptions. They also include comments for translators.
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-07 19:00+0000\n"
+"PO-Revision-Date: 2026-06-07 19:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: l10n_py_edi_contingency
+msgid "EDI Contingency Mode"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Offline contingency mode for EDI with physical booklets"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Contingency Booklet (SET physical booklet)"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Booklet Number"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Physical booklet number from SET"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Company"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Start Number"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "First document number in this booklet"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "End Number"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Last document number in this booklet"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Used"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Remaining"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Active"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Exhausted"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Cancelled"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Activation Date"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Date when this booklet started being used"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Notes"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "A booklet with this number already exists for this company."
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "End number must be greater than or equal to start number."
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Booklet %(booklet)s has no remaining numbers. Please activate a new booklet."
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Booklet %(booklet)s range exhausted. Next number (%(next)s) exceeds end number (%(end)s)."
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Cannot activate an exhausted booklet."
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Cannot cancel an active booklet with used numbers. Please exhaust it first or deactivate all invoices."
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Invalid Range"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+
+#. module: l10n_py_edi_contingency
+msgid "Contingency Booklet"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Physical booklet used for this contingency document"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Contingency Number"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Document number from physical booklet (assigned in contingency mode)"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Contingency Mode"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "True when this document uses contingency mode (no SIFEN connection)"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Activate contingency mode for invoices"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Booklet"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Select an active booklet with available numbers"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Please select a booklet"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Booklet %(booklet)s has no remaining numbers. Please select a different booklet."
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "No invoices selected"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "No valid invoices found. Invoices must be in draft or pending status with no CDC assigned."
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Booklet %(booklet)s exhausted after activating %(count)s invoices."
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Contingency Mode Activated"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "%(count)s invoice(s) activated with contingency booklet %(booklet)s."
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Contingency Booklets"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Activate Contingency Mode"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "EDI: Sync Contingency Documents to SIFEN"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Sync contingency documents when connection is restored"
+msgstr ""
+
+#. module: l10n_py_edi_contingency
+msgid "Check for contingency documents and sync to SIFEN when connection is restored."
+msgstr ""

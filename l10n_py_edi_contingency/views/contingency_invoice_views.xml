@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Extend account.move form with contingency fields -->
+    <record id="view_account_move_form_contingency" model="ir.ui.view">
+        <field name="name">account.move.form.contingency</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="l10n_py_edi_base.view_move_form_edi" />
+        <field name="arch" type="xml">
+            <!-- Add contingency mode indicator after EDI status -->
+            <xpath expr="//field[@name='l10n_py_edi_status']" position="before">
+                <field name="l10n_py_contingency_mode" readonly="1" />
+            </xpath>
+
+            <!-- Add contingency number display after CDC -->
+            <xpath expr="//field[@name='l10n_py_cdc']" position="after">
+                <field
+                    name="l10n_py_contingency_number"
+                    readonly="1"
+                    invisible="not l10n_py_contingency_number"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
