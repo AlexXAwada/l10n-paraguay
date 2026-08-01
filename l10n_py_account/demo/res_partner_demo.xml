@@ -2,7 +2,7 @@
 <odoo noupdate="1">
     <!-- ============== CONTRIBUYENTES (con RUC) ============== -->
 
-    <!-- Cliente contribuyente - IVA general -->
+    <!-- Cliente contribuyente - VAT general -->
     <record id="partner_contribuyente_general" model="res.partner">
         <field name="name">Comercial Guaraní SA</field>
         <field name="is_company">1</field>

@@ -19,7 +19,7 @@ class TestAccountAuthorization(TransactionCase):
         cls.company = cls.env.ref("base.main_company")
         cls.country_py = cls.env.ref("base.py")
 
-        # Obtener tipo de documento factura
+        # Obtener tipo de documento invoice
         cls.doc_type_invoice = cls.env["l10n_latam.document.type"].search(
             [("country_id", "=", cls.country_py.id), ("code", "=", "1")],
             limit=1,
@@ -53,21 +53,21 @@ class TestAccountAuthorization(TransactionCase):
         vals.update(kwargs)
         return self.Authorization.create(vals)
 
-    # ============== F01: Timbrado ==============
+    # ============== F01: Authorization ==============
 
     def test_create_authorization(self):
-        """F01: Crear timbrado válido"""
+        """F01: Create valid authorization"""
         auth = self._create_authorization()
         self.assertTrue(auth.id)
         self.assertEqual(auth.state, "valid")
 
     def test_authorization_state_valid(self):
-        """F01: Estado 'valid' cuando vigente"""
+        """F01: State 'valid' cuando vigente"""
         auth = self._create_authorization()
         self.assertEqual(auth.state, "valid")
 
     def test_authorization_state_expired(self):
-        """F01: Estado 'expired' cuando vencido"""
+        """F01: State 'expired' cuando vencido"""
         auth = self._create_authorization(
             date_from=self.today - timedelta(days=400),
             date_to=self.today - timedelta(days=35),
@@ -75,7 +75,7 @@ class TestAccountAuthorization(TransactionCase):
         self.assertEqual(auth.state, "expired")
 
     def test_authorization_state_to_expire(self):
-        """F01: Estado 'to_expire' cuando < 30 días"""
+        """F01: State 'to_expire' when < 30 days"""
         auth = self._create_authorization(
             date_from=self.today - timedelta(days=300),
             date_to=self.today + timedelta(days=25),
@@ -83,15 +83,15 @@ class TestAccountAuthorization(TransactionCase):
         self.assertEqual(auth.state, "to_expire")
 
     def test_timbrado_format_validation(self):
-        """F01: Rechaza timbrado con != 8 dígitos"""
+        """F01: Rechaza timbrado con != 8 digits"""
         with self.assertRaises(ValidationError):
-            self._create_authorization(name="1234567")  # 7 dígitos
+            self._create_authorization(name="1234567")  # 7 digits
 
         with self.assertRaises(ValidationError):
             self._create_authorization(name="1234567A")  # letras
 
     def test_establishment_format_validation(self):
-        """F01: Rechaza establecimiento con != 3 dígitos"""
+        """F01: Rechaza establishment con != 3 digits"""
         with self.assertRaises(ValidationError):
             self._create_authorization(establishment="01")
 
@@ -99,7 +99,7 @@ class TestAccountAuthorization(TransactionCase):
             self._create_authorization(establishment="00A")
 
     def test_invoice_range_validation(self):
-        """F01: Rechaza range inválido (from > to)"""
+        """F01: Reject invalid range (from > to)"""
         with self.assertRaises(ValidationError):
             self._create_authorization(invoice_number_from=1000, invoice_number_to=500)
 
@@ -109,7 +109,7 @@ class TestAccountAuthorization(TransactionCase):
             self._create_authorization(invoice_number_to=10000000)
 
     def test_range_at_max_boundary(self):
-        """F01: Aceita faja até exatamente 9.999.999"""
+        """F01: Accept range up to exactly 9,999,999"""
         auth = self._create_authorization(invoice_number_to=9999999)
         self.assertEqual(auth.invoice_number_to, 9999999)
 
@@ -127,12 +127,12 @@ class TestAccountAuthorization(TransactionCase):
         self.assertEqual(auth.l10n_latam_document_type_id, self.doc_type_invoice)
 
     def test_check_validity(self):
-        """F01: Verificación de vigencia"""
+        """F01: Validity check"""
         auth = self._create_authorization()
         self.assertTrue(auth.check_validity())
 
     def test_check_validity_expired(self):
-        """F01: Timbrado vencido lanza error"""
+        """F01: Authorization vencido lanza error"""
         auth = self._create_authorization(
             date_from=self.today - timedelta(days=400),
             date_to=self.today - timedelta(days=35),
@@ -141,18 +141,18 @@ class TestAccountAuthorization(TransactionCase):
             auth.check_validity()
 
     def test_check_number_available(self):
-        """F01: Número dentro del range y no usado"""
+        """F01: Number within range and not used"""
         auth = self._create_authorization()
         self.assertTrue(auth.check_number_available(500))
 
     def test_check_number_out_of_range(self):
-        """F01: Número fuera del range"""
+        """F01: Number outside range"""
         auth = self._create_authorization()
         with self.assertRaises(ValidationError):
             auth.check_number_available(15000)
 
     def test_next_number_computation(self):
-        """F01: Próximo número correcto"""
+        """F01: Correct next number"""
         auth = self._create_authorization()
         self.assertEqual(auth.next_number, 1)
 
@@ -164,18 +164,18 @@ class TestAccountAuthorization(TransactionCase):
             invoice_number_from=1,
             invoice_number_to=100,
         )
-        # Sin facturas, uso = 0%
+        # Sin invoices, uso = 0%
         self.assertEqual(auth.usage_percentage, 0.0)
 
-    # ============== F02: Serie AA-ZZ ==============
+    # ============== F02: Series AA-ZZ ==============
 
     def test_series_default_aa(self):
-        """F02: Serie por defecto es AA"""
+        """F02: Series por defecto es AA"""
         auth = self._create_authorization()
         self.assertEqual(auth.series, "AA")
 
     def test_series_validation_valid(self):
-        """F02: Serie válida de 2 letras mayúsculas"""
+        """F02: Valid series of 2 uppercase letters"""
         auth = self._create_authorization(series="AB")
         self.assertEqual(auth.series, "AB")
 
@@ -183,24 +183,24 @@ class TestAccountAuthorization(TransactionCase):
         self.assertEqual(auth2.series, "ZZ")
 
     def test_series_validation_invalid_mixed(self):
-        """F02: Serie con dígitos rechazada"""
+        """F02: Series with digits rejected"""
         with self.assertRaises(ValidationError):
             self._create_authorization(series="A1")
 
     def test_series_validation_invalid_lowercase(self):
-        """F02: Serie con minúsculas rechazada"""
+        """F02: Series with lowercase rejected"""
         with self.assertRaises(ValidationError):
             self._create_authorization(series="ab")
 
     def test_series_validation_invalid_single(self):
-        """F02: Serie de 1 carácter rechazada"""
+        """F02: Series of 1 character rejected"""
         with self.assertRaises(ValidationError):
             self._create_authorization(series="A")
 
     # ============== F01: name_get ==============
 
     def test_name_get(self):
-        """F01: Formato de visualización"""
+        """F01: Display format"""
         auth = self._create_authorization(
             expedition_point="002",
         )
@@ -212,19 +212,19 @@ class TestAccountAuthorization(TransactionCase):
         """F02: name_get incluye serie cuando != AA"""
         auth = self._create_authorization(series="BC")
         name = auth.display_name
-        self.assertIn("Serie BC", name)
+        self.assertIn("Series BC", name)
 
     def test_name_get_default_series_hidden(self):
         """F02: name_get no incluye serie AA (por defecto)"""
         auth = self._create_authorization(series="AA")
         name = auth.display_name
-        self.assertNotIn("Serie", name)
+        self.assertNotIn("Series", name)
 
     # ============== SQL Unique ==============
 
     @mute_logger("odoo.sql_db")
     def test_unique_constraint(self):
-        """F02: Timbrado duplicado lanza IntegrityError"""
+        """F02: Authorization duplicado lanza IntegrityError"""
         self._create_authorization()
         with self.assertRaises(IntegrityError):
             self._create_authorization()

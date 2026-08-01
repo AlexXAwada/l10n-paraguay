@@ -16,4 +16,10 @@
         <field name="email">info@empresademo.com.py</field>
         <field name="website">https://www.empresademo.com.py</field>
     </record>
+
+    <!-- Aplicar plano de contas PY à empresa demo (padrão l10n_br) -->
+    <function model="account.chart.template" name="try_loading">
+        <value eval="['py']" />
+        <value model="res.company" eval="obj().env.ref('base.main_company')" />
+    </function>
 </odoo>

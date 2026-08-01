@@ -18,13 +18,13 @@
                         <button
                             name="check_validity"
                             type="object"
-                            string="Verificar Validez"
+                            string="Verify Validity"
                             class="oe_stat_button"
                             icon="fa-check-circle"
                         />
                     </div>
                     <div class="oe_title">
-                        <label for="name" string="Número de Timbrado" />
+                        <label for="name" string="Authorization Number" />
                         <h1>
                             <field name="name" placeholder="ej: 12345678" />
                         </h1>
@@ -43,7 +43,7 @@
                             <field name="date_to" />
                         </group>
                     </group>
-                    <group string="Numeración Autorizada">
+                    <group string="Authorized Numbering">
                         <group>
                             <field name="establishment" />
                             <field name="expedition_point" />
@@ -54,7 +54,7 @@
                             <field name="invoice_number_to" />
                         </group>
                     </group>
-                    <group string="Estadísticas" col="4">
+                    <group string="Statistics" col="4">
                         <field name="next_number" />
                         <field name="used_numbers" />
                         <field name="remaining_numbers" />
@@ -99,34 +99,34 @@
         </field>
     </record>
 
-    <!-- Vista de búsqueda para account.authorization -->
+    <!-- Search view for account.authorization -->
     <record id="view_account_authorization_search" model="ir.ui.view">
         <field name="name">account.authorization.search</field>
         <field name="model">account.authorization</field>
         <field name="arch" type="xml">
-            <search string="Buscar Timbrados">
-                <field name="name" string="Timbrado" />
+            <search string="Buscar Authorizations">
+                <field name="name" string="Authorization" />
                 <field name="establishment" />
                 <field name="expedition_point" />
                 <field name="l10n_latam_document_type_id" />
                 <filter
-                    string="Vigentes"
+                    string="Valids"
                     name="valid"
                     domain="[('state', '=', 'valid')]"
                 />
                 <filter
-                    string="Por Vencer"
+                    string="Expiring Soon"
                     name="to_expire"
                     domain="[('state', '=', 'to_expire')]"
                 />
                 <filter
-                    string="Vencidos"
+                    string="Expireds"
                     name="expired"
                     domain="[('state', '=', 'expired')]"
                 />
                 <separator />
                 <filter
-                    string="Activos"
+                    string="Actives"
                     name="active"
                     domain="[('active', '=', True)]"
                 />
@@ -137,47 +137,50 @@
                 />
                 <separator />
                 <field name="l10n_latam_document_type_id" />
-                <group expand="0" string="Agrupar Por">
-                    <filter
-                        string="Estado"
-                        name="group_state"
-                        context="{'group_by': 'state'}"
-                    />
-                    <filter
-                        string="Tipo de Documento"
-                        name="group_type"
-                        context="{'group_by': 'l10n_latam_document_type_id'}"
-                    />
-                    <filter
-                        string="Establecimiento"
-                        name="group_establishment"
-                        context="{'group_by': 'establishment'}"
-                    />
-                </group>
+                <separator />
+                <filter
+                    string="State"
+                    name="group_state"
+                    context="{'group_by': 'state'}"
+                />
+                <filter
+                    string="Document Type"
+                    name="group_type"
+                    context="{'group_by': 'l10n_latam_document_type_id'}"
+                />
+                <filter
+                    string="Establishment"
+                    name="group_establishment"
+                    context="{'group_by': 'establishment'}"
+                />
             </search>
         </field>
     </record>
 
-    <!-- Acción para account.authorization -->
+    <!-- Action for account.authorization -->
     <record id="action_account_authorization" model="ir.actions.act_window">
-        <field name="name">Timbrados</field>
+        <field name="name">Authorizations</field>
         <field name="res_model">account.authorization</field>
         <field name="view_mode">list,form</field>
+        <field
+            name="view_ids"
+            eval="[(5, 0, {'view_mode': 'list', 'view_id': ref('view_account_authorization_tree')}), (0, 0, {'view_mode': 'form', 'view_id': ref('view_account_authorization_form')})]"
+        />
         <field
             name="context"
         >{'search_default_active': 1, 'search_default_valid': 1}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-                Crear un nuevo timbrado
+                Create a new authorization
             </p>
             <p>
-                Los timbrados son autorizaciones otorgadas por la SET (Subsecretaría de Estado de Tributación)
-                para emitir facturas. Cada timbrado tiene un rango de numeración y fechas de validez específicas.
+                Authorizations are documents issued by SET - Paraguay Tax Authority
+                for issuing invoices. Each authorization has a numbering range and specific validity dates.
             </p>
         </field>
     </record>
 
-    <!-- Menú Paraguay dentro de Configuración -->
+    <!-- Paraguay menu under Configuration -->
     <menuitem
         id="menu_l10n_py_config"
         name="Paraguay"
@@ -187,7 +190,7 @@
 
     <menuitem
         id="menu_account_authorization"
-        name="Timbrados"
+        name="Authorizations"
         parent="menu_l10n_py_config"
         action="action_account_authorization"
         sequence="10"

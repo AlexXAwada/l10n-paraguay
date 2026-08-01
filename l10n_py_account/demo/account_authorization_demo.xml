@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo noupdate="1">
-    <!-- Timbrados de Demostración -->
+    <!-- Authorizations de Demostración -->
 
-    <!-- Timbrado vigente para facturas -->
+    <!-- Authorization vigente para facturas -->
     <record id="demo_authorization_001" model="account.authorization">
         <field name="name">12345678</field>
         <field
@@ -21,7 +21,7 @@
         <field name="active" eval="True" />
     </record>
 
-    <!-- Timbrado vigente alternativo -->
+    <!-- Authorization vigente alternativo -->
     <record id="demo_authorization_002" model="account.authorization">
         <field name="name">87654321</field>
         <field
@@ -40,7 +40,7 @@
         <field name="active" eval="True" />
     </record>
 
-    <!-- Timbrado para notas de crédito -->
+    <!-- Authorization para notas de crédito -->
     <record id="demo_authorization_credit_note" model="account.authorization">
         <field name="name">11223344</field>
         <field
@@ -59,7 +59,7 @@
         <field name="active" eval="True" />
     </record>
 
-    <!-- Timbrado por vencer (menos de 30 días) -->
+    <!-- Authorization por vencer (menos de 30 días) -->
     <record id="demo_authorization_to_expire" model="account.authorization">
         <field name="name">99887766</field>
         <field
@@ -78,7 +78,7 @@
         <field name="active" eval="True" />
     </record>
 
-    <!-- Timbrado vencido (para demostración) -->
+    <!-- Authorization vencido (para demostración) -->
     <record id="demo_authorization_expired" model="account.authorization">
         <field name="name">55667788</field>
         <field
@@ -97,7 +97,7 @@
         <field name="active" eval="False" />
     </record>
 
-    <!-- Timbrado para notas de débito -->
+    <!-- Authorization para notas de débito -->
     <record id="demo_authorization_debit_note" model="account.authorization">
         <field name="name">44556677</field>
         <field

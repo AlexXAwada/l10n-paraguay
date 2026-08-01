@@ -2,7 +2,7 @@
 import re
 from datetime import date
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 MAX_INVOICE_NUMBER = 9999999
@@ -10,136 +10,125 @@ MAX_INVOICE_NUMBER = 9999999
 
 class AccountAuthorization(models.Model):
     """
-    Modelo para gestionar timbrados (autorizaciones) de la SET Paraguay
+    Model to manage document authorizations (timbrado) from SET Paraguay
     """
 
     _name = "account.authorization"
-    _description = "Autorización de Facturación (Timbrado)"
+    _description = "Document Authorization (Timbrado)"
     _order = "date_from desc, id desc"
 
     name = fields.Char(
-        string="Número de Timbrado",
+        string="Authorization Number",
         required=True,
         size=8,
-        help="Número de timbrado otorgado por la SET",
+        help="Authorization number issued by SET",
     )
 
     date_from = fields.Date(
-        string="Fecha de Inicio",
+        string="Start Date",
         required=True,
-        help="Fecha desde la cual el timbrado es válido",
+        help="Date from which the authorization is valid",
     )
 
     date_to = fields.Date(
-        string="Fecha de Vencimiento",
+        string="End Date",
         required=True,
-        help="Fecha hasta la cual el timbrado es válido",
+        help="Date until which the authorization is valid",
     )
 
     invoice_number_from = fields.Integer(
-        string="Número Desde",
+        string="From Number",
         required=True,
-        help="Primer número de factura autorizado",
+        help="First authorized invoice number",
     )
 
     invoice_number_to = fields.Integer(
-        string="Número Hasta",
+        string="To Number",
         required=True,
-        help="Último número de factura autorizado",
+        help="Last authorized invoice number",
     )
 
     establishment = fields.Char(
-        string="Establecimiento",
         required=True,
         size=3,
         default="001",
-        help="Código de establecimiento (3 dígitos)",
+        help="Establishment code (3 digits)",
     )
 
     expedition_point = fields.Char(
-        string="Punto de Expedición",
         required=True,
         size=3,
         default="001",
-        help="Código de punto de expedición (3 dígitos)",
+        help="Expedition point code (3 digits)",
     )
 
     series = fields.Char(
-        string="Serie",
         size=2,
         default="AA",
-        help="Serie del timbrado (2 letras mayúsculas, AA-ZZ). "
-        "Permite reiniciar numeración cuando se agota la faja.",
+        help="Authorization series (2 uppercase letters, AA-ZZ). "
+        "Allows restarting numbering when the range is exhausted.",
     )
 
     l10n_latam_document_type_id = fields.Many2one(
         comodel_name="l10n_latam.document.type",
-        string="Tipo de Documento",
+        string="Document Type",
         required=True,
-        help="Tipo de documento LATAM (Factura, NC, ND, etc.)",
+        help="LATAM document type (Invoice, CN, DN, etc.)",
     )
 
     company_id = fields.Many2one(
         "res.company",
-        string="Compañía",
+        string="Company",
         required=True,
         default=lambda self: self.env.company,
     )
 
     active = fields.Boolean(
-        string="Activo",
         default=True,
-        help="Marcar como inactivo para deshabilitar el timbrado",
+        help="Mark as inactive to disable the authorization",
     )
 
     state = fields.Selection(
         [
-            ("valid", "Vigente"),
-            ("expired", "Vencido"),
-            ("to_expire", "Por Vencer"),
+            ("valid", "Valid"),
+            ("expired", "Expired"),
+            ("to_expire", "Expiring Soon"),
         ],
-        string="Estado",
         compute="_compute_state",
         store=True,
     )
 
     next_number = fields.Integer(
-        string="Próximo Número",
         compute="_compute_next_number",
-        help="Próximo número de factura a utilizar",
+        help="Next invoice number to use",
     )
 
     used_numbers = fields.Integer(
-        string="Números Utilizados",
         compute="_compute_used_numbers",
-        help="Cantidad de números ya utilizados",
+        help="Number of numbers already used",
     )
 
     remaining_numbers = fields.Integer(
-        string="Números Disponibles",
+        string="Available Numbers",
         compute="_compute_remaining_numbers",
-        help="Cantidad de números aún disponibles",
+        help="Number of remaining available numbers",
     )
 
     usage_percentage = fields.Float(
-        string="Porcentaje de Uso",
         compute="_compute_usage_percentage",
-        help="Porcentaje de números utilizados respecto al total autorizado",
+        help="Percentage of numbers used out of total authorized",
     )
 
-    _sql_constraints = [
-        (
-            "unique_timbrado",
-            "unique(name, establishment, expedition_point, series, "
-            "l10n_latam_document_type_id, company_id)",
-            "La combinación timbrado/establecimiento/punto de expedición/"
-            "serie/tipo de documento debe ser única.",
-        ),
-    ]
+    _unique_timbrado = models.Constraint(
+        "unique(name, establishment, expedition_point, series, "
+        "l10n_latam_document_type_id, company_id)",
+        "The combination of authorization/establishment/expedition point/"
+        "series/document type must be unique.",
+    )
 
     @api.depends("date_from", "date_to")
     def _compute_state(self):
-        """Calcula el estado del timbrado basado en las fechas"""
+        """Compute authorization state based on dates"""
         today = date.today()
         for record in self:
             if not record.date_from or not record.date_to:
@@ -153,8 +142,9 @@ class AccountAuthorization(models.Model):
             else:
                 record.state = "valid"
 
+    @api.depends()
     def _compute_next_number(self):
-        """Calcula el próximo número disponible"""
+        """Compute the next available number"""
         for record in self:
             last_invoice = self.env["account.move"].search(
                 [
@@ -170,8 +160,9 @@ class AccountAuthorization(models.Model):
             else:
                 record.next_number = record.invoice_number_from
 
+    @api.depends()
     def _compute_used_numbers(self):
-        """Calcula cuántos números se han utilizado"""
+        """Compute how many numbers have been used"""
         for record in self:
             count = self.env["account.move"].search_count(
                 [
@@ -181,14 +172,16 @@ class AccountAuthorization(models.Model):
             )
             record.used_numbers = count
 
+    @api.depends("used_numbers", "invoice_number_from", "invoice_number_to")
     def _compute_remaining_numbers(self):
-        """Calcula cuántos números quedan disponibles"""
+        """Compute how many numbers are still available"""
         for record in self:
             total = record.invoice_number_to - record.invoice_number_from + 1
             record.remaining_numbers = total - record.used_numbers
 
+    @api.depends("used_numbers", "invoice_number_from", "invoice_number_to")
     def _compute_usage_percentage(self):
-        """Calcula el porcentaje de uso de la faja de numeración"""
+        """Compute the usage percentage of the number range"""
         for record in self:
             total = record.invoice_number_to - record.invoice_number_from + 1
             if total > 0:
@@ -198,89 +191,79 @@ class AccountAuthorization(models.Model):
 
     @api.constrains("name")
     def _check_timbrado_format(self):
-        """Valida el formato del número de timbrado"""
+        """Validate authorization number format"""
         for record in self:
             if not record.name.isdigit() or len(record.name) != 8:
                 raise ValidationError(
-                    _(
-                        "El número de timbrado debe contener exactamente "
-                        "8 dígitos numéricos."
+                    self.env._(
+                        "The authorization number must contain exactly "
+                        "8 numeric digits."
                     )
                 )
 
     @api.constrains("establishment", "expedition_point")
     def _check_codes_format(self):
-        """Valida el formato de establecimiento y punto de expedición"""
+        """Validate establishment and expedition point format"""
         for record in self:
             if not record.establishment.isdigit() or len(record.establishment) != 3:
                 raise ValidationError(
-                    _(
-                        "El código de establecimiento debe contener "
-                        "exactamente 3 dígitos."
-                    )
+                    self.env._("The establishment code must contain exactly 3 digits.")
                 )
             if (
                 not record.expedition_point.isdigit()
                 or len(record.expedition_point) != 3
             ):
                 raise ValidationError(
-                    _(
-                        "El código de punto de expedición debe contener "
-                        "exactamente 3 dígitos."
+                    self.env._(
+                        "The expedition point code must contain exactly 3 digits."
                     )
                 )
 
     @api.constrains("invoice_number_from", "invoice_number_to")
     def _check_invoice_range(self):
-        """Valida que el rango de numeración sea válido"""
+        """Validate that the number range is valid"""
         for record in self:
             if record.invoice_number_from <= 0:
-                raise ValidationError(_("El número inicial debe ser mayor a cero."))
+                raise ValidationError(
+                    self.env._("The starting number must be greater than zero.")
+                )
             if record.invoice_number_to <= record.invoice_number_from:
                 raise ValidationError(
-                    _("El número final debe ser mayor al número inicial.")
+                    self.env._(
+                        "The ending number must be greater than the starting number."
+                    )
                 )
             if record.invoice_number_to > MAX_INVOICE_NUMBER:
                 raise ValidationError(
-                    _(
-                        "El número final no puede exceder %(max)s.",
+                    self.env._(
+                        "The ending number cannot exceed %(max)s.",
                         max=MAX_INVOICE_NUMBER,
                     )
                 )
 
     @api.constrains("series")
     def _check_series_format(self):
-        """Valida que la serie sea exactamente 2 letras mayúsculas (AA-ZZ)"""
+        """Validate that series is exactly 2 uppercase letters (AA-ZZ)"""
         for record in self:
             if record.series and not re.match(r"^[A-Z]{2}$", record.series):
                 raise ValidationError(
-                    _(
-                        "La serie debe ser exactamente 2 letras mayúsculas "
-                        "(ej: AA, AB, ZZ)."
+                    self.env._(
+                        "The series must be exactly 2 uppercase letters "
+                        "(e.g.: AA, AB, ZZ)."
                     )
                 )
 
     @api.constrains("date_from", "date_to")
     def _check_dates(self):
-        """Valida que las fechas sean coherentes"""
+        """Validate that dates are consistent"""
         for record in self:
             if record.date_to < record.date_from:
                 raise ValidationError(
-                    _(
-                        "La fecha de vencimiento debe ser posterior "
-                        "a la fecha de inicio."
-                    )
+                    self.env._("The end date must be after the start date.")
                 )
 
-    @api.depends(
-        "name",
-        "establishment",
-        "expedition_point",
-        "series",
-        "l10n_latam_document_type_id",
-    )
     def _compute_display_name(self):
-        """Formato de visualización del timbrado"""
+        """Authorization display format"""
         for record in self:
             doc_type_name = (
                 record.l10n_latam_document_type_id.name
@@ -288,49 +271,47 @@ class AccountAuthorization(models.Model):
                 else ""
             )
             name = (
-                f"Timbrado {record.name} "
+                f"Authorization {record.name} "
                 f"({record.establishment}-{record.expedition_point})"
             )
             if record.series and record.series != "AA":
-                name = f"{name} Serie {record.series}"
+                name = f"{name} Series {record.series}"
             if doc_type_name:
                 name = f"{name} [{doc_type_name}]"
             record.display_name = name
 
     def check_validity(self):
-        """Verifica si el timbrado es válido en la fecha actual"""
+        """Verify if the authorization is valid on the current date"""
         self.ensure_one()
         today = date.today()
 
         if not self.active:
-            raise ValidationError(_("El timbrado está inactivo."))
+            raise ValidationError(self.env._("The authorization is inactive."))
 
         if today < self.date_from:
-            raise ValidationError(_("El timbrado aún no ha entrado en vigencia."))
+            raise ValidationError(self.env._("The authorization is not yet effective."))
 
         if today > self.date_to:
-            raise ValidationError(_("El timbrado ha vencido."))
+            raise ValidationError(self.env._("The authorization has expired."))
 
         return True
 
     def check_number_available(self, number, exclude_move_id=False):
-        """Verifica si un número está disponible en este timbrado"""
+        """Verify if a number is available in this authorization"""
         self.ensure_one()
 
         if number < self.invoice_number_from or number > self.invoice_number_to:
             raise ValidationError(
-                _(
-                    "El número %(number)s está fuera del rango autorizado "
-                    "(%(from)s - %(to)s)."
+                self.env._(
+                    "Number %(number)s is outside the authorized range "
+                    "(%(from_)s - %(to)s.",
+                    number=number,
+                    from_=self.invoice_number_from,
+                    to=self.invoice_number_to,
                 )
-                % {
-                    "number": number,
-                    "from": self.invoice_number_from,
-                    "to": self.invoice_number_to,
-                }
             )
 
-        # Verificar si el número ya fue utilizado
+        # Check if the number has already been used
         domain = [
             ("l10n_py_authorization_id", "=", self.id),
             ("l10n_py_invoice_number", "=", number),
@@ -342,14 +323,12 @@ class AccountAuthorization(models.Model):
 
         if existing:
             raise ValidationError(
-                _(
-                    "El número %(number)s ya ha sido utilizado en la factura "
-                    "%(invoice_name)s."
+                self.env._(
+                    "Number %(number)s has already been used in invoice "
+                    "%(invoice_name)s.",
+                    number=number,
+                    invoice_name=existing[0].name,
                 )
-                % {
-                    "number": number,
-                    "invoice_name": existing[0].name,
-                }
             )
 
         return True
