@@ -14,12 +14,12 @@
             <!-- EDI tab in notebook -->
             <xpath expr="//notebook" position="inside">
                 <page
-                    string="Facturación Electrónica"
+                    string="Electronic Billing"
                     name="l10n_py_edi"
                     invisible="move_type not in ['out_invoice', 'out_refund']"
                 >
                     <group>
-                        <group string="Datos EDI">
+                        <group string="Data EDI">
                             <field name="l10n_py_emission_type" />
                             <field name="l10n_py_transaction_type" />
                             <field name="l10n_py_presence_type" />
@@ -29,7 +29,7 @@
                             <field name="l10n_py_security_code" readonly="1" />
                             <field name="l10n_py_contingency_motive" />
                         </group>
-                        <group string="Estado EDI">
+                        <group string="State EDI">
                             <field
                                 name="l10n_py_edi_status"
                                 widget="statusbar"
@@ -42,7 +42,7 @@
                     </group>
                     <field name="l10n_py_doc_type_code" invisible="1" />
                     <group
-                        string="Nota de Remisión (NRE)"
+                        string="Remission Note (NRE)"
                         invisible="l10n_py_doc_type_code != '7'"
                         name="nre_section"
                     >
@@ -60,7 +60,7 @@
                             <field name="l10n_py_afe_constancia_number" />
                             <field name="l10n_py_afe_constancia_control" />
                         </group>
-                        <group string="Datos del Vendedor">
+                        <group string="Data del Vendedor">
                             <field name="l10n_py_afe_vendor_doc_type" />
                             <field name="l10n_py_afe_vendor_doc_number" />
                             <field name="l10n_py_afe_vendor_name" />
@@ -70,14 +70,14 @@
                             <field name="l10n_py_afe_vendor_district" />
                             <field name="l10n_py_afe_vendor_city" />
                         </group>
-                        <group string="Lugar de Provisión">
+                        <group string="Provision Place">
                             <field name="l10n_py_afe_provision_address" />
                             <field name="l10n_py_afe_provision_department" />
                             <field name="l10n_py_afe_provision_district" />
                             <field name="l10n_py_afe_provision_city" />
                         </group>
                     </group>
-                    <separator string="Documentos Asociados (Grupo H)" />
+                    <separator string="Documents Associateds (Grupo H)" />
                     <field name="l10n_py_associated_document_ids" />
                 </page>
             </xpath>
@@ -97,14 +97,8 @@
                     invisible="l10n_py_edi_status in ['sent', 'accepted', 'processing']"
                 />
                 <button
-                    name="action_l10n_py_preview_qr"
-                    string="Previsualizar QR"
-                    type="object"
-                    invisible="l10n_py_edi_status in ['sent', 'accepted', 'processing']"
-                />
-                <button
                     name="action_send_edi"
-                    string="Enviar a EDI"
+                    string="Send a EDI"
                     type="object"
                     class="oe_highlight"
                     invisible="l10n_py_edi_status in ['sent', 'accepted', 'processing']"
@@ -117,21 +111,21 @@
                 />
                 <button
                     name="action_cancel_edi"
-                    string="Cancelar EDI"
+                    string="Cancel EDI"
                     type="object"
-                    invisible="not l10n_py_cdc"
+                    invisible="l10n_py_cdc == False"
                 />
                 <button
                     name="action_download_xml"
-                    string="Descargar XML"
+                    string="Downloadr XML"
                     type="object"
-                    invisible="not l10n_py_edi_xml"
+                    invisible="l10n_py_edi_xml == False"
                 />
                 <button
                     name="action_download_kude"
-                    string="Descargar KUDE"
+                    string="Downloadr KUDE"
                     type="object"
-                    invisible="not l10n_py_kude_pdf"
+                    invisible="l10n_py_kude_pdf == False"
                 />
             </xpath>
         </field>

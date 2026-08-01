@@ -1,8 +1,10 @@
 # l10n_py_edi_base/tests/test_edi_log.py
 
+import logging
+from unittest.mock import patch
+
 from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
-from odoo.tools import mute_logger
 
 
 @tagged("post_install", "-at_install", "l10n_py")
@@ -10,10 +12,10 @@ class TestEDILog(TransactionCase):
     """Tests para l10n_py.edi.log"""
 
     def test_log_operation_success(self):
-        """Crear log de operación exitosa"""
+        """Create successful operation log"""
         log = self.env["l10n_py.edi.log"].log_operation(
             operation_type="send",
-            provider="factpy",
+            provider="sifen",
             execution_time=150.5,
             success=True,
         )
@@ -21,27 +23,31 @@ class TestEDILog(TransactionCase):
         self.assertTrue(log.success)
         self.assertFalse(log.error)
 
-    @mute_logger("odoo.addons.l10n_py_edi_base.models.l10n_py_edi_log")
     def test_log_operation_error(self):
-        """Crear log de operación con error"""
-        log = self.env["l10n_py.edi.log"].log_operation(
-            operation_type="send",
-            provider="factpy",
-            execution_time=500.0,
-            success=False,
-            error_message="Connection timeout",
-        )
+        """Create error operation log"""
+        # Suppress ERROR log to prevent CI failures
+        with patch.object(
+            logging.getLogger("odoo.addons.l10n_py_edi_base.models.l10n_py_edi_log"),
+            "error",
+        ):
+            log = self.env["l10n_py.edi.log"].log_operation(
+                operation_type="send",
+                provider="sifen",
+                execution_time=500.0,
+                success=False,
+                error_message="Connection timeout",
+            )
         self.assertTrue(log)
         self.assertFalse(log.success)
         self.assertTrue(log.error)
         self.assertEqual(log.error_message, "Connection timeout")
 
     def test_error_computed(self):
-        """Campo error computed correctamente"""
+        """Error field computed correctly"""
         log = self.env["l10n_py.edi.log"].create(
             {
                 "operation_type": "send",
-                "provider": "factpy",
+                "provider": "sifen",
                 "status_code": 500,
                 "success": False,
             }
@@ -51,7 +57,7 @@ class TestEDILog(TransactionCase):
         log2 = self.env["l10n_py.edi.log"].create(
             {
                 "operation_type": "send",
-                "provider": "factpy",
+                "provider": "sifen",
                 "status_code": 200,
                 "success": True,
             }
@@ -63,7 +69,7 @@ class TestEDILog(TransactionCase):
         log = self.env["l10n_py.edi.log"].create(
             {
                 "operation_type": "send",
-                "provider": "factpy",
+                "provider": "sifen",
                 "execution_time": 150.5,
             }
         )
@@ -74,7 +80,7 @@ class TestEDILog(TransactionCase):
         log = self.env["l10n_py.edi.log"].create(
             {
                 "operation_type": "send",
-                "provider": "factpy",
+                "provider": "sifen",
                 "execution_time": 2500.0,
             }
         )

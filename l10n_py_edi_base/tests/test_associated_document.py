@@ -16,7 +16,7 @@ class TestAssociatedDocument(TransactionCase):
         cls.company = cls.env.ref("base.main_company")
         cls.country_py = cls.env.ref("base.py")
 
-        # Crear move mínimo para asociar documentos
+        # Create minimum move to associate documents
         cls.partner = cls.env["res.partner"].create(
             {"name": "Test Partner PY", "country_id": cls.country_py.id}
         )
@@ -43,10 +43,10 @@ class TestAssociatedDocument(TransactionCase):
         # Ensure 44 digits
         cls.valid_cdc = cls.valid_cdc.ljust(44, "0")[:44]
 
-    # ============== F08: Electrónico ==============
+    # ============== F08: Electronic ==============
 
     def test_electronic_requires_cdc(self):
-        """F08: Documento electrónico sin CDC → error"""
+        """F08: Electronic document without CDC → error"""
         with self.assertRaises(ValidationError):
             self.AssociatedDoc.create(
                 {
@@ -56,7 +56,7 @@ class TestAssociatedDocument(TransactionCase):
             )
 
     def test_electronic_with_valid_cdc(self):
-        """F08: Documento electrónico con CDC válido → OK"""
+        """F08: Electronic document with valid CDC → OK"""
         doc = self.AssociatedDoc.create(
             {
                 "move_id": self.move.id,
@@ -67,7 +67,7 @@ class TestAssociatedDocument(TransactionCase):
         self.assertTrue(doc.id)
 
     def test_electronic_no_printed_fields(self):
-        """F08: Documento electrónico no puede tener campos impresos"""
+        """F08: Electronic document cannot have printed fields"""
         with self.assertRaises(ValidationError):
             self.AssociatedDoc.create(
                 {
@@ -79,7 +79,7 @@ class TestAssociatedDocument(TransactionCase):
             )
 
     def test_cdc_format_validation(self):
-        """F08: CDC con formato inválido → error"""
+        """F08: CDC with invalid format → error"""
         with self.assertRaises(ValidationError):
             self.AssociatedDoc.create(
                 {
@@ -101,7 +101,7 @@ class TestAssociatedDocument(TransactionCase):
     # ============== F08: Impreso ==============
 
     def test_printed_requires_all_fields(self):
-        """F08: Documento impreso sin campos obligatorios → error"""
+        """F08: Document impreso sin campos obligatorios → error"""
         # Sin timbrado
         with self.assertRaises(ValidationError):
             self.AssociatedDoc.create(
@@ -118,7 +118,7 @@ class TestAssociatedDocument(TransactionCase):
             )
 
     def test_printed_complete(self):
-        """F08: Documento impreso con todos los campos → OK"""
+        """F08: Document impreso con todos los campos → OK"""
         doc = self.AssociatedDoc.create(
             {
                 "move_id": self.move.id,
@@ -134,7 +134,7 @@ class TestAssociatedDocument(TransactionCase):
         self.assertTrue(doc.id)
 
     def test_printed_no_cdc(self):
-        """F08: Documento impreso no puede tener CDC"""
+        """F08: Document impreso no puede tener CDC"""
         with self.assertRaises(ValidationError):
             self.AssociatedDoc.create(
                 {
@@ -153,7 +153,7 @@ class TestAssociatedDocument(TransactionCase):
     # ============== F08: Constancia ==============
 
     def test_constancia_complete(self):
-        """F08: Constancia electrónica con tipo y número → OK"""
+        """F08: Electronic certificate with type and number → OK"""
         doc = self.AssociatedDoc.create(
             {
                 "move_id": self.move.id,
@@ -189,13 +189,13 @@ class TestAssociatedDocument(TransactionCase):
             )
 
     def test_constancia_requires_type_and_number(self):
-        """F08: Constancia sin tipo o número → error"""
+        """F08: Certificate without type or number → error"""
         with self.assertRaises(ValidationError):
             self.AssociatedDoc.create(
                 {
                     "move_id": self.move.id,
                     "association_type": "3",
-                    # falta tipo y número
+                    # missing type and number
                 }
             )
 
@@ -205,6 +205,6 @@ class TestAssociatedDocument(TransactionCase):
                     "move_id": self.move.id,
                     "association_type": "3",
                     "constancia_type": "1",
-                    # falta número
+                    # missing number
                 }
             )

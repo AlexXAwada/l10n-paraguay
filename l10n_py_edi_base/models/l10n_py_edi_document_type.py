@@ -4,20 +4,17 @@ from odoo import fields, models
 
 
 class EDIDocumentType(models.Model):
-    """Tipos de Documentos Electrónicos"""
+    """Electronic Document Types"""
 
     _name = "l10n_py.edi.document.type"
-    _description = "Tipo de Documento Electrónico"
+    _description = "Electronic Document Type"
     _order = "code"
 
-    code = fields.Char(string="Código", required=True, size=2)
-    name = fields.Char(string="Nombre", required=True, translate=True)
-    description = fields.Text(string="Descripción", translate=True)
+    code = fields.Char(required=True, size=2)
+    name = fields.Char(required=True, translate=True)
+    description = fields.Text(translate=True)
 
-    _sql_constraints = [
-        (
-            "code_unique",
-            "unique(code)",
-            "El código del tipo de documento debe ser único",
-        )
-    ]
+    _code_unique = models.Constraint(
+        "unique(code)",
+        "Document type code must be unique",
+    )

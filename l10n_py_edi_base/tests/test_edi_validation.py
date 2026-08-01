@@ -8,7 +8,7 @@ from odoo.tests.common import TransactionCase
 
 @tagged("post_install", "-at_install", "l10n_py")
 class TestEDIValidation(TransactionCase):
-    """Tests para validación de datos EDI"""
+    """Tests for EDI data validation"""
 
     @classmethod
     def setUpClass(cls):
@@ -23,14 +23,14 @@ class TestEDIValidation(TransactionCase):
         if not cls.doc_type_invoice:
             cls.doc_type_invoice = cls.env["l10n_latam.document.type"].create(
                 {
-                    "name": "Factura",
+                    "name": "Invoice",
                     "code": "1",
                     "country_id": cls.country_py.id,
                     "internal_type": "invoice",
                 }
             )
 
-        # Empresa
+        # Company
         cls.company = cls.env["res.company"].create(
             {
                 "name": "Test Company EDI",
@@ -51,7 +51,7 @@ class TestEDIValidation(TransactionCase):
             }
         )
 
-        # Timbrado
+        # Authorization Number
         today = date.today()
         cls.authorization = cls.env["account.authorization"].create(
             {
@@ -91,7 +91,7 @@ class TestEDIValidation(TransactionCase):
         )
 
     def test_security_code_generation(self):
-        """Código de seguridad de 9 dígitos"""
+        """Security code of 9 digits"""
         invoice = (
             self.env["account.move"]
             .with_company(self.company)
@@ -110,7 +110,7 @@ class TestEDIValidation(TransactionCase):
         self.assertTrue(security_code.isdigit())
 
     def test_edi_status_default(self):
-        """Estado EDI por defecto es 'draft'"""
+        """State EDI por defecto es 'draft'"""
         invoice = (
             self.env["account.move"]
             .with_company(self.company)

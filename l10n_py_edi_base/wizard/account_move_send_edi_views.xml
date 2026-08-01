@@ -11,13 +11,13 @@
                     </group>
                     <footer>
                         <button
-                            string="Enviar"
+                            string="Send"
                             name="action_send"
                             type="object"
                             class="oe_highlight"
                         />
                         <button
-                            string="Cancelar"
+                            string="Cancel"
                             class="btn-secondary"
                             special="cancel"
                         />

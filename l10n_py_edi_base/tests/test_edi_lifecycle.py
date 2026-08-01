@@ -28,7 +28,7 @@ class TestEDILifecycle(TransactionCase):
         if not cls.doc_type_invoice:
             cls.doc_type_invoice = cls.env["l10n_latam.document.type"].create(
                 {
-                    "name": "Factura",
+                    "name": "Invoice",
                     "code": "1",
                     "country_id": cls.country_py.id,
                     "internal_type": "invoice",
@@ -44,7 +44,7 @@ class TestEDILifecycle(TransactionCase):
 
         cls.account_income = cls.env["account.account"].search(
             [
-                ("company_ids", "in", cls.company.id),
+                ("company_ids", "in", [cls.company.id]),
                 ("account_type", "=", "income"),
             ],
             limit=1,
@@ -61,7 +61,7 @@ class TestEDILifecycle(TransactionCase):
 
         cls.account_receivable = cls.env["account.account"].search(
             [
-                ("company_ids", "in", cls.company.id),
+                ("company_ids", "in", [cls.company.id]),
                 ("account_type", "=", "asset_receivable"),
             ],
             limit=1,
@@ -104,12 +104,25 @@ class TestEDILifecycle(TransactionCase):
             }
         )
 
+        # Ensure there's a tax group with country_id = PY
+        tax_group = cls.env["account.tax.group"].search(
+            [("country_id", "=", cls.country_py.id), ("name", "=", "Exempt")],
+            limit=1,
+        )
+        if not tax_group:
+            tax_group = cls.env["account.tax.group"].create(
+                {
+                    "name": "Exempt",
+                    "country_id": cls.country_py.id,
+                }
+            )
         cls.tax_exempt = cls.env["account.tax"].create(
             {
-                "name": "Exento Test",
+                "name": "Exempt",
                 "amount": 0.0,
                 "amount_type": "percent",
                 "type_tax_use": "sale",
+                "tax_group_id": tax_group.id,
             }
         )
 
@@ -155,13 +168,13 @@ class TestEDILifecycle(TransactionCase):
     # ============== F11: Inutilização ==============
 
     def test_inutilize_range(self):
-        """F11: Inutilizar faja de números → OK"""
+        """F11: Inutilize number range → OK"""
         inut = self.env["l10n_py.number.inutilization"].create(
             {
                 "authorization_id": self.authorization.id,
                 "number_from": 9990,
                 "number_to": 9999,
-                "motive": "Números saltados por error de sistema",
+                "motive": "Numbers saltados por error de sistema",
             }
         )
         self.assertTrue(inut.id)
@@ -169,7 +182,7 @@ class TestEDILifecycle(TransactionCase):
         self.assertEqual(inut.state, "draft")
 
     def test_inutilize_over_1000(self):
-        """F11: Inutilizar más de 1000 → error"""
+        """F11: Inutilize more than 1000 → error"""
         with self.assertRaises(ValidationError):
             self.env["l10n_py.number.inutilization"].create(
                 {
@@ -181,7 +194,7 @@ class TestEDILifecycle(TransactionCase):
             )
 
     def test_inutilize_used_numbers(self):
-        """F11: Inutilizar números ya usados → error"""
+        """F11: Inutilize already used numbers → error"""
         move = self._create_and_post_invoice()
         used_number = move.l10n_py_invoice_number
 
@@ -196,7 +209,7 @@ class TestEDILifecycle(TransactionCase):
             )
 
     def test_inutilize_outside_range(self):
-        """F11: Inutilizar fuera del rango del timbrado → error"""
+        """F11: Inutilize fuera del rango del timbrado → error"""
         with self.assertRaises(ValidationError):
             self.env["l10n_py.number.inutilization"].create(
                 {

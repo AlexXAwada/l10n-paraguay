@@ -28,7 +28,7 @@
         />
     </record>
 
-    <!-- Documento asociado electrónico para NDE 1 -->
+    <!-- Document asociado electrónico para NDE 1 -->
     <record id="demo_nde_electronic_assoc_doc" model="l10n_py.associated.document">
         <field name="move_id" ref="demo_nde_electronic" />
         <field name="association_type">1</field>
@@ -61,7 +61,7 @@
         />
     </record>
 
-    <!-- Documento asociado impreso para NDE 2 -->
+    <!-- Document asociado impreso para NDE 2 -->
     <record id="demo_nde_printed_assoc_doc" model="l10n_py.associated.document">
         <field name="move_id" ref="demo_nde_printed" />
         <field name="association_type">2</field>

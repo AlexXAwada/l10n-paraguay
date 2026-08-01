@@ -4,40 +4,40 @@ from odoo import fields, models
 
 
 class Transport(models.Model):
-    """Datos de transporte de mercaderías (Grupo G SIFEN)."""
+    """Goods transport data (Grupo G SIFEN)."""
 
     _name = "l10n_py.transport"
-    _description = "Transporte de Mercaderías"
+    _description = "Goods Transport"
 
     move_id = fields.Many2one(
         "account.move",
-        string="Documento",
+        string="Document",
         required=True,
         ondelete="cascade",
     )
 
     transport_mode = fields.Selection(
         [
-            ("1", "Terrestre"),
-            ("2", "Fluvial"),
-            ("3", "Aéreo"),
+            ("1", "Land"),
+            ("2", "River"),
+            ("3", "Air"),
             ("4", "Multimodal"),
         ],
-        string="Modalidad de Transporte (E901)",
+        string="Modalidad de Transport (E901)",
         required=True,
         default="1",
     )
 
     transport_type = fields.Selection(
-        [("1", "Propio"), ("2", "Tercero")],
-        string="Tipo de Transporte (E903)",
+        [("1", "Propio"), ("2", "Third party")],
+        string="Tipo de Transport (E903)",
     )
 
     freight_responsibility = fields.Selection(
         [
-            ("1", "Emisor de la Factura Electrónica"),
-            ("2", "Receptor de la Factura Electrónica"),
-            ("3", "Tercero"),
+            ("1", "Electronic Invoice Issuer"),
+            ("2", "Electronic Invoice Receiver"),
+            ("3", "Third party"),
             ("4", "Agente intermediario del transporte"),
         ],
         string="Responsable del Flete (E905)",
@@ -57,65 +57,65 @@ class Transport(models.Model):
             ("FCA", "FCA"),
             ("FOB", "FOB"),
         ],
-        string="Condición de Negociación (E906)",
+        string="Negotiation Condition (E906)",
     )
 
     manifest_number = fields.Char(
-        string="Número de Manifiesto / Conocimiento (E907)",
+        string="Number de Manifest / Conocimiento (E907)",
     )
 
     transport_start_date = fields.Date(
-        string="Fecha Inicio Transporte (E909)",
+        string="Date Inicio Transport (E909)",
     )
 
     transport_end_date = fields.Date(
-        string="Fecha Fin Transporte (E910)",
+        string="Date Fin Transport (E910)",
     )
 
     # Departure point (gCamSal)
     departure_address = fields.Char(
-        string="Dirección de Salida (E920)",
+        string="Address de Salida (E920)",
     )
     departure_house = fields.Integer(
-        string="Número de Casa Salida (E921)",
+        string="Number de Casa Salida (E921)",
     )
     departure_department = fields.Integer(
-        string="Departamento Salida (E924)",
+        string="State/Province Salida (E924)",
     )
     departure_district = fields.Integer(
         string="Distrito Salida (E926)",
     )
     departure_city = fields.Integer(
-        string="Ciudad Salida (E928)",
+        string="City Salida (E928)",
     )
 
-    # Transporter data (gCamTrans)
+    # Transportr data (gCamTrans)
     transporter_nature = fields.Selection(
-        [("1", "Contribuyente"), ("2", "No contribuyente")],
-        string="Naturaleza del Transportista (E940)",
+        [("1", "Taxpayer"), ("2", "No contribuyente")],
+        string="Naturaleza del Carrier (E940)",
     )
     transporter_name = fields.Char(
-        string="Nombre del Transportista (E941)",
+        string="Name del Carrier (E941)",
     )
     transporter_ruc = fields.Char(
-        string="RUC del Transportista (E942)",
+        string="RUC del Carrier (E942)",
     )
     transporter_dv = fields.Char(
-        string="DV del Transportista (E943)",
+        string="DV del Carrier (E943)",
         size=1,
     )
     driver_doc_number = fields.Char(
-        string="Doc. del Chofer (E950)",
+        string="Doc. del Driver (E950)",
     )
     driver_name = fields.Char(
-        string="Nombre del Chofer (E951)",
+        string="Name del Driver (E951)",
     )
 
     # Related vehicles and deliveries
     vehicle_ids = fields.One2many(
         "l10n_py.transport.vehicle",
         "transport_id",
-        string="Vehículos",
+        string="Vehicles",
     )
     delivery_ids = fields.One2many(
         "l10n_py.transport.delivery",
@@ -130,20 +130,20 @@ class Transport(models.Model):
 
 
 class TransportVehicle(models.Model):
-    """Vehículo de transporte (gVehTras)."""
+    """Vehicle de transporte (gVehTras)."""
 
     _name = "l10n_py.transport.vehicle"
-    _description = "Vehículo de Transporte"
+    _description = "Vehicle de Transport"
 
     transport_id = fields.Many2one(
         "l10n_py.transport",
-        string="Transporte",
+        string="Transport",
         required=True,
         ondelete="cascade",
     )
 
     vehicle_type = fields.Char(
-        string="Tipo de Vehículo (E960)",
+        string="Tipo de Vehicle (E960)",
         required=True,
     )
     brand = fields.Char(
@@ -151,39 +151,39 @@ class TransportVehicle(models.Model):
         required=True,
     )
     plate_number = fields.Char(
-        string="Número de Identificación (E962)",
+        string="Identification Number (E962)",
         required=True,
     )
 
 
 class TransportDelivery(models.Model):
-    """Punto de entrega de mercaderías (gCamEnt)."""
+    """Goods delivery point (gCamEnt)."""
 
     _name = "l10n_py.transport.delivery"
     _description = "Punto de Entrega"
 
     transport_id = fields.Many2one(
         "l10n_py.transport",
-        string="Transporte",
+        string="Transport",
         required=True,
         ondelete="cascade",
     )
 
     address = fields.Char(
-        string="Dirección de Entrega (E930)",
+        string="Address de Entrega (E930)",
         required=True,
     )
     house_number = fields.Integer(
-        string="Número de Casa (E931)",
+        string="Number de Casa (E931)",
     )
     department = fields.Integer(
-        string="Departamento (E934)",
+        string="State/Province (E934)",
         required=True,
     )
     district = fields.Integer(
         string="Distrito (E936)",
     )
     city = fields.Integer(
-        string="Ciudad (E938)",
+        string="City (E938)",
         required=True,
     )

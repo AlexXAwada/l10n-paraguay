@@ -10,21 +10,17 @@
                         <field name="invoice_id" readonly="1" />
                         <field
                             name="motive"
-                            placeholder="Ingrese el motivo de cancelación..."
+                            placeholder="Enter the cancellation reason..."
                         />
                     </group>
                     <footer>
                         <button
-                            string="Cancelar Documento"
+                            string="Cancel Document"
                             name="action_cancel"
                             type="object"
                             class="oe_highlight"
                         />
-                        <button
-                            string="Cerrar"
-                            class="btn-secondary"
-                            special="cancel"
-                        />
+                        <button string="Close" class="btn-secondary" special="cancel" />
                     </footer>
                 </sheet>
             </form>

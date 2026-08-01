@@ -97,7 +97,7 @@
                                 style="display: table-cell; width: 40%; vertical-align: middle; padding: 4px 10px;"
                             >
                                 <div style="font-size: 10px;">
-                                    <strong>Timbrado Nro.:</strong>
+                                    <strong>Authorization Number Nro.:</strong>
                                     <span t-field="doc.l10n_py_authorization_id.name" />
                                 </div>
                                 <div style="font-size: 10px;">
@@ -217,7 +217,7 @@
                                     style="display: table-cell; width: 35%; padding: 4px 8px; vertical-align: top;"
                                 >
                                     <div style="margin-bottom: 2px;">
-                                        <strong>Fecha Emisi&#243;n: </strong>
+                                        <strong>Date Emisi&#243;n: </strong>
                                         <span
                                             t-field="doc.invoice_date"
                                             t-options='{"format": "dd/MM/yyyy"}'
@@ -263,7 +263,7 @@
                             <div
                                 style="display: table-cell; width: 35%; padding: 3px 8px;"
                             >
-                                <strong>Moneda: </strong>
+                                <strong>Currency: </strong>
                                 <span t-field="doc.currency_id.name" />
                                 <t
                                     t-if="doc.l10n_py_exchange_rate and doc.l10n_py_exchange_rate > 0"
@@ -318,10 +318,10 @@
                                     >Exenta</th>
                                     <th
                                         style="width: 12%; border: 1px solid #000; padding: 3px 4px; text-align: right;"
-                                    >IVA 5%</th>
+                                    >VAT 5%</th>
                                     <th
                                         style="width: 12%; border: 1px solid #000; padding: 3px 4px; text-align: right;"
-                                    >IVA 10%</th>
+                                    >VAT 10%</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -377,7 +377,7 @@
                                                 />
                                             </t>
                                         </td>
-                                        <!-- IVA 5% -->
+                                        <!-- VAT 5% -->
                                         <td
                                             style="border-right: 1px solid #ccc; padding: 2px 4px; text-align: right;"
                                         >
@@ -390,7 +390,7 @@
                                                 />
                                             </t>
                                         </td>
-                                        <!-- IVA 10% -->
+                                        <!-- VAT 10% -->
                                         <td
                                             style="padding: 2px 4px; text-align: right;"
                                         >
@@ -425,7 +425,7 @@
                                     </div>
                                 </t>
                             </div>
-                            <!-- Lado direito: Totais por alíquota -->
+                            <!-- Right side: Totals by rate -->
                             <div
                                 style="display: table-cell; width: 45%; vertical-align: top;"
                             >
@@ -438,7 +438,7 @@
                                     >
                                         <td
                                             style="padding: 2px 6px;"
-                                        >Sub-total Exento (F003):</td>
+                                        >Sub-total Exempt (F003):</td>
                                         <td
                                             style="padding: 2px 6px; text-align: right;"
                                         >
@@ -501,7 +501,7 @@
                                     >
                                         <td
                                             style="padding: 2px 6px;"
-                                        >Liq. IVA 5% (F015):</td>
+                                        >Liq. VAT 5% (F015):</td>
                                         <td
                                             style="padding: 2px 6px; text-align: right;"
                                         >
@@ -517,7 +517,7 @@
                                     >
                                         <td
                                             style="padding: 2px 6px;"
-                                        >Liq. IVA 10% (F016):</td>
+                                        >Liq. VAT 10% (F016):</td>
                                         <td
                                             style="padding: 2px 6px; text-align: right;"
                                         >
@@ -532,7 +532,7 @@
                                     >
                                         <td
                                             style="padding: 2px 6px;"
-                                        >Total Liq. IVA (F017):</td>
+                                        >Total Liq. VAT (F017):</td>
                                         <td
                                             style="padding: 2px 6px; text-align: right;"
                                         >
@@ -583,7 +583,7 @@
                             style="text-align: center; font-size: 8px; color: #555; margin-top: 6px; border-top: 1px solid #ccc; padding-top: 4px;"
                         >
                             <div>
-                                Este documento es una representaci&#243;n gr&#225;fica de un Documento Electr&#243;nico (DE)
+                                Este documento es una representaci&#243;n gr&#225;fica de un Document Electr&#243;nico (DE)
                             </div>
                             <t t-if="doc.l10n_py_cdc">
                                 <div>

@@ -9,11 +9,11 @@ class ProductTemplate(models.Model):
     # ============== CAMPOS EDI PARAGUAY ==============
 
     l10n_py_ncm_code = fields.Char(
-        string="Código NCM", size=8, help="Nomenclatura Común del Mercosur (8 dígitos)"
+        string="NCM Code", size=8, help="Common Mercosur Nomenclature (8 digits)"
     )
 
     l10n_py_unit_code = fields.Integer(
-        string="Código Unidad de Medida",
+        string="Code Unidad de Medida",
         default=77,
-        help="Código de unidad de medida según SET (77 = UNI - Unidad)",
+        help="Measurement unit code per SET (77 = UNI - Unit)",
     )

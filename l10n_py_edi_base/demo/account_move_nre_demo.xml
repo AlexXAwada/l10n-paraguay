@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo noupdate="1">
     <!-- ============================================================ -->
-    <!-- Timbrado para Notas de Remisión                              -->
+    <!-- Authorization Number para Notas de Remisión                              -->
     <!-- ============================================================ -->
 
     <record id="demo_authorization_nre" model="account.authorization">
@@ -48,7 +48,7 @@
         />
     </record>
 
-    <!-- Documento asociado electrónico para NRE 1 (FE de venta) -->
+    <!-- Document asociado electrónico para NRE 1 (FE de venta) -->
     <record id="demo_nre_venta_assoc_doc" model="l10n_py.associated.document">
         <field name="move_id" ref="demo_nre_traslado_venta" />
         <field name="association_type">1</field>

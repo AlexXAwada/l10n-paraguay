@@ -1,14 +1,19 @@
 # l10n_py_edi_base/models/account_move.py
 
+import base64 as b64
+import io
 import logging
-import re
 import secrets
 import string
+import time
 
+import qrcode
 from dateutil.relativedelta import relativedelta
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
+
+from ..services.cdc_generator import CDCGenerator
 
 _logger = logging.getLogger(__name__)
 
@@ -19,40 +24,40 @@ class AccountMove(models.Model):
     # ============== CAMPOS EDI PARAGUAY ==============
 
     l10n_py_emission_type = fields.Selection(
-        [("1", "Normal"), ("2", "Contingencia")],
-        string="Tipo de Emisión",
+        [("1", "Normal"), ("2", "Contingency")],
+        string="Emission Type",
         default="1",
         required=True,
     )
 
     l10n_py_transaction_type = fields.Selection(
         [
-            ("1", "Venta de mercadería"),
-            ("2", "Prestación de servicios"),
-            ("3", "Mixto (Venta de mercadería y servicios)"),
+            ("1", "Sale of goods"),
+            ("2", "Service provision"),
+            ("3", "Mixed (Sale of goods and services)"),
             ("4", "Venta de activo fijo"),
             ("5", "Venta de divisas"),
             ("6", "Compra de divisas"),
-            ("7", "Promoción o entrega de muestras"),
-            ("8", "Donación"),
+            ("7", "Promotion or sample delivery"),
+            ("8", "Donation"),
             ("9", "Anticipo"),
             ("10", "Compra de productos"),
-            ("11", "Compra de servicios"),
-            ("12", "Venta de crédito fiscal"),
-            ("13", "Compra de crédito fiscal"),
+            ("11", "Purchase of services"),
+            ("12", "Output tax sale"),
+            ("13", "Input tax purchase"),
         ],
-        string="Tipo de Transacción",
+        string="Paraguay Transaction Type",
         required=True,
         default="1",
     )
 
     l10n_py_presence_type = fields.Selection(
         [
-            ("1", "Operación presencial"),
-            ("2", "Operación electrónica"),
-            ("3", "Operación telemarketing"),
+            ("1", "Operation presencial"),
+            ("2", "Electronic operation"),
+            ("3", "Operation telemarketing"),
             ("4", "Venta a domicilio"),
-            ("5", "Operación bancaria"),
+            ("5", "Operation bancaria"),
         ],
         string="Tipo de Presencia",
         default="1",
@@ -63,9 +68,19 @@ class AccountMove(models.Model):
         "CDC",
         readonly=True,
         copy=False,
-        help="Código de Control del documento electrónico",
+        help="Control code of the electronic document",
     )
-    l10n_py_qr_code = fields.Binary("Código QR", readonly=True, copy=False)
+    l10n_py_cdc_emission_date = fields.Datetime(
+        "CDC Emission Date",
+        readonly=True,
+        copy=False,
+        help=(
+            "Timestamp used to generate the CDC datetime segment. "
+            "Persisted on the first send attempt and reused on every "
+            "retry so the CDC stays stable."
+        ),
+    )
+    l10n_py_qr_code = fields.Binary("Code QR", readonly=True, copy=False)
     l10n_py_qr_string = fields.Char("String QR", readonly=True, copy=False)
     l10n_py_edi_xml = fields.Binary("XML Firmado", readonly=True, copy=False)
     l10n_py_edi_xml_filename = fields.Char("XML Filename", readonly=True)
@@ -74,16 +89,16 @@ class AccountMove(models.Model):
 
     l10n_py_edi_status = fields.Selection(
         [
-            ("draft", "Borrador"),
-            ("to_send", "Para Enviar"),
-            ("sent", "Enviado"),
-            ("processing", "Procesando"),
-            ("accepted", "Aceptado"),
-            ("rejected", "Rechazado"),
-            ("cancelled", "Cancelado"),
+            ("draft", "Draft"),
+            ("to_send", "To Send"),
+            ("sent", "Sent"),
+            ("processing", "Processing"),
+            ("accepted", "Accepted"),
+            ("rejected", "Rejected"),
+            ("cancelled", "Cancelled"),
             ("error", "Error"),
         ],
-        string="Estado EDI",
+        string="EDI Status",
         default="draft",
         readonly=True,
         copy=False,
@@ -91,73 +106,83 @@ class AccountMove(models.Model):
 
     l10n_py_edi_message = fields.Text("Mensaje EDI", readonly=True, copy=False)
     l10n_py_edi_batch_id = fields.Char("ID de Lote", readonly=True, copy=False)
-    l10n_py_security_code = fields.Char(
-        "Código de Seguridad", size=9, readonly=True, copy=False
+    l10n_py_edi_accepted_date = fields.Datetime(
+        string="EDI Acceptance Date",
+        readonly=True,
+        copy=False,
     )
-    l10n_py_receipt_id = fields.Char("Receipt ID", help="ID único del sistema cliente")
+    l10n_py_edi_rejected_date = fields.Datetime(
+        string="EDI Rejection Date",
+        readonly=True,
+        copy=False,
+    )
+    l10n_py_security_code = fields.Char(
+        "Code de Security", size=9, readonly=True, copy=False
+    )
+    l10n_py_receipt_id = fields.Char("Receipt ID", help="Unique customer system ID")
 
-    # Campos para contingencia
-    l10n_py_contingency_motive = fields.Char("Motivo de Contingencia")
+    # Contingency fields
+    l10n_py_contingency_motive = fields.Char("Contingency Reason")
 
-    # Documentos asociados (Grupo H SIFEN)
+    # Documents asociados (Grupo H SIFEN)
     l10n_py_associated_document_ids = fields.One2many(
         "l10n_py.associated.document",
         "move_id",
-        string="Documentos Asociados",
-        help="Documentos asociados al DTE (Grupo H del SIFEN)",
+        string="Documents Associateds",
+        help="Documents asociados al DTE (Grupo H del SIFEN)",
     )
 
-    # Operación comercial (Grupo D — gOpeCom)
+    # Operation comercial (Grupo D — gOpeCom)
     l10n_py_exchange_rate_condition = fields.Selection(
-        [("1", "Global"), ("2", "Por Ítem")],
-        string="Condición Tipo de Cambio",
+        [("1", "Global"), ("2", "Per Item")],
+        string="Exchange Rate Condition",
         default="1",
-        help="Condición del tipo de cambio (D015)",
+        help="Exchange rate condition (D015)",
     )
 
     # Tipo de pago (Grupo E — gPaConEIni)
     l10n_py_payment_type = fields.Selection(
         [
-            ("1", "Efectivo"),
-            ("2", "Cheque"),
-            ("3", "Tarjeta de crédito"),
-            ("4", "Tarjeta de débito"),
-            ("5", "Transferencia"),
-            ("6", "Giro"),
-            ("7", "Billetera electrónica"),
-            ("8", "Tarjeta empresarial"),
-            ("9", "Vale"),
-            ("10", "Retención"),
-            ("11", "Anticipo"),
-            ("12", "Valor fiscal"),
-            ("13", "Valor comercial"),
-            ("14", "Compensación"),
+            ("1", "Cash"),
+            ("2", "Check"),
+            ("3", "Credit card"),
+            ("4", "Debit card"),
+            ("5", "Transfer"),
+            ("6", "Bank giro"),
+            ("7", "Electronic wallet"),
+            ("8", "Business card"),
+            ("9", "Voucher"),
+            ("10", "Withholding"),
+            ("11", "Advance"),
+            ("12", "Tax value"),
+            ("13", "Commercial value"),
+            ("14", "Compensation"),
             ("15", "Permuta"),
             ("16", "Pago bancario"),
         ],
         string="Tipo de Pago",
         default="1",
-        help="Tipo de pago para condición contado (E606)",
+        help="Payment type for cash condition (E606)",
     )
 
-    # Campos AFE — Autofactura Electrónica (Grupo E — gCamAE)
+    # AFE Fields — Electronic Self-Invoice (Grupo E — gCamAE)
     l10n_py_afe_constancia_type = fields.Selection(
         [("1", "No contribuyente"), ("2", "Microproductor")],
         string="Tipo de Constancia (EA002)",
     )
     l10n_py_afe_constancia_number = fields.Char(
-        string="Número de Constancia (EA004)",
+        string="Number de Constancia (EA004)",
         size=20,
     )
     l10n_py_afe_constancia_control = fields.Char(
-        string="Número de Control (EA005)",
+        string="Number de Control (EA005)",
         size=20,
     )
     l10n_py_afe_vendor_doc_type = fields.Selection(
         [
-            ("1", "Cédula paraguaya"),
+            ("1", "Paraguayan ID"),
             ("2", "Pasaporte"),
-            ("3", "Cédula extranjera"),
+            ("3", "Foreign ID"),
             ("4", "Carnet de residencia"),
         ],
         string="Tipo Doc. Vendedor (EA006)",
@@ -167,34 +192,34 @@ class AccountMove(models.Model):
         size=20,
     )
     l10n_py_afe_vendor_name = fields.Char(
-        string="Nombre Vendedor (EA009)",
+        string="Name Vendedor (EA009)",
     )
     l10n_py_afe_vendor_address = fields.Char(
-        string="Dirección Vendedor (EA010)",
+        string="Address Vendedor (EA010)",
     )
     l10n_py_afe_vendor_house = fields.Integer(
         string="Nro. Casa Vendedor (EA011)",
     )
     l10n_py_afe_vendor_department = fields.Integer(
-        string="Departamento Vendedor (EA012)",
+        string="State/Province Vendedor (EA012)",
     )
     l10n_py_afe_vendor_district = fields.Integer(
         string="Distrito Vendedor (EA014)",
     )
     l10n_py_afe_vendor_city = fields.Integer(
-        string="Ciudad Vendedor (EA016)",
+        string="City Vendedor (EA016)",
     )
     l10n_py_afe_provision_address = fields.Char(
-        string="Dirección Provisión (EA018)",
+        string="Provision Address (EA018)",
     )
     l10n_py_afe_provision_department = fields.Integer(
-        string="Departamento Provisión (EA019)",
+        string="Provision State/Province (EA019)",
     )
     l10n_py_afe_provision_district = fields.Integer(
-        string="Distrito Provisión (EA021)",
+        string="Provision District (EA021)",
     )
     l10n_py_afe_provision_city = fields.Integer(
-        string="Ciudad Provisión (EA023)",
+        string="Provision City (EA023)",
     )
 
     # Campo auxiliar para visibilidad en la vista
@@ -202,37 +227,37 @@ class AccountMove(models.Model):
         compute="_compute_l10n_py_doc_type_code",
     )
 
-    # Campos NRE (Nota de Remisión Electrónica — tipo 7)
+    # NRE Fields (Electronic Remission Note — type 7)
     l10n_py_nre_motive = fields.Selection(
         [
             ("1", "Traslado por venta"),
-            ("2", "Traslado por consignación"),
-            ("3", "Traslado por exportación"),
-            ("4", "Traslado por importación"),
+            ("2", "Consignment transfer"),
+            ("3", "Export transfer"),
+            ("4", "Import transfer"),
             ("5", "Traslado entre locales"),
             ("6", "Otros"),
         ],
-        string="Motivo de Remisión (E501)",
+        string="Remission Reason (E501)",
     )
 
     l10n_py_nre_estimated_invoice_date = fields.Date(
-        string="Fecha Estimada de Facturación (E506)",
-        help="Fecha estimada de facturación para NRE sin factura asociada",
+        string="Date Estimada de Billing (E506)",
+        help="Estimated invoicing date for NRE without associated invoice",
     )
 
-    # Transporte (Grupo G SIFEN — NRE)
+    # Transport (Grupo G SIFEN — NRE)
     l10n_py_transport_id = fields.Many2one(
         "l10n_py.transport",
-        string="Datos de Transporte",
-        help="Datos de transporte para Nota de Remisión (Grupo G SIFEN)",
+        string="Data de Transport",
+        help="Transport data for Remission Note (Grupo G SIFEN)",
     )
 
     # Campo prazo de transmissão
     l10n_py_transmission_deadline = fields.Datetime(
-        string="Plazo de Transmisión",
+        string="Transmission Deadline",
         compute="_compute_transmission_deadline",
         store=True,
-        help="Plazo máximo para transmitir el DTE (72 horas desde emisión)",
+        help="Maximum deadline to transmit the DTE (72 hours from emission)",
     )
 
     # ============== LIFECYCLE METHODS ==============
@@ -247,10 +272,10 @@ class AccountMove(models.Model):
 
     @api.depends("invoice_date")
     def _compute_transmission_deadline(self):
-        """Calcular plazo máximo de transmisión (72h desde emisión)"""
+        """Compute maximum transmission deadline (72h from emission)"""
         for move in self:
             if move.invoice_date:
-                # 72 horas desde el inicio del día de emisión
+                # 72 hours from start of emission day
                 move.l10n_py_transmission_deadline = fields.Datetime.from_string(
                     str(move.invoice_date) + " 00:00:00"
                 ) + relativedelta(hours=72)
@@ -270,7 +295,7 @@ class AccountMove(models.Model):
 
     @api.onchange("invoice_line_ids")
     def _onchange_invoice_lines_transaction_type(self):
-        """Auto-detectar tipo de transacción basado en los productos"""
+        """Auto-detect transaction type based on products"""
         if self.invoice_line_ids:
             has_products = False
             has_services = False
@@ -289,7 +314,7 @@ class AccountMove(models.Model):
             elif has_services:
                 self.l10n_py_transaction_type = "2"  # Servicios
             else:
-                self.l10n_py_transaction_type = "1"  # Mercadería
+                self.l10n_py_transaction_type = "1"  # Goods
 
     # ============== CONSTRAINT METHODS ==============
 
@@ -298,13 +323,13 @@ class AccountMove(models.Model):
         for record in self:
             if record.l10n_py_security_code and len(record.l10n_py_security_code) != 9:
                 raise ValidationError(
-                    _("El código de seguridad debe tener " "exactamente 9 caracteres")
+                    self.env._("Security code must have exactly 9 characters")
                 )
 
-    # ============== PRIVATE METHODS ==============
+    # ============== PRVATTE METHODS ==============
 
     def _generate_security_code(self):
-        """Generar código de seguridad aleatorio de 9 dígitos"""
+        """Generate security code random de 9 digits"""
         return "".join(secrets.choice(string.digits) for _ in range(9))
 
     @staticmethod
@@ -342,32 +367,56 @@ class AccountMove(models.Model):
         return _ALPHA2_TO_3.get(country.code, country.code)
 
     def _prepare_edi_document_data(self):
-        """Preparar datos del documento electrónico en formato JSON"""
+        """Prepare electronic document data in JSON format"""
         self.ensure_one()
 
         if not self.l10n_py_security_code:
             self.l10n_py_security_code = self._generate_security_code()
 
-        # Obtener código de tipo de documento desde l10n_latam
+        # Generate and persist the CDC (and the timestamp used to build it)
+        # on the first send attempt so it stays stable across retries,
+        # whether or not the previous attempt succeeded.
+        if not self.l10n_py_cdc:
+            doc_type_code = "1"
+            if self.l10n_latam_document_type_id:
+                doc_type_code = self.l10n_latam_document_type_id.code or "1"
+            emission_date = self.l10n_py_cdc_emission_date or fields.Datetime.now()
+            cdc = CDCGenerator.generate(
+                company_ruc=self.company_id.l10n_py_ruc,
+                doc_type=int(doc_type_code),
+                establishment=(self.journal_id.l10n_py_establishment or "001"),
+                expedition_point=self.journal_id.l10n_py_point or "001",
+                sequence=int(self._get_edi_sequence_number()),
+                emission_date=emission_date,
+                security_code=self.l10n_py_security_code or None,
+            )
+            self.write(
+                {
+                    "l10n_py_cdc": cdc,
+                    "l10n_py_cdc_emission_date": emission_date,
+                }
+            )
+
+        # Obtener code de tipo de documento desde l10n_latam
         doc_type_code = "1"
         if self.l10n_latam_document_type_id:
             doc_type_code = self.l10n_latam_document_type_id.code or "1"
 
-        # Datos del timbrado (Grupo B)
-        auth = self.journal_id.l10n_py_authorization_id
+        # Data del timbrado (Grupo B)
+        auth = self.l10n_py_authorization_id or self.journal_id.l10n_py_authorization_id
         timbrado_data = {}
         if auth:
             timbrado_data = {
                 "timbrado": auth.name or "",
-                "timbradoFechaInicio": (
+                "timbradoDateInicio": (
                     auth.date_from.strftime("%Y-%m-%d") if auth.date_from else ""
                 ),
-                "timbradoFechaFin": (
+                "timbradoDateFin": (
                     auth.date_to.strftime("%Y-%m-%d") if auth.date_to else ""
                 ),
             }
 
-        # Construir estructura de datos según formato requerido
+        # Build data structure per required format
         document_data = {
             "tipoDocumento": int(doc_type_code),
             "establecimiento": (self.journal_id.l10n_py_establishment or "001"),
@@ -383,28 +432,28 @@ class AccountMove(models.Model):
             ),
             "tipoEmision": int(self.l10n_py_emission_type),
             "tipoTransaccion": int(self.l10n_py_transaction_type),
-            "tipoImpuesto": 1,  # IVA
+            "tipoTax": 1,  # VAT
             "moneda": self.currency_id.name,
             "condicionTipoCambio": int(self.l10n_py_exchange_rate_condition or "1"),
             "tipoCambio": self.l10n_py_exchange_rate or 0,
             "receiptId": (self.l10n_py_receipt_id or f"{self.company_id.id}-{self.id}"),
-            "codigoSeguridadAleatorio": self.l10n_py_security_code,
+            "codigoSecurityRandom": self.l10n_py_security_code,
             "cliente": self._prepare_customer_data(),
             "factura": {"presencia": int(self.l10n_py_presence_type)},
             "condicion": self._prepare_payment_condition(),
             "items": self._prepare_invoice_lines(),
         }
 
-        # Agregar datos de usuario emisor si existe
+        # Agregar datos de usuario issuer si existe
         if self.user_id:
             document_data["usuario"] = {
-                "documentoTipo": 1,  # Cédula
+                "documentoTipo": 1,  # ID card
                 "documentoNumero": self.user_id.partner_id.vat or "",
                 "nombre": self.user_id.name,
                 "cargo": self.user_id.function or "Vendedor",
             }
 
-        # Documentos asociados (Grupo H)
+        # Documents asociados (Grupo H)
         if self.l10n_py_associated_document_ids:
             document_data["documentosAsociados"] = self._prepare_associated_documents()
 
@@ -421,11 +470,11 @@ class AccountMove(models.Model):
                     self.l10n_py_nre_estimated_invoice_date.strftime("%Y-%m-%d")
                 )
 
-        # Campos AFE (tipo=4) — Autofactura Electrónica
+        # AFE Fields (type=4) — Electronic Self-Invoice
         if doc_type_code == "4":
             document_data["autofactura"] = self._prepare_autofactura_data()
 
-        # Transporte (tipo=7 — NRE)
+        # Transport (tipo=7 — NRE)
         if doc_type_code == "7" and self.l10n_py_transport_id:
             document_data["transporte"] = self._prepare_transport_data()
 
@@ -442,13 +491,16 @@ class AccountMove(models.Model):
             "baseGravada10": self.l10n_py_base_10,  # F019
             "totalBaseGravada": self.l10n_py_base_total,  # F020
         }
-        if self.l10n_py_amount_total_pyg is not None:
+        if self.l10n_py_amount_total_pyg:
             document_data["totales"]["totalPYG"] = self.l10n_py_amount_total_pyg  # F023
         else:
-            # Fallback: use totalOperacion when currency is PYG
             document_data["totales"]["totalPYG"] = document_data["totales"][
                 "totalOperacion"
             ]
+
+        document_data["cdc"] = self.l10n_py_cdc or ""
+        document_data["security_code"] = self.l10n_py_security_code or ""
+        document_data["emission_date"] = self.l10n_py_cdc_emission_date
 
         return document_data
 
@@ -468,7 +520,7 @@ class AccountMove(models.Model):
                         "establecimiento": ad.establishment,
                         "punto": ad.expedition_point,
                         "numero": ad.doc_number,
-                        "tipoDocumentoImpreso": int(ad.doc_type_code),
+                        "tipoDocumentPrinted": int(ad.doc_type_code),
                         "fecha": (
                             ad.doc_date.strftime("%Y-%m-%d") if ad.doc_date else ""
                         ),
@@ -488,7 +540,7 @@ class AccountMove(models.Model):
         """Preparar datos del cliente (Grupo D receptor)"""
         partner = self.partner_id
 
-        # iNatRec: 1=Contribuyente, 2=No Contribuyente
+        # iNatRec: 1=Taxpayer, 2=No Taxpayer
         nat_rec = partner.l10n_py_taxpayer_type or "1"
 
         # iTiOpe: 1=B2B, 2=B2C, 3=B2G, 4=B2F (extranjero)
@@ -505,7 +557,7 @@ class AccountMove(models.Model):
             "contribuyente": nat_rec == "1",
             "ruc": partner.l10n_py_ruc or "",
             "dvReceptor": partner.l10n_py_ruc_dv or "",
-            "tipoContribuyente": "2" if partner.is_company else "1",
+            "tipoTaxpayer": "2" if partner.is_company else "1",
             "razonSocial": partner.name,
             "nombreFantasia": partner.l10n_py_fantasy_name or partner.name,
             "direccion": partner.street or "N/A",
@@ -517,7 +569,7 @@ class AccountMove(models.Model):
             "paisDescripcion": partner.country_id.name or "Paraguay",
         }
 
-        # Agregar datos de ubicación si están disponibles
+        # Add location data if available
         if partner.l10n_py_department_code:
             customer_data.update(
                 {
@@ -548,40 +600,50 @@ class AccountMove(models.Model):
         return customer_data
 
     def _prepare_payment_condition(self):
-        """Preparar condición de pago"""
+        """Prepare payment condition"""
         payment_condition = {
-            "tipo": (
-                2 if self.invoice_payment_term_id else 1
-            ),  # 1: Contado, 2: Crédito
+            "tipo": (2 if self.invoice_payment_term_id else 1),  # 1: Cash, 2: Credit
         }
 
         if self.invoice_payment_term_id:
-            # Es crédito
+            # It is credit
             payment_condition["credito"] = {
                 "tipo": 1,  # 1: Plazo, 2: Cuotas
                 "plazo": (
-                    f"{self.invoice_payment_term_id.line_ids[0].days} días"
+                    f"{self.invoice_payment_term_id.line_ids[0].days} days"
                     if self.invoice_payment_term_id.line_ids
-                    else "0 días"
+                    else "0 days"
                 ),
                 "cuotas": len(self.invoice_payment_term_id.line_ids),
             }
 
-            # Preparar información de cuotas
+            # Prepare installment information
             cuotas = []
-            if self.invoice_date and self.invoice_payment_term_id.line_ids:
-                for line in self.invoice_payment_term_id.line_ids:
-                    due_date = self.invoice_date + relativedelta(days=line.days)
-                    cuotas.append(
-                        {
-                            "moneda": self.currency_id.name,
-                            "monto": (
-                                self.amount_total
-                                / len(self.invoice_payment_term_id.line_ids)
-                            ),
-                            "vencimiento": due_date.strftime("%Y-%m-%d"),
-                        }
-                    )
+            sign = self.direction_sign
+            payment_terms = self.invoice_payment_term_id._compute_terms(
+                date_ref=self.invoice_date or fields.Date.today(),
+                currency=self.currency_id,
+                company=self.company_id,
+                tax_amount=self.amount_tax_signed,
+                tax_amount_currency=self.amount_tax * sign,
+                sign=sign,
+                untaxed_amount=self.amount_untaxed_signed,
+                untaxed_amount_currency=self.amount_untaxed * sign,
+            )
+            for term_line in payment_terms.get("line_ids", []):
+                date_due = term_line.get("date")
+                amount = term_line.get("foreign_amount")
+                cuotas.append(
+                    {
+                        "moneda": self.currency_id.name,
+                        "monto": amount,
+                        "vencimiento": (
+                            date_due.strftime("%Y-%m-%d")
+                            if hasattr(date_due, "strftime")
+                            else str(date_due)
+                        ),
+                    }
+                )
 
             payment_condition["credito"]["infoCuotas"] = cuotas
         else:
@@ -598,15 +660,15 @@ class AccountMove(models.Model):
         return payment_condition
 
     def _prepare_invoice_lines(self):
-        """Preparar líneas de la factura"""
+        """Prepare invoice lines"""
         items = []
 
         for line in self.invoice_line_ids.filtered(
             lambda line: line.display_type not in ("line_section", "line_note")
         ):
-            # Determinar tasa de IVA
+            # Determinar tasa de VAT
             iva_rate = 10  # Por defecto 10%
-            iva_type = 1  # Gravado IVA
+            iva_type = 1  # Gravado VAT
 
             for tax in line.tax_ids:
                 if tax.amount == 5:
@@ -615,7 +677,7 @@ class AccountMove(models.Model):
                     iva_type = 3  # Exenta
                     iva_rate = 0
 
-            # Calcular base gravable e liquidação IVA por linha (SIFEN)
+            # Calcular base gravable e liquidação VAT por linha (SIFEN)
             base_gravada = 0.0
             liquidacion_iva = 0.0
             if iva_rate > 0 and line.price_total:
@@ -626,18 +688,7 @@ class AccountMove(models.Model):
                 "codigo": (
                     line.product_id.default_code or f"PROD-{line.product_id.id}"
                 ),
-                # Odoo antepone "[CÓDIGO] " al nombre de línea y permite saltos
-                # de línea; el SET valida un patrón en dDesProSer, así que se
-                # quita el prefijo y se colapsan los espacios/saltos.
-                "descripcion": re.sub(
-                    r"\s+",
-                    " ",
-                    re.sub(
-                        r"^\[[^\]]*\]\s*",
-                        "",
-                        (line.name or line.product_id.name or ""),
-                    ),
-                ).strip(),
+                "descripcion": line.name or line.product_id.name,
                 "observacion": "",
                 "ncm": (
                     line.product_id.l10n_py_ncm_code
@@ -675,7 +726,7 @@ class AccountMove(models.Model):
         if t.incoterm:
             data["condicionNegociacion"] = t.incoterm
         if t.manifest_number:
-            data["numeroManifiesto"] = t.manifest_number
+            data["numeroManifest"] = t.manifest_number
         if t.transport_start_date:
             data["fechaInicio"] = t.transport_start_date.strftime("%Y-%m-%d")
         if t.transport_end_date:
@@ -691,15 +742,15 @@ class AccountMove(models.Model):
                 "ciudad": t.departure_city or 0,
             }
 
-        # Transporter
+        # Transportr
         if t.transporter_name:
             data["transportista"] = {
                 "naturaleza": t.transporter_nature or "1",
                 "nombre": t.transporter_name,
                 "ruc": t.transporter_ruc or "",
                 "dv": t.transporter_dv or "",
-                "choferDocumento": t.driver_doc_number or "",
-                "choferNombre": t.driver_name or "",
+                "choferDocument": t.driver_doc_number or "",
+                "choferName": t.driver_name or "",
             }
 
         # Vehicles
@@ -729,7 +780,7 @@ class AccountMove(models.Model):
         return data
 
     def _prepare_autofactura_data(self):
-        """Preparar datos de Autofactura Electrónica (Grupo E — gCamAE)."""
+        """Prepare Electronic Self-Invoice data (Group E — gCamAE)."""
         return {
             "tipoConstancia": int(self.l10n_py_afe_constancia_type or "1"),
             "numeroConstancia": self.l10n_py_afe_constancia_number or "",
@@ -749,7 +800,7 @@ class AccountMove(models.Model):
         }
 
     def _get_edi_sequence_number(self):
-        """Obtener número de secuencia para EDI"""
+        """Obtener number de sequence para EDI"""
         if self.l10n_py_invoice_number:
             return str(self.l10n_py_invoice_number).zfill(7)
         if self.name:
@@ -758,36 +809,38 @@ class AccountMove(models.Model):
         return "0000001"
 
     def _validate_afe_data(self, docs):
-        """Validar datos específicos de Autofactura Electrónica (código 4)."""
+        """Validate Electronic Self-Invoice specific data (code 4)."""
         errors = []
         if len(docs) != 1:
             errors.append(
-                _("Autofactura: debe tener exactamente 1 documento asociado.")
+                self.env._("Self-invoice: must have exactly 1 associated document.")
             )
         elif docs[0].association_type != "3":
             errors.append(
-                _(
-                    "Autofactura: el documento asociado debe "
-                    "ser una constancia electrónica."
+                self.env._(
+                    "Self-invoice: the associated document must "
+                    "be an electronic certificate (constancia)."
                 )
             )
         required_fields = [
-            ("l10n_py_afe_constancia_type", "el tipo de constancia"),
-            ("l10n_py_afe_constancia_number", "el número de constancia"),
-            ("l10n_py_afe_constancia_control", "el número de control"),
-            ("l10n_py_afe_vendor_doc_number", "el número de documento del vendedor"),
-            ("l10n_py_afe_vendor_name", "el nombre del vendedor"),
-            ("l10n_py_afe_vendor_address", "la dirección del vendedor"),
+            ("l10n_py_afe_constancia_type", "the constancia type"),
+            ("l10n_py_afe_constancia_number", "the constancia number"),
+            ("l10n_py_afe_constancia_control", "the control number"),
+            ("l10n_py_afe_vendor_doc_number", "the vendor document number"),
+            ("l10n_py_afe_vendor_name", "the vendor name"),
+            ("l10n_py_afe_vendor_address", "the vendor address"),
         ]
         for field_name, desc in required_fields:
             if not getattr(self, field_name):
-                errors.append(_("Autofactura: %s es obligatorio.") % desc)
+                errors.append(
+                    self.env._("Self-invoice: %(desc)s is required.", desc=desc)
+                )
         return errors
 
     def _validate_edi_document_type(self):
-        """Validar requisitos específicos por tipo de DTE.
+        """Validate specific requirements by DTE type.
 
-        Llamado antes del envío EDI. Retorna lista de errores.
+        Called before EDI send. Returns list of errors.
         """
         errors = []
         code = (
@@ -797,129 +850,131 @@ class AccountMove(models.Model):
         )
         docs = self.l10n_py_associated_document_ids
 
-        # AFE (code=4): exatamente 1 constância + datos vendedor
+        # AFE (code=4): exactly 1 certificate + seller data
         if code == "4":
             errors.extend(self._validate_afe_data(docs))
 
-        # NCE (code=5): exatamente 1 doc associado
+        # NCE (code=5): exactly 1 associated document
         elif code == "5":
             if len(docs) != 1:
                 errors.append(
-                    _(
-                        "Nota de Crédito Electrónica: debe tener "
-                        "exactamente 1 documento asociado."
+                    self.env._(
+                        "Electronic Credit Note: must have "
+                        "exactly 1 associated document."
                     )
                 )
 
-        # NDE (code=6): exatamente 1 doc associado
+        # NDE (code=6): exactly 1 associated document
         elif code == "6":
             if len(docs) != 1:
                 errors.append(
-                    _(
-                        "Nota de Débito Electrónica: debe tener "
-                        "exactamente 1 documento asociado."
+                    self.env._(
+                        "Electronic Debit Note: must have "
+                        "exactly 1 associated document."
                     )
                 )
 
-        # NRE (code=7): validações NRE
+        # NRE (code=7): validations NRE
         elif code == "7":
             if not self.l10n_py_nre_motive:
-                errors.append(_("Nota de Remisión: el motivo es obligatorio."))
-            # Motivo "1" (traslado por venta) sin doc asociado → requer data estimada
+                errors.append(
+                    self.env._("Remission Note: motivo (reason) is required.")
+                )
+            # Reason "1" (sale transfer) without doc → requires estimated date
             if self.l10n_py_nre_motive == "1" and not docs:
                 if not self.l10n_py_nre_estimated_invoice_date:
                     errors.append(
-                        _(
-                            "NRE traslado por venta sin documento "
-                            "asociado: debe indicar fecha estimada "
-                            "de facturación."
+                        self.env._(
+                            "NRE sale transfer without associated "
+                            "document: estimated invoicing date is required."
                         )
                     )
-            # Data estimada no puede exceder el mes de emisión
+            # Estimated date cannot exceed the month after emission
             if self.l10n_py_nre_estimated_invoice_date and self.invoice_date:
                 est_date = self.l10n_py_nre_estimated_invoice_date
                 inv_date = self.invoice_date
-                # La fecha estimada no debe superar el mes siguiente
-                if est_date.month > inv_date.month + 1 or (
-                    est_date.year > inv_date.year
-                    and not (inv_date.month == 12 and est_date.month == 1)
-                ):
+                max_allowed = inv_date + relativedelta(months=1, day=31)
+                if est_date > max_allowed:
                     errors.append(
-                        _(
-                            "La fecha estimada de facturación no puede "
-                            "exceder el mes siguiente al de emisión."
+                        self.env._(
+                            "The estimated invoicing date cannot "
+                            "exceed the month after emission."
                         )
                     )
-            # Motivo "5" (entre locales) → RUC receptor = RUC emissor
+            # Reason "5" (local-to-local transfer) → recipient RUC = issuer RUC
             if self.l10n_py_nre_motive == "5":
                 partner_ruc = self.partner_id.l10n_py_ruc or ""
-                company_ruc = self.company_id.l10n_py_ruc or ""
+                company_ruc = self.company_id.partner_id.l10n_py_ruc or ""
                 if partner_ruc != company_ruc:
                     errors.append(
-                        _(
-                            "Traslado entre locales: el RUC del "
-                            "receptor debe coincidir con el del emisor."
+                        self.env._(
+                            "Transfer between locations: the receiver's "
+                            "RUC must match the issuer's."
                         )
                     )
 
         return errors
 
     def _validate_edi_data(self):
-        """Validar datos antes de enviar a EDI"""
+        """Validate datos antes de enviar a EDI"""
         errors = []
 
-        # Validar datos de la empresa
+        # Validate datos de la empresa
         company = self.company_id
         if not company.l10n_py_ruc:
-            errors.append(_("Configure el RUC de la empresa"))
+            errors.append(self.env._("Configure the company RUC"))
 
-        # Validar datos del cliente (F15)
+        # Validate datos del cliente (F15)
         partner = self.partner_id
         if partner.l10n_py_taxpayer_type == "1" and not partner.l10n_py_ruc:
-            errors.append(_("El cliente contribuyente debe tener RUC"))
+            errors.append(self.env._("Taxpayer customer must have a RUC"))
         if partner.l10n_py_taxpayer_type == "2" and not partner.l10n_py_doc_number:
             errors.append(
-                _(
-                    "El cliente no contribuyente debe tener número "
-                    "de documento de identidad"
+                self.env._(
+                    "Non-taxpayer customer must have an identity document number"
                 )
             )
 
         if not partner.street:
-            errors.append(_("La dirección del cliente es obligatoria"))
+            errors.append(self.env._("Customer address is required"))
 
-        # Validar datos del diario
+        # Validate datos del diario
         journal = self.journal_id
         if not journal.l10n_py_authorization_id:
-            errors.append(_("Configure el timbrado en el diario"))
+            errors.append(
+                self.env._("Configure the authorization (timbrado) in the journal")
+            )
 
         if (
             journal.l10n_py_authorization_validity
             and journal.l10n_py_authorization_validity < fields.Date.today()
         ):
-            errors.append(_("El timbrado está vencido"))
+            errors.append(self.env._("The authorization has expired"))
 
-        # Validar productos
+        # Validate productos
         for line in self.invoice_line_ids.filtered(
             lambda line: line.display_type not in ("line_section", "line_note")
         ):
             if hasattr(line.product_id, "l10n_py_ncm_code"):
                 if not line.product_id.l10n_py_ncm_code:
                     errors.append(
-                        _("El producto %s no tiene código NCM") % line.product_id.name
+                        self.env._(
+                            "Product %(name)s does not have an NCM code",
+                            name=line.product_id.name,
+                        )
                     )
 
-        # Validar requisitos por tipo de documento (F03-F07)
+        # Validate requisitos por tipo de documento (F03-F07)
         errors.extend(self._validate_edi_document_type())
 
-        # Validar nominación obligatoria (> Gs. 7.000.000)
+        # Validate mandatory denomination (> Gs. 7,000,000)
         _NOMINACION_THRESHOLD = 7000000
         if self.currency_id.name == "PYG" and self.amount_total > _NOMINACION_THRESHOLD:
             if partner.l10n_py_taxpayer_type == "2" and not partner.l10n_py_doc_number:
                 errors.append(
-                    _(
-                        "Facturas superiores a Gs. 7.000.000 no pueden "
-                        "ser innominadas. Debe identificar al receptor."
+                    self.env._(
+                        "Invoices over Gs. 7,000,000 cannot be issued "
+                        "without identifying the recipient."
                     )
                 )
 
@@ -928,17 +983,49 @@ class AccountMove(models.Model):
 
         return True
 
+    def _log_edi_operation(
+        self,
+        operation_type,
+        provider,
+        response_data=None,
+        success=True,
+        error_message=None,
+        duration_ms=0,
+    ):
+        """Log an EDI operation to l10n_py_edi_log.
+
+        Args:
+            operation_type: send | status | cancel | event | validate
+            provider: sifen | factpy | facturasend | local
+            response_data: dict response from connector
+            success: whether the operation succeeded
+            error_message: error string if failed
+            duration_ms: execution time in milliseconds
+        """
+        try:
+            self.env["l10n_py.edi.log"].log_operation(
+                operation_type=operation_type,
+                provider=provider,
+                document=self,
+                response_data=response_data,
+                success=success,
+                error_message=error_message,
+                execution_time=duration_ms,
+            )
+        except Exception as e:
+            _logger.warning("Failed to log EDI operation: %s", str(e))
+
     # ============== PUBLIC METHODS ==============
 
     def _get_edi_connector(self):
-        """Buscar conector EDI de la empresa."""
+        """Search the company's EDI connector."""
         connector = (
             self.env["l10n_py.edi.connector"]
             .sudo()
             .search([("company_id", "=", self.company_id.id)], limit=1)
         )
         if not connector:
-            raise UserError(_("No hay un conector EDI configurado para esta empresa"))
+            raise UserError(self.env._("No EDI connector configured for this company"))
         return connector
 
     def _target_new_tab(self, attachment_id):
@@ -951,18 +1038,13 @@ class AccountMove(models.Model):
             }
 
     def action_preview_xml(self):
-        """Generar y mostrar XML sin firmar ni enviar (preview)."""
+        """Generate y mostrar XML sin firmar ni enviar (preview)."""
         self.ensure_one()
         self._validate_edi_data()
         document_data = self._prepare_edi_document_data()
         connector = self._get_edi_connector()
         xml_string = connector.preview_document(document_data)
-
-        import base64 as b64
-
         xml_b64 = b64.b64encode(xml_string.encode("utf-8"))
-        self.l10n_py_edi_xml = xml_b64
-        self.l10n_py_edi_xml_filename = "preview.xml"
 
         attachment = self.env["ir.attachment"].create(
             {
@@ -976,24 +1058,26 @@ class AccountMove(models.Model):
         return self._target_new_tab(attachment)
 
     def action_preview_kude(self):
-        """Generar KuDE (PDF) a partir del XML preview via pykude."""
-        import base64
-
+        """Generate KuDE (PDF) a partir del XML preview via pykude."""
         self.ensure_one()
-        if not self.l10n_py_edi_xml:
-            # Generate XML first
-            self.action_preview_xml()
-        if not self.l10n_py_edi_xml:
-            raise UserError(_("No hay XML disponible para generar el KuDE"))
+        self._validate_edi_data()
+        document_data = self._prepare_edi_document_data()
+        connector = self._get_edi_connector()
+        xml_string = connector.preview_document(document_data)
 
-        from pykude import auto_kude
-        from pykude.kude_fe.config import KudeFeConfig
+        try:
+            from pykude import auto_kude
+            from pykude.kude_fe.config import KudeFeConfig
+        except ImportError as err:
+            raise UserError(
+                self.env._("pykude is not available in this environment")
+            ) from err
 
-        xml_content = base64.b64decode(self.l10n_py_edi_xml).decode("utf-8")
+        xml_content = xml_string
 
         config = KudeFeConfig()
         if self.company_id.logo:
-            config.logo = base64.b64decode(self.company_id.logo)
+            config.logo = b64.b64decode(self.company_id.logo)
 
         kude = auto_kude(xml=xml_content, config=config)
         pdf_bytes = kude.output()
@@ -1001,7 +1085,7 @@ class AccountMove(models.Model):
         attachment = self.env["ir.attachment"].create(
             {
                 "name": f"KUDE_preview_{self.name or self.id}.pdf",
-                "datas": base64.b64encode(pdf_bytes),
+                "datas": b64.b64encode(pdf_bytes),
                 "mimetype": "application/pdf",
                 "res_model": self._name,
                 "res_id": self.id,
@@ -1010,10 +1094,10 @@ class AccountMove(models.Model):
         return self._target_new_tab(attachment)
 
     def action_send_edi(self):
-        """Enviar documento a sistema EDI"""
+        """Send documento a sistema EDI"""
         self.ensure_one()
 
-        # Validar datos
+        # Validate datos
         self._validate_edi_data()
 
         # Preparar datos
@@ -1021,24 +1105,41 @@ class AccountMove(models.Model):
 
         # Obtener conector configurado
         connector = self._get_edi_connector()
+        provider = connector.provider_type or "sifen"
 
         try:
-            # Enviar documento
+            # Send documento
             self.l10n_py_edi_status = "sent"
+
+            t0 = time.time()
             response = connector.send_document(document_data)
+            duration_ms = (time.time() - t0) * 1000
+
+            # Log operation
+            self._log_edi_operation(
+                "send",
+                provider,
+                response_data=response,
+                success=response.get("success", False),
+                error_message=response.get("error"),
+                duration_ms=duration_ms,
+            )
 
             # Procesar respuesta
             if response.get("success"):
                 self._process_edi_response(response)
             else:
                 self.l10n_py_edi_status = "rejected"
-                self.l10n_py_edi_message = response.get("error", "Error desconocido")
+                self.l10n_py_edi_rejected_date = fields.Datetime.now()
+                self.l10n_py_edi_message = response.get("error", "Unknown error")
 
         except Exception as e:
-            _logger.error("Error enviando EDI: %s", str(e))
+            _logger.error("Error sending EDI: %s", str(e))
             self.l10n_py_edi_status = "error"
             self.l10n_py_edi_message = str(e)
-            raise UserError(_("Error enviando documento: %s") % str(e)) from e
+            raise UserError(
+                self.env._("Error sending document: %(value)s", value=str(e))
+            ) from e
 
     def _process_edi_response(self, response):
         """Procesar respuesta exitosa del EDI"""
@@ -1046,85 +1147,48 @@ class AccountMove(models.Model):
 
         result = response.get("result", {})
 
-        # Guardar CDC y otros datos
+        # Save CDC y otros datos
         if result.get("deList"):
             de_data = result["deList"][0]
-            self.write(
-                {
-                    "l10n_py_cdc": de_data.get("cdc"),
-                    "l10n_py_qr_string": de_data.get("qr"),
-                    "l10n_py_edi_status": "accepted",
-                    "l10n_py_edi_batch_id": result.get("loteId"),
-                    "l10n_py_edi_message": ("Documento aceptado exitosamente"),
-                }
-            )
+            vals = {
+                "l10n_py_cdc": de_data.get("cdc"),
+                "l10n_py_qr_string": de_data.get("qr"),
+                "l10n_py_edi_status": "accepted",
+                "l10n_py_edi_batch_id": result.get("loteId"),
+                "l10n_py_edi_message": self.env._("Document accepted successfully"),
+            }
+            if not self.l10n_py_edi_accepted_date:
+                vals["l10n_py_edi_accepted_date"] = fields.Datetime.now()
+            self.write(vals)
 
-            # Generar la imagen del QR a partir del enlace dCarQR
-            self._l10n_py_generate_qr_image()
-
-            # Guardar XML si viene
+            # Save XML si viene
             if de_data.get("xml"):
-                import base64 as b64
-
                 self.l10n_py_edi_xml = b64.b64encode(de_data["xml"].encode("utf-8"))
                 self.l10n_py_edi_xml_filename = f"{self.l10n_py_cdc}.xml"
 
-            # Auto-generar KuDE al aceptar
+            # Generate QR code binary from qr_string (CDC + signature)
+            if de_data.get("qr"):
+                try:
+                    qr = qrcode.QRCode(version=1, box_size=10, border=4)
+                    qr.add_data(de_data["qr"])
+                    qr.make(fit=True)
+                    img = qr.make_image(fill_color="black", back_color="white")
+                    buffer = io.BytesIO()
+                    img.save(buffer, format="PNG")
+                    self.l10n_py_qr_code = b64.b64encode(buffer.getvalue())
+                except Exception as e:
+                    _logger.warning("Error generating QR code: %s", str(e))
+
+            # Auto-generate KuDE al aceptar
             try:
                 self._generate_kude()
             except Exception as e:
-                _logger.warning("Error generando KuDE: %s", str(e))
-
-    def _l10n_py_generate_qr_image(self):
-        """Genera la imagen PNG del QR (l10n_py_qr_code) desde el enlace."""
-        from ..services.qr_generator import QRGenerator
-
-        for move in self:
-            if move.l10n_py_qr_string:
-                move.l10n_py_qr_code = QRGenerator.generate_image(
-                    move.l10n_py_qr_string
-                )
-
-    def action_l10n_py_preview_qr(self):
-        """Genera CDC + QR (firma local) SIN transmitir, para previsualizar.
-
-        Útil para verificar el QR/KuDE en pruebas. El CDC generado es de
-        previsualización; la emisión real lo regenera al transmitir.
-        """
-        self.ensure_one()
-        self._validate_edi_data()
-        document_data = self._prepare_edi_document_data()
-        connector = self._get_edi_connector()
-        result = connector.preview_qr(document_data)
-        if not result or not result.get("qr"):
-            raise UserError(
-                _(
-                    "No se pudo generar el QR. Verifique el certificado y el "
-                    "CSC/IdCSC configurados en el conector EDI."
-                )
-            )
-        self.write(
-            {
-                "l10n_py_cdc": result.get("cdc"),
-                "l10n_py_qr_string": result["qr"],
-            }
-        )
-        self._l10n_py_generate_qr_image()
-        return {
-            "type": "ir.actions.client",
-            "tag": "display_notification",
-            "params": {
-                "type": "success",
-                "title": _("QR generado"),
-                "message": _("CDC y código QR de previsualización generados."),
-                "sticky": False,
-            },
-        }
+                _logger.warning("Error generating KuDE: %s", str(e))
 
     def _validate_cancel_deadline(self):
-        """Validar plazo de cancelación según tipo de documento SIFEN.
+        """Validate cancellation deadline per SIFEN document type.
 
-        FE/AFE: 48 horas, NCE/NDE/NRE: 168 horas (7 días).
+        FE/AFE: 48 hours, NCE/NDE/NRE: 168 hours (7 days).
         """
         if not self.invoice_date:
             return
@@ -1139,53 +1203,89 @@ class AccountMove(models.Model):
         else:
             max_hours = 168
 
-        emission_dt = fields.Datetime.from_string(str(self.invoice_date) + " 00:00:00")
-        deadline = emission_dt + relativedelta(hours=max_hours)
+        accepted_dt = self.l10n_py_edi_accepted_date or (
+            fields.Datetime.from_string(str(self.invoice_date) + " 00:00:00")
+            if self.invoice_date
+            else None
+        )
+        if not accepted_dt:
+            return
+        deadline = accepted_dt + relativedelta(hours=max_hours)
         now = fields.Datetime.now()
         if now > deadline:
             raise UserError(
-                _(
-                    "El plazo de cancelación ha expirado. "
-                    "Límite: %(deadline)s (%(hours)s horas desde emisión).",
+                self.env._(
+                    "The cancellation deadline has expired. "
+                    "Limit: %(deadline)s (%(hours)s hours from emission).",
                     deadline=deadline,
                     hours=max_hours,
                 )
             )
 
-    def action_cancel_edi(self):
-        """Cancelar documento electrónico"""
+    def action_cancel_edi(self, motive=None):
+        """Cancel electronic document"""
         self.ensure_one()
 
         if not self.l10n_py_cdc:
-            raise UserError(_("No se puede cancelar un documento sin CDC"))
+            raise UserError(self.env._("Cannot cancel a document without a CDC"))
 
         self._validate_cancel_deadline()
 
         connector = self._get_edi_connector()
-        response = connector.cancel_document(self.l10n_py_cdc)
+        provider = connector.provider_type or "sifen"
+
+        t0 = time.time()
+        response = connector.cancel_document(self.l10n_py_cdc, reason=motive or "")
+        duration_ms = (time.time() - t0) * 1000
+
+        # Log operation
+        self._log_edi_operation(
+            "cancel",
+            provider,
+            response_data=response,
+            success=response.get("success", False),
+            error_message=response.get("error"),
+            duration_ms=duration_ms,
+        )
+
         if response.get("success"):
             self.l10n_py_edi_status = "cancelled"
-            self.l10n_py_edi_message = f"Cancelado el {fields.Datetime.now()}"
+            self.l10n_py_edi_message = self.env._(
+                "Cancelled on %(date)s", date=fields.Datetime.now()
+            )
+            # The CDC uniquely identifies one electronic-document instance in
+            # SIFEN. Clear it (and its derived fields) so that any future
+            # resend on this record regenerates a fresh CDC instead of
+            # reusing a cancelled one, which SIFEN would reject as duplicate.
+            self.l10n_py_cdc = False
+            self.l10n_py_cdc_emission_date = False
+            self.l10n_py_qr_string = False
+            self.l10n_py_edi_accepted_date = False
         else:
-            raise UserError(_("Error cancelando documento: %s") % response.get("error"))
+            raise UserError(
+                self.env._(
+                    "Error cancelling document: %(error)s",
+                    error=response.get("error"),
+                )
+            )
 
     def action_retry_edi(self):
-        """Reintentar envío de documento"""
+        """Retry document sending"""
         self.ensure_one()
 
         if self.l10n_py_edi_status not in ["error", "rejected"]:
             raise UserError(
-                _("Solo se pueden reintentar documentos " "con error o rechazados")
+                self.env._("Only documents in error or rejected state can be retried")
             )
 
         return self.action_send_edi()
 
     def action_download_xml(self):
-        """Descargar XML del documento"""
+        """Download the document's XML."""
         self.ensure_one()
 
         if not self.l10n_py_edi_xml:
-            raise UserError(_("No hay XML disponible para este documento"))
+            raise UserError(self.env._("No XML available for this document"))
 
         return {
             "type": "ir.actions.act_url",
@@ -1197,15 +1297,18 @@ class AccountMove(models.Model):
         }
 
     def action_download_kude(self):
-        """Descargar KUDE (PDF)"""
+        """Download the KUDE (PDF)"""
         self.ensure_one()
 
         if not self.l10n_py_kude_pdf:
-            # Intentar generar KUDE
-            self._generate_kude()
+            # Try to generate the KUDE; a failure falls through to a clean message
+            try:
+                self._generate_kude()
+            except Exception as e:
+                _logger.warning("Error generating KuDE: %s", str(e))
 
         if not self.l10n_py_kude_pdf:
-            raise UserError(_("No hay KUDE disponible para este documento"))
+            raise UserError(self.env._("No KUDE available for this document"))
 
         return {
             "type": "ir.actions.act_url",
@@ -1217,35 +1320,49 @@ class AccountMove(models.Model):
         }
 
     def _generate_kude(self):
-        """Generar KUDE (representación gráfica del DE) vía pykude."""
-        import base64
-
+        """Generate KUDE (graphical representation of DTE) via pykude."""
         self.ensure_one()
         if not self.l10n_py_edi_xml:
             return
-        from pykude import auto_kude
-        from pykude.kude_fe.config import KudeFeConfig
+        if not self.l10n_py_cdc:
+            raise UserError(
+                self.env._(
+                    "Cannot generate KUDE without a CDC. "
+                    "Please resend the document first."
+                )
+            )
+        try:
+            from pykude import auto_kude
+            from pykude.kude_fe.config import KudeFeConfig
+        except ImportError:
+            _logger.warning("pykude not available, skipping KuDE generation")
+            return
 
-        xml_content = base64.b64decode(self.l10n_py_edi_xml).decode("utf-8")
+        xml_content = b64.b64decode(self.l10n_py_edi_xml).decode("utf-8")
 
         config = KudeFeConfig()
         if self.company_id.logo:
-            config.logo = base64.b64decode(self.company_id.logo)
+            config.logo = b64.b64decode(self.company_id.logo)
 
         kude = auto_kude(xml=xml_content, config=config)
         pdf_bytes = kude.output()
-        self.l10n_py_kude_pdf = base64.b64encode(pdf_bytes)
+
+        self.l10n_py_kude_pdf = b64.b64encode(pdf_bytes)
         self.l10n_py_kude_filename = f"KUDE_{self.l10n_py_cdc}.pdf"
 
     # ============== CRON METHODS ==============
 
+    # Minimum minutes between status checks for a document
+    _EDI_STATUS_CHECK_COOLDOWN_MIN = 10
+
     @api.model
     def _cron_check_edi_status(self):
-        """Verificar estado de documentos enviados y procesar cola de contingencia.
+        """Verify status of sent documents and process contingency queue.
 
-        Prioriza documentos cercanos al plazo de 72h.
+        Prioritizes documents close to the 72h deadline.
+        Uses cooldown to avoid checking the same document too frequently.
         """
-        # 1. Procesar cola de contingencia (to_send pendientes)
+        # 1. Process contingency queue (to_send pending with contingency type)
         contingency_docs = self.search(
             [
                 ("l10n_py_edi_status", "=", "to_send"),
@@ -1257,17 +1374,30 @@ class AccountMove(models.Model):
             try:
                 doc.action_send_edi()
             except Exception:
-                _logger.warning("Error reenviando doc contingencia %s", doc.name)
+                _logger.warning("Error retrying contingency doc %s", doc.name)
 
-        # 2. Verificar estado de documentos ya enviados
+        # 2. Verify status of already-sent documents with cooldown
         pending_docs = self.search(
             [
                 ("l10n_py_edi_status", "in", ["sent", "processing"]),
                 ("l10n_py_edi_batch_id", "!=", False),
-            ]
+            ],
+            order="write_date asc",  # Oldest first — prioritize stale documents
         )
 
+        now = fields.Datetime.now()
+        cooldown_delta = self._EDI_STATUS_CHECK_COOLDOWN_MIN * 60
+
         for doc in pending_docs:
+            # Cooldown: skip if document was updated recently
+            # Use write_date as proxy for last check time
+            last_update = doc.write_date
+            if last_update:
+                seconds_since_update = (now - last_update).total_seconds()
+                if seconds_since_update < cooldown_delta:
+                    # Still in cooldown window — skip this document
+                    continue
+
             try:
                 connector = (
                     self.env["l10n_py.edi.connector"]
@@ -1278,11 +1408,10 @@ class AccountMove(models.Model):
                     continue
                 response = connector.check_status(doc.l10n_py_edi_batch_id)
                 if response.get("success"):
-                    # Actualizar estado según respuesta
-                    pass
+                    doc._process_edi_response(response)
             except Exception as e:
                 _logger.error(
-                    "Error verificando estado EDI para %s: %s",
+                    "Error checking EDI status for %s: %s",
                     doc.name,
                     str(e),
                 )

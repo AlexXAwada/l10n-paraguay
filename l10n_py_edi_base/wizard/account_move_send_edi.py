@@ -1,14 +1,14 @@
 # l10n_py_edi_base/wizard/account_move_send_edi.py
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 
 class AccountMoveSendEDIWizard(models.TransientModel):
     _name = "account.move.send.edi.wizard"
-    _description = "Wizard para enviar factura a EDI"
+    _description = "Wizard to send invoice to EDI"
 
-    invoice_id = fields.Many2one("account.move", string="Factura", required=True)
+    invoice_id = fields.Many2one("account.move", string="Invoice", required=True)
 
     @api.model
     def default_get(self, fields_list):
@@ -18,10 +18,10 @@ class AccountMoveSendEDIWizard(models.TransientModel):
         return res
 
     def action_send(self):
-        """Enviar factura a EDI"""
+        """Send factura a EDI"""
         self.ensure_one()
         if not self.invoice_id:
-            raise UserError(_("No se seleccionó una factura"))
+            raise UserError(self.env._("No invoice selected"))
 
         self.invoice_id.action_send_edi()
 
@@ -29,8 +29,8 @@ class AccountMoveSendEDIWizard(models.TransientModel):
             "type": "ir.actions.client",
             "tag": "display_notification",
             "params": {
-                "title": _("Envío Exitoso"),
-                "message": _("La factura ha sido enviada al sistema EDI"),
+                "title": self.env._("Sending Successful"),
+                "message": self.env._("The invoice has been sent to the EDI system"),
                 "type": "success",
                 "sticky": False,
             },

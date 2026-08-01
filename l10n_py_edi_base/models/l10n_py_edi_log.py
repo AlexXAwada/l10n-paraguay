@@ -1,72 +1,71 @@
 # l10n_py_edi_base/models/l10n_py_edi_log.py
 
 """
-Sistema de Logs Avançado para operações EDI
-Implementa logging completo conforme propostas de melhoria
+Advanced Logging System for EDI Operations
+Implements complete logging per improvement proposals
 """
 
 import json
 import logging
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 _logger = logging.getLogger(__name__)
 
 
 class EDILog(models.Model):
-    """Modelo robusto para registrar logs de operações EDI"""
+    """Robust model to register EDI operation logs"""
 
     _name = "l10n_py.edi.log"
-    _description = "Log de Operações EDI Paraguay"
+    _description = "EDI Operations Log"
     _order = "create_date desc"
     _rec_name = "operation_type"
 
-    # ============== IDENTIFICAÇÃO DA OPERAÇÃO ==============
+    # ============== OPERATION IDENTIFICATION ==============
 
     operation_type = fields.Selection(
         [
-            ("send", "Envio de Documento"),
-            ("status", "Consulta de Status"),
-            ("cancel", "Cancelación"),
-            ("event", "Evento"),
+            ("send", "Document Sending"),
+            ("status", "Status Check"),
+            ("cancel", "Cancellation"),
+            ("event", "Event"),
+            ("webhook", "Webhook"),
+            ("inutilize", "Number Inutilization"),
             ("download_pdf", "Download PDF"),
             ("download_xml", "Download XML"),
-            ("validate", "Validação"),
+            ("validate", "Validation"),
         ],
-        string="Tipo de Operação",
         required=True,
         index=True,
     )
 
-    # ============== DOCUMENTOS RELACIONADOS ==============
+    # ============== RELATED DOCUMENTS ==============
 
     document_id = fields.Many2one(
         "account.move",
-        string="Documento",
         ondelete="cascade",
         index=True,
-        help="Documento fiscal relacionado",
+        help="Related fiscal document",
     )
 
-    cdc = fields.Char(string="CDC", index=True, help="Código de Control del documento")
+    cdc = fields.Char(index=True, help="Document control code")
 
-    # ============== PROVEDOR EDI ==============
+    # ============== EDI PROVIDER ==============
 
     provider = fields.Selection(
         [
             ("factpy", "FactPy"),
-            ("facturasend", "FacturaSend"),
+            ("facturasend", "InvoiceSend"),
             ("sifen", "SIFEN Directo"),
-            ("local", "Processamento Local"),
+            ("local", "Local Processing"),
         ],
-        string="Provedor",
         required=True,
         index=True,
     )
 
-    # ============== DADOS DA REQUISIÇÃO ==============
+    # ============== REQUEST DATA ==============
 
-    endpoint = fields.Char(help="URL ou endpoint da API")
+    endpoint = fields.Char(help="API URL or endpoint")
 
     method = fields.Selection(
         [
@@ -76,80 +75,63 @@ class EDILog(models.Model):
             ("DELETE", "DELETE"),
             ("PATCH", "PATCH"),
         ],
-        string="Método HTTP",
     )
 
-    request_headers = fields.Text(
-        string="Headers da Requisição", help="Headers HTTP enviados"
-    )
+    request_headers = fields.Text(help="HTTP headers sent")
 
-    request_data = fields.Text(string="Dados Enviados", help="Payload da requisição")
+    request_data = fields.Text(help="Request payload")
 
-    # ============== DADOS DA RESPOSTA ==============
+    # ============== RESPONSE DATA ==============
 
-    status_code = fields.Integer(
-        string="Código de Status", help="Código de status HTTP"
-    )
+    status_code = fields.Integer(help="HTTP status code")
 
-    response_headers = fields.Text(
-        string="Headers da Resposta", help="Headers HTTP recebidos"
-    )
+    response_headers = fields.Text(help="HTTP headers received")
 
-    response_data = fields.Text(string="Resposta Recebida", help="Payload da resposta")
+    response_data = fields.Text(help="Response payload")
 
-    # ============== MÉTRICAS ==============
+    # ============== METRICS ==============
 
     execution_time = fields.Float(
-        string="Tempo de Execução (ms)",
-        help="Tempo de execução em milissegundos",
+        help="Execution time in milliseconds",
         digits=(10, 2),
     )
 
-    # ============== STATUS E ERRO ==============
+    # ============== STATUS AND ERROR ==============
 
     success = fields.Boolean(
-        string="Sucesso",
         default=True,
         index=True,
-        help="Indica se a operação foi bem-sucedida",
+        help="Indicates whether the operation was successful",
     )
 
-    error_message = fields.Text(
-        string="Mensagem de Erro", help="Descrição do erro se houver"
-    )
+    error_message = fields.Text(help="Error description if any")
 
-    error_code = fields.Char(string="Código de Erro", help="Código de erro do provedor")
+    error_code = fields.Char(help="Provider error code")
 
-    # ============== DADOS ADICIONAIS ==============
+    # ============== ADDITIONAL DATA ==============
 
-    batch_id = fields.Char(
-        string="ID do Lote", help="Identificador de lote do provedor"
-    )
+    batch_id = fields.Char(help="Provider batch identifier")
 
-    retry_count = fields.Integer(
-        string="Tentativas", default=0, help="Número de tentativas realizadas"
-    )
+    retry_count = fields.Integer(default=0, help="Number of retries performed")
 
-    # ============== CAMPOS COMPUTADOS ==============
+    # ============== COMPUTED FIELDS ==============
 
     error = fields.Boolean(
-        string="É Erro",
         compute="_compute_error",
         store=True,
-        help="Indica se houve erro na operação",
+        help="Indicates whether there was an error in the operation",
     )
 
     duration_human = fields.Char(
-        string="Duração",
         compute="_compute_duration_human",
-        help="Duração em formato legível",
+        help="Duration in readable format",
     )
 
-    # ============== MÉTODOS COMPUTE ==============
+    # ============== COMPUTE METHODS ==============
 
     @api.depends("status_code", "success")
     def _compute_error(self):
-        """Computar se é erro baseado no status code e flag success"""
+        """Compute if it is an error based on status code and success flag"""
         for record in self:
             if record.status_code:
                 record.error = record.status_code >= 400
@@ -158,7 +140,7 @@ class EDILog(models.Model):
 
     @api.depends("execution_time")
     def _compute_duration_human(self):
-        """Formatar duração para exibição"""
+        """Format duration for display"""
         for record in self:
             if record.execution_time:
                 if record.execution_time < 1000:
@@ -169,7 +151,7 @@ class EDILog(models.Model):
             else:
                 record.duration_human = "N/A"
 
-    # ============== MÉTODOS PÚBLICOS ==============
+    # ============== PUBLIC METHODS ==============
 
     @api.model
     def log_operation(
@@ -185,21 +167,21 @@ class EDILog(models.Model):
         **kwargs,
     ):
         """
-        Registrar operação EDI
+        Register EDI operation
 
         Args:
-            operation_type (str): Tipo de operação
-            provider (str): Provedor EDI
-            document (account.move): Documento relacionado
-            request_data (dict): Dados da requisição
-            response_data (dict): Dados da resposta
-            execution_time (float): Tempo de execução em ms
-            success (bool): Se a operação foi bem-sucedida
-            error_message (str): Mensagem de erro (se houver)
-            **kwargs: Campos adicionais
+            operation_type (str): Operation type
+            provider (str): EDI provider
+            document (account.move): Related document
+            request_data (dict): Request data
+            response_data (dict): Response data
+            execution_time (float): Execution time in ms
+            success (bool): Whether the operation was successful
+            error_message (str): Error message (if any)
+            **kwargs: Additional fields
 
         Returns:
-            l10n_py.edi.log: Registro de log criado
+            l10n_py.edi.log: Created log record
         """
         try:
             # Preparar dados do log
@@ -211,7 +193,7 @@ class EDILog(models.Model):
                 "error_message": error_message,
             }
 
-            # Documento relacionado
+            # Document relacionado
             if document:
                 log_vals["document_id"] = document.id
                 log_vals["cdc"] = getattr(document, "l10n_py_cdc", False)
@@ -244,7 +226,7 @@ class EDILog(models.Model):
             # Criar registro de log
             log_record = self.create(log_vals)
 
-            # Log no sistema também
+            # Also log to system
             if not success:
                 _logger.error(
                     f"EDI Error [{provider}] {operation_type}: {error_message}"
@@ -258,11 +240,11 @@ class EDILog(models.Model):
             return log_record
 
         except Exception as e:
-            _logger.exception(f"Erro ao criar log EDI: {str(e)}")
+            _logger.exception(f"Error creating EDI log: {str(e)}")
             return False
 
     def action_view_document(self):
-        """Abrir documento relacionado"""
+        """Open related document"""
         self.ensure_one()
         if not self.document_id:
             return False
@@ -276,34 +258,36 @@ class EDILog(models.Model):
         }
 
     def action_retry_operation(self):
-        """Repetir operação (se aplicável)"""
+        """Retry operation (if applicable)"""
         self.ensure_one()
 
         if self.operation_type == "send" and self.document_id:
-            # Incrementar contador de tentativas
+            # Increment retry counter
             self.write({"retry_count": self.retry_count + 1})
             return self.document_id.action_send_edi()
 
         return False
 
     def action_view_request_data(self):
-        """Exibir dados da requisição em formato legível"""
+        """Display request data in readable format"""
         self.ensure_one()
         return self._show_data_wizard("request", self.request_data)
 
     def action_view_response_data(self):
-        """Exibir dados da resposta em formato legível"""
+        """Display response data in readable format"""
         self.ensure_one()
         return self._show_data_wizard("response", self.response_data)
 
     def _show_data_wizard(self, data_type, data):
-        """Mostrar wizard com dados formatados"""
+        """Show wizard with formatted data"""
         return {
             "type": "ir.actions.client",
             "tag": "display_notification",
             "params": {
-                "title": _("Dados da %s") % data_type.capitalize(),
-                "message": data or _("Sem dados"),
+                "title": self.env._(
+                    "Data for %(data_type)s", data_type=data_type.capitalize()
+                ),
+                "message": data or self.env._("No data"),
                 "type": "info",
                 "sticky": True,
             },
