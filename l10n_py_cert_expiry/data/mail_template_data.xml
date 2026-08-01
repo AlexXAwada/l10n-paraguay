@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="mail_template_cert_expiry_warning" model="mail.template">
+        <field name="name">Certificate Expiry Warning</field>
+        <field
+            name="subject"
+        >SIFEN Certificate Expiring Soon - {{ object.name }}</field>
+        <field name="email_from">{{ object.email or 'noreply@company.com' }}</field>
+        <field name="model_id" ref="model_res_company" />
+        <field
+            name="body_html"
+        ><![CDATA[
+<h2>SIFEN Certificate Expiry Warning</h2>
+
+<p>Dear Administrator,</p>
+
+<p>This is an automated notification that the SIFEN digital certificate
+for <strong>{{ object.name }}</strong> is about to expire.</p>
+
+<table style="border-collapse: collapse; margin: 20px 0;">
+    <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;"><strong>Company:</strong></td>
+        <td style="padding: 8px; border: 1px solid #ddd;">{{ object.name }}</td>
+    </tr>
+    <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;"><strong>Certificate Expiry:</strong></td>
+        <td style="padding: 8px; border: 1px solid #ddd;">{{ object.l10n_py_certificate_expiry }}</td>
+    </tr>
+</table>
+
+<p><strong>Action Required:</strong></p>
+<ol>
+    <li>Contact your certificate provider to renew the certificate</li>
+    <li>Upload the new certificate in Settings > Companies > EDI Configuration</li>
+    <li>Test the connection before the current certificate expires</li>
+</ol>
+
+<p>If the certificate expires, EDI documents cannot be sent to SIFEN.</p>
+
+<p>Best regards,<br/>
+Odoo System</p>
+        ]]></field>
+    </record>
+</odoo>
