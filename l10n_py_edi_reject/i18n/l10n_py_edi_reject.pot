@@ -1,0 +1,293 @@
+#. module: l10n_py_edi_reject
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00:00+0000\n"
+"PO-Revision-Date: 2024-01-01 00:00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. module: l10n_py_edi_reject
+msgid "EDI Reject Resolution"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Resolve rejected EDI documents and resubmit"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Rejection Code"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Full rejection message from SIFEN"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Suggested Action"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "When the document was rejected"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Fix Applied"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Field name that needs to be corrected"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Retry Count"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Last Retry"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Resolve Rejection"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Only rejected documents can be retried."
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Retry failed: %(error)s"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Resolve EDI Rejection"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Error Code"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Error Message"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Suggested Fix"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Field to Correct"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Select the field that needs to be corrected"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Partner Name"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Partner RUC"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Partner Document"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Partner Taxpayer Type"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Enter corrected RUC for the partner"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Enter corrected document number for the partner"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Select corrected taxpayer type"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Company RUC"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Enter corrected company RUC"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Resolution Notes"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Notes about why this fix is being applied"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Partner RUC (wrong or invalid)"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Partner Document Number (wrong)"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Partner Taxpayer Type (wrong type)"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Company RUC (wrong or invalid)"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Total Amount (amount mismatch)"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Tax Amount (IVA calculation error)"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Partner Address (incomplete address)"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Other (manual review required)"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Rejection resolution requires manual review. Notes: %(notes)s"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Document %(name)s was retried successfully."
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Retry Failed"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Batch Retry Rejected Documents"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Rejected Documents"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Fix Type"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Select fix type for all documents"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Retry All (no changes)"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Fix RUC on All"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Fix Taxpayer Type on All"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Replacement RUC"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "RUC to set on all selected partner"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Replacement Taxpayer Type"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Preview Only"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "If checked, shows what would be changed without applying"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Proposed Changes"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "No rejected documents selected."
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Batch retry completed: %(success)s succeeded, %(failed)s failed."
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Batch Retry Complete"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Apply Fix and Retry"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "View Document"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Corrective Action"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Additional Info"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Rejection Info"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Selection"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Batch Fix Options"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Preview Changes"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Apply and Retry All"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Taxpayer (has RUC)"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Non-Taxpayer (no RUC)"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Rejection Date"
+msgstr ""
+
+#. module: l10n_py_edi_reject
+msgid "Field to Fix"
+msgstr ""
